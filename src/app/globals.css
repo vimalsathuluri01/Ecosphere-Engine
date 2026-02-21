@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+@theme {
+    --color-background: hsl(60 20% 98%);
+    --color-foreground: hsl(147 20% 20%);
+
+    --color-card: hsl(0 0% 100%);
+    --color-card-foreground: hsl(147 20% 20%);
+
+    --color-popover: hsl(0 0% 100%);
+    --color-popover-foreground: hsl(147 20% 20%);
+
+    --color-primary: hsl(147 30% 41%);
+    --color-primary-foreground: hsl(0 0% 100%);
+
+    --color-secondary: hsl(40 40% 94%);
+    --color-secondary-foreground: hsl(147 30% 25%);
+
+    --color-muted: hsl(147 10% 94%);
+    --color-muted-foreground: hsl(147 10% 40%);
+
+    --color-accent: hsl(20 60% 80%);
+    --color-accent-foreground: hsl(147 30% 25%);
+
+    --color-destructive: hsl(0 84.2% 60.2%);
+    --color-destructive-foreground: hsl(210 40% 98%);
+
+    --color-border: hsl(147 10% 90%);
+    --color-input: hsl(147 10% 90%);
+    --color-ring: hsl(147 30% 41%);
+
+    --radius: 1.5rem;
+
+    --font-sans: var(--font-outfit), sans-serif;
+
+    --animate-accordion-down: accordion-down 0.2s ease-out;
+    --animate-accordion-up: accordion-up 0.2s ease-out;
+
+    @keyframes accordion-down {
+        from {
+            height: 0
+        }
+
+        to {
+            height: var(--radix-accordion-content-height)
+        }
+    }
+
+    @keyframes accordion-up {
+        from {
+            height: var(--radix-accordion-content-height)
+        }
+
+        to {
+            height: 0
+        }
+    }
+}
+
+/* 
+  Tailwind v4 CSS Variables mapped for Shadcn UI 
+  Keeping semantic names to support cn() and utility classes
+*/
+:root {
+    --background: 60 20% 98%;
+    --foreground: 147 20% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 147 20% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 147 20% 20%;
+    --primary: 147 30% 41%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 40% 94%;
+    --secondary-foreground: 147 30% 25%;
+    --muted: 147 10% 94%;
+    --muted-foreground: 147 10% 40%;
+    --accent: 20 60% 80%;
+    --accent-foreground: 147 30% 25%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 147 10% 90%;
+    --input: 147 10% 90%;
+    --ring: 147 30% 41%;
+    --radius: 1.5rem;
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground antialiased;
+        font-feature-settings: "rlig" 1, "calt" 1;
+        background-color: hsl(40, 20%, 97%);
+        /* Raw Cotton Base */
+    }
+
+    /* Noise Texture Overlay */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 50;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Custom Scrollbar - Minimalist */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: hsl(150, 5%, 80%);
+        border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: hsl(150, 5%, 60%);
+    }
+}
+
+/* Glassmorphism Utilities */
+.glass {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark {
+    background: rgba(20, 25, 20, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
