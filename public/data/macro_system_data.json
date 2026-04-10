@@ -1,0 +1,5386 @@
+{
+  "entity_mode": {
+    "kpis": {
+      "gini": 0.79,
+      "top_10_share": 69,
+      "median_efficiency": 50
+    },
+    "deciles": [
+      {
+        "name": "D1",
+        "value": 94,
+        "label": "Cleanest 10%",
+        "cumulative": 0
+      },
+      {
+        "name": "D2",
+        "value": 470,
+        "label": "2nd Decile",
+        "cumulative": 0
+      },
+      {
+        "name": "D3",
+        "value": 1032,
+        "label": "3rd Decile",
+        "cumulative": 1
+      },
+      {
+        "name": "D4",
+        "value": 1788,
+        "label": "4th Decile",
+        "cumulative": 2
+      },
+      {
+        "name": "D5",
+        "value": 2873,
+        "label": "Median 10%",
+        "cumulative": 4
+      },
+      {
+        "name": "D6",
+        "value": 4474,
+        "label": "6th Decile",
+        "cumulative": 7
+      },
+      {
+        "name": "D7",
+        "value": 7011,
+        "label": "7th Decile",
+        "cumulative": 11
+      },
+      {
+        "name": "D8",
+        "value": 11446,
+        "label": "8th Decile",
+        "cumulative": 18
+      },
+      {
+        "name": "D9",
+        "value": 21631,
+        "label": "9th Decile",
+        "cumulative": 31
+      },
+      {
+        "name": "D10",
+        "value": 110625,
+        "label": "Worst 10%",
+        "cumulative": 100
+      }
+    ],
+    "drivers": {
+      "carbon": 42,
+      "water": 28,
+      "waste": 18,
+      "toxins": 12
+    },
+    "vanguard": [
+      {
+        "company": "UrbanVogue 1414",
+        "category": "Sportswear",
+        "material": "Blended",
+        "score": 0,
+        "deviation": -100
+      },
+      {
+        "company": "Crest Textile Design",
+        "category": "Eco_Brand",
+        "material": "Organic Cotton",
+        "score": 0,
+        "deviation": -100
+      },
+      {
+        "company": "Hyper Chic Vault 4452",
+        "category": "Private_Label",
+        "material": "Polyester",
+        "score": 0,
+        "deviation": -100
+      },
+      {
+        "company": "Urban Mode Boutique",
+        "category": "Streetwear",
+        "material": "Cotton",
+        "score": 0,
+        "deviation": -100
+      },
+      {
+        "company": "Omni Weave Goods 9308",
+        "category": "Fast_Fashion",
+        "material": "Polyester",
+        "score": 0,
+        "deviation": -100
+      }
+    ],
+    "systemicRisks": [
+      {
+        "company": "H&M",
+        "category": "Fast Fashion",
+        "material": "Cotton",
+        "score": 0,
+        "deviation": 32118
+      },
+      {
+        "company": "Nike",
+        "category": "Sportswear",
+        "material": "Polyester",
+        "score": 0,
+        "deviation": 31995
+      },
+      {
+        "company": "Zara",
+        "category": "Fast Fashion",
+        "material": "Cotton",
+        "score": 0,
+        "deviation": 28401
+      },
+      {
+        "company": "Uniqlo",
+        "category": "Fast Fashion",
+        "material": "Polyester",
+        "score": 0,
+        "deviation": 26542
+      },
+      {
+        "company": "Adidas",
+        "category": "Sportswear",
+        "material": "Cotton",
+        "score": 0,
+        "deviation": 19107
+      }
+    ]
+  },
+  "volume_mode": {
+    "kpis": {
+      "gini": 0.79,
+      "top_10_share": 69,
+      "median_efficiency": 50
+    },
+    "deciles": [
+      {
+        "name": "D1",
+        "value": 120,
+        "label": "Cleanest 10%",
+        "cumulative": 0
+      },
+      {
+        "name": "D2",
+        "value": 457,
+        "label": "2nd Decile",
+        "cumulative": 0
+      },
+      {
+        "name": "D3",
+        "value": 1030,
+        "label": "3rd Decile",
+        "cumulative": 0
+      },
+      {
+        "name": "D4",
+        "value": 1797,
+        "label": "4th Decile",
+        "cumulative": 0
+      },
+      {
+        "name": "D5",
+        "value": 2868,
+        "label": "Median 10%",
+        "cumulative": 1
+      },
+      {
+        "name": "D6",
+        "value": 4497,
+        "label": "6th Decile",
+        "cumulative": 2
+      },
+      {
+        "name": "D7",
+        "value": 7091,
+        "label": "7th Decile",
+        "cumulative": 2
+      },
+      {
+        "name": "D8",
+        "value": 11588,
+        "label": "8th Decile",
+        "cumulative": 4
+      },
+      {
+        "name": "D9",
+        "value": 22441,
+        "label": "9th Decile",
+        "cumulative": 7
+      },
+      {
+        "name": "D10",
+        "value": 664646,
+        "label": "Worst 10%",
+        "cumulative": 100
+      }
+    ],
+    "drivers": {
+      "carbon": 42,
+      "water": 28,
+      "waste": 18,
+      "toxins": 12
+    },
+    "vanguard": [
+      {
+        "company": "UrbanVogue 1414",
+        "category": "Sportswear",
+        "material": "Blended",
+        "score": 0,
+        "deviation": -100
+      },
+      {
+        "company": "Crest Textile Design",
+        "category": "Eco_Brand",
+        "material": "Organic Cotton",
+        "score": 0,
+        "deviation": -100
+      },
+      {
+        "company": "Hyper Chic Vault 4452",
+        "category": "Private_Label",
+        "material": "Polyester",
+        "score": 0,
+        "deviation": -100
+      },
+      {
+        "company": "Urban Mode Boutique",
+        "category": "Streetwear",
+        "material": "Cotton",
+        "score": 0,
+        "deviation": -100
+      },
+      {
+        "company": "Omni Weave Goods 9308",
+        "category": "Fast_Fashion",
+        "material": "Polyester",
+        "score": 0,
+        "deviation": -100
+      }
+    ],
+    "systemicRisks": [
+      {
+        "company": "H&M",
+        "category": "Fast Fashion",
+        "material": "Cotton",
+        "score": 0,
+        "deviation": 32118
+      },
+      {
+        "company": "Nike",
+        "category": "Sportswear",
+        "material": "Polyester",
+        "score": 0,
+        "deviation": 31995
+      },
+      {
+        "company": "Zara",
+        "category": "Fast Fashion",
+        "material": "Cotton",
+        "score": 0,
+        "deviation": 28401
+      },
+      {
+        "company": "Uniqlo",
+        "category": "Fast Fashion",
+        "material": "Polyester",
+        "score": 0,
+        "deviation": 26542
+      },
+      {
+        "company": "Adidas",
+        "category": "Sportswear",
+        "material": "Cotton",
+        "score": 0,
+        "deviation": 19107
+      }
+    ]
+  },
+  "toxicityMatrix": [
+    {
+      "product": "Hemp Bag",
+      "hemp": 20,
+      "wool": 26,
+      "polyester": 22,
+      "cotton": 41,
+      "bamboo": 28
+    },
+    {
+      "product": "Bamboo Blouse",
+      "hemp": 32,
+      "wool": 25,
+      "polyester": 38,
+      "cotton": 34,
+      "bamboo": 30
+    },
+    {
+      "product": "Polyester Jacket",
+      "hemp": 35,
+      "wool": 27,
+      "polyester": 29,
+      "cotton": 22,
+      "bamboo": 24
+    },
+    {
+      "product": "Cotton T-Shirt",
+      "hemp": 28,
+      "wool": 39,
+      "polyester": 21,
+      "cotton": 32,
+      "bamboo": 37
+    },
+    {
+      "product": "Wool Sweater",
+      "hemp": 28,
+      "wool": 31,
+      "polyester": 37,
+      "cotton": 34,
+      "bamboo": 37
+    }
+  ],
+  "nexus": [
+    {
+      "water": 464.9634209801433,
+      "energy": 11.588248688368857,
+      "type": "hemp"
+    },
+    {
+      "water": 1039.355782412316,
+      "energy": 49.72562341733404,
+      "type": "wool"
+    },
+    {
+      "water": 477.17913646261024,
+      "energy": 75.38596708612815,
+      "type": "polyester"
+    },
+    {
+      "water": 684.4802643838023,
+      "energy": 21.486946613969806,
+      "type": "cotton"
+    },
+    {
+      "water": 988.4883646172311,
+      "energy": 23.612687699557668,
+      "type": "bamboo"
+    },
+    {
+      "water": 1268.7786984297923,
+      "energy": 48.63943268295056,
+      "type": "bamboo"
+    },
+    {
+      "water": 310.339285524305,
+      "energy": 71.66387629722617,
+      "type": "cotton"
+    },
+    {
+      "water": 329.56421931470044,
+      "energy": 5.577644499161149,
+      "type": "cotton"
+    },
+    {
+      "water": 731.833632305888,
+      "energy": 11.11894713239925,
+      "type": "polyester"
+    },
+    {
+      "water": 122.5802977984715,
+      "energy": 18.751552550635022,
+      "type": "wool"
+    },
+    {
+      "water": 397.5856104472992,
+      "energy": 27.295505530900535,
+      "type": "bamboo"
+    },
+    {
+      "water": 1261.4761457437921,
+      "energy": 52.00963459654445,
+      "type": "polyester"
+    },
+    {
+      "water": 807.3489788617816,
+      "energy": 62.92300699209635,
+      "type": "wool"
+    },
+    {
+      "water": 545.400903168835,
+      "energy": 69.23059994074929,
+      "type": "polyester"
+    },
+    {
+      "water": 985.3920449377318,
+      "energy": 6.324014738289979,
+      "type": "bamboo"
+    },
+    {
+      "water": 879.3597857721008,
+      "energy": 13.657941692691029,
+      "type": "cotton"
+    },
+    {
+      "water": 277.7637454608824,
+      "energy": 21.26957747548835,
+      "type": "cotton"
+    },
+    {
+      "water": 412.7711506127257,
+      "energy": 12.989575638983775,
+      "type": "wool"
+    },
+    {
+      "water": 1470.5880778395176,
+      "energy": 44.38702041739545,
+      "type": "hemp"
+    },
+    {
+      "water": 862.7746009332257,
+      "energy": 51.99745103970664,
+      "type": "wool"
+    },
+    {
+      "water": 701.7483998532907,
+      "energy": 27.63703036803633,
+      "type": "hemp"
+    },
+    {
+      "water": 547.549093273601,
+      "energy": 24.493981903822505,
+      "type": "polyester"
+    },
+    {
+      "water": 200.61133287169721,
+      "energy": 25.896511897042664,
+      "type": "polyester"
+    },
+    {
+      "water": 468.630377850101,
+      "energy": 26.410610048626385,
+      "type": "bamboo"
+    },
+    {
+      "water": 883.3596527973934,
+      "energy": 91.64246484000503,
+      "type": "hemp"
+    },
+    {
+      "water": 478.9197216084343,
+      "energy": 49.285052018881046,
+      "type": "bamboo"
+    },
+    {
+      "water": 318.212229171445,
+      "energy": 22.892139114499223,
+      "type": "cotton"
+    },
+    {
+      "water": 318.9891861491743,
+      "energy": 25.27705401515172,
+      "type": "hemp"
+    },
+    {
+      "water": 1601.9114354881663,
+      "energy": 48.59522267498057,
+      "type": "wool"
+    },
+    {
+      "water": 539.5302141142677,
+      "energy": 11.584510000317437,
+      "type": "cotton"
+    },
+    {
+      "water": 1222.1149672261108,
+      "energy": 33.445801974886884,
+      "type": "cotton"
+    },
+    {
+      "water": 895.5722903450504,
+      "energy": 55.30438743260021,
+      "type": "wool"
+    },
+    {
+      "water": 645.9220343616262,
+      "energy": 50.409942718771156,
+      "type": "cotton"
+    },
+    {
+      "water": 418.22304904573195,
+      "energy": 16.428437850214422,
+      "type": "hemp"
+    },
+    {
+      "water": 936.920316294102,
+      "energy": 17.7619384966515,
+      "type": "bamboo"
+    },
+    {
+      "water": 996.7139999065882,
+      "energy": 3.068418758685652,
+      "type": "cotton"
+    },
+    {
+      "water": 988.6603731156093,
+      "energy": 50.95212164094935,
+      "type": "hemp"
+    },
+    {
+      "water": 224.65530966639855,
+      "energy": 95.03874604159594,
+      "type": "polyester"
+    },
+    {
+      "water": 500.0967870600922,
+      "energy": 14.414545756307126,
+      "type": "hemp"
+    },
+    {
+      "water": 456.3683936389636,
+      "energy": 58.25030618697682,
+      "type": "bamboo"
+    },
+    {
+      "water": 169.71822510155138,
+      "energy": 119.46321333044345,
+      "type": "hemp"
+    },
+    {
+      "water": 909.713541039317,
+      "energy": 22.137071603824445,
+      "type": "wool"
+    },
+    {
+      "water": 1061.2529223263853,
+      "energy": 32.20550539796084,
+      "type": "bamboo"
+    },
+    {
+      "water": 817.2893737706509,
+      "energy": 33.26685637385893,
+      "type": "polyester"
+    },
+    {
+      "water": 741.1820864883216,
+      "energy": 38.71400225859784,
+      "type": "wool"
+    },
+    {
+      "water": 568.8702916693909,
+      "energy": 40.88815690035663,
+      "type": "hemp"
+    },
+    {
+      "water": 344.64827468345277,
+      "energy": 19.972534108136507,
+      "type": "bamboo"
+    },
+    {
+      "water": 458.4493055158386,
+      "energy": 41.02537744733039,
+      "type": "polyester"
+    },
+    {
+      "water": 706.9964655937997,
+      "energy": 20.354242520834674,
+      "type": "wool"
+    },
+    {
+      "water": 1500.2007133834395,
+      "energy": 46.251265175412335,
+      "type": "polyester"
+    },
+    {
+      "water": 782.9055918670242,
+      "energy": 34.212638358788844,
+      "type": "hemp"
+    },
+    {
+      "water": 766.9955014820628,
+      "energy": 5.579028285909326,
+      "type": "polyester"
+    },
+    {
+      "water": 182.53263559326405,
+      "energy": 81.56960448899784,
+      "type": "cotton"
+    },
+    {
+      "water": 701.2210297507379,
+      "energy": 15.90558987035266,
+      "type": "wool"
+    },
+    {
+      "water": 1338.207899509095,
+      "energy": 74.61432289105389,
+      "type": "polyester"
+    },
+    {
+      "water": 647.7256770727598,
+      "energy": 66.99363473802148,
+      "type": "hemp"
+    },
+    {
+      "water": 665.6184009877212,
+      "energy": 41.407756028311645,
+      "type": "hemp"
+    },
+    {
+      "water": 461.84092492407774,
+      "energy": 40.16125968508788,
+      "type": "polyester"
+    },
+    {
+      "water": 1114.3249485745523,
+      "energy": 55.568311633433645,
+      "type": "hemp"
+    },
+    {
+      "water": 137.97737855481472,
+      "energy": 23.506959469524702,
+      "type": "bamboo"
+    },
+    {
+      "water": 1120.8929187716194,
+      "energy": 24.401887203111837,
+      "type": "bamboo"
+    },
+    {
+      "water": 647.6326375156722,
+      "energy": 53.683998890594985,
+      "type": "bamboo"
+    },
+    {
+      "water": 708.6762532383168,
+      "energy": 25.871426447099992,
+      "type": "cotton"
+    },
+    {
+      "water": 914.8512686189811,
+      "energy": 20.026455272300108,
+      "type": "polyester"
+    },
+    {
+      "water": 316.3236093899671,
+      "energy": 14.10344798105399,
+      "type": "cotton"
+    },
+    {
+      "water": 737.5961963960892,
+      "energy": 47.23602132274873,
+      "type": "hemp"
+    },
+    {
+      "water": 502.04356435557327,
+      "energy": 16.193777340290993,
+      "type": "cotton"
+    },
+    {
+      "water": 266.25830707243995,
+      "energy": 50.26427660115389,
+      "type": "hemp"
+    },
+    {
+      "water": 1323.0298226947841,
+      "energy": 67.7208453668342,
+      "type": "hemp"
+    },
+    {
+      "water": 607.092660198189,
+      "energy": 50.83437226805496,
+      "type": "wool"
+    },
+    {
+      "water": 305.542767243273,
+      "energy": 54.38458214413231,
+      "type": "bamboo"
+    },
+    {
+      "water": 573.7297053168523,
+      "energy": 38.206490066412094,
+      "type": "hemp"
+    },
+    {
+      "water": 200.05477218280927,
+      "energy": 46.1199995595147,
+      "type": "wool"
+    },
+    {
+      "water": 439.1012058609544,
+      "energy": 46.89987070968692,
+      "type": "bamboo"
+    },
+    {
+      "water": 666.9730515898833,
+      "energy": 34.06412617435111,
+      "type": "hemp"
+    },
+    {
+      "water": 193.5565677054004,
+      "energy": 57.17456203879205,
+      "type": "hemp"
+    },
+    {
+      "water": 997.1637214812636,
+      "energy": 28.56530305288483,
+      "type": "cotton"
+    },
+    {
+      "water": 789.1327798654751,
+      "energy": 18.44017348065312,
+      "type": "cotton"
+    },
+    {
+      "water": 1168.1581778345083,
+      "energy": 17.612524907000985,
+      "type": "bamboo"
+    },
+    {
+      "water": 1160.7942517221916,
+      "energy": 27.297176729528513,
+      "type": "hemp"
+    },
+    {
+      "water": 409.89901516635217,
+      "energy": 3.5040678006549295,
+      "type": "polyester"
+    },
+    {
+      "water": 516.4807395654525,
+      "energy": 38.17068019321271,
+      "type": "cotton"
+    },
+    {
+      "water": 739.33348287912,
+      "energy": 42.065684421716156,
+      "type": "bamboo"
+    },
+    {
+      "water": 270.3203971996311,
+      "energy": 50.30110917673261,
+      "type": "hemp"
+    },
+    {
+      "water": 336.2354191822709,
+      "energy": 6.504211662532557,
+      "type": "hemp"
+    },
+    {
+      "water": 463.049387273329,
+      "energy": 16.832009114436932,
+      "type": "polyester"
+    },
+    {
+      "water": 264.0409304205981,
+      "energy": 58.172978495828495,
+      "type": "bamboo"
+    },
+    {
+      "water": 303.07898743178697,
+      "energy": 27.86066692148727,
+      "type": "hemp"
+    },
+    {
+      "water": 334.16789720743645,
+      "energy": 55.20760115546428,
+      "type": "cotton"
+    },
+    {
+      "water": 521.5587724303253,
+      "energy": 9.433994542453382,
+      "type": "polyester"
+    },
+    {
+      "water": 506.5925293714195,
+      "energy": 74.02806331536132,
+      "type": "bamboo"
+    },
+    {
+      "water": 1178.8316329236318,
+      "energy": 9.431555681057478,
+      "type": "polyester"
+    },
+    {
+      "water": 527.4235950269156,
+      "energy": 34.47829029805305,
+      "type": "cotton"
+    },
+    {
+      "water": 603.3565524930298,
+      "energy": 35.14054609388522,
+      "type": "bamboo"
+    },
+    {
+      "water": 1718.0210941456628,
+      "energy": 21.6279699604257,
+      "type": "polyester"
+    },
+    {
+      "water": 101.68763278164903,
+      "energy": 42.48687385832409,
+      "type": "wool"
+    },
+    {
+      "water": 629.7176512141424,
+      "energy": 37.92753747130758,
+      "type": "cotton"
+    },
+    {
+      "water": 509.32782889531126,
+      "energy": 36.73456397916078,
+      "type": "cotton"
+    },
+    {
+      "water": 699.3645093597065,
+      "energy": 18.020689526368642,
+      "type": "cotton"
+    },
+    {
+      "water": 482.1137773034942,
+      "energy": 17.96052082346815,
+      "type": "wool"
+    },
+    {
+      "water": 612.8721163475872,
+      "energy": 25.035271535708542,
+      "type": "wool"
+    },
+    {
+      "water": 1356.8962005469914,
+      "energy": 15.881321748597939,
+      "type": "hemp"
+    },
+    {
+      "water": 977.9536033461343,
+      "energy": 75.03785755754605,
+      "type": "polyester"
+    },
+    {
+      "water": 496.72723390793726,
+      "energy": 21.090025129087284,
+      "type": "hemp"
+    },
+    {
+      "water": 413.8340476231649,
+      "energy": 36.56546898465795,
+      "type": "polyester"
+    },
+    {
+      "water": 269.64107113821774,
+      "energy": 46.85480008373981,
+      "type": "wool"
+    },
+    {
+      "water": 463.2779301928053,
+      "energy": 14.024508048945362,
+      "type": "wool"
+    },
+    {
+      "water": 667.5121232564886,
+      "energy": 9.723102044469075,
+      "type": "hemp"
+    },
+    {
+      "water": 1582.5465884883374,
+      "energy": 14.70531552315181,
+      "type": "bamboo"
+    },
+    {
+      "water": 688.9506147613627,
+      "energy": 36.52435173131893,
+      "type": "hemp"
+    },
+    {
+      "water": 446.8412296040059,
+      "energy": 37.621167889083424,
+      "type": "polyester"
+    },
+    {
+      "water": 102.1101553901921,
+      "energy": 40.019101824654165,
+      "type": "hemp"
+    },
+    {
+      "water": 327.9380302016962,
+      "energy": 24.20661570860956,
+      "type": "cotton"
+    },
+    {
+      "water": 463.68050840627325,
+      "energy": 1.5232907470953714,
+      "type": "polyester"
+    },
+    {
+      "water": 789.7043948669652,
+      "energy": 29.235450095094354,
+      "type": "polyester"
+    },
+    {
+      "water": 415.260478537781,
+      "energy": 51.17909072641928,
+      "type": "bamboo"
+    },
+    {
+      "water": 1488.5778683653675,
+      "energy": 63.12953672651126,
+      "type": "wool"
+    },
+    {
+      "water": 547.8745767589766,
+      "energy": 32.10773710927622,
+      "type": "polyester"
+    },
+    {
+      "water": 1201.5093977624683,
+      "energy": 37.724668245263466,
+      "type": "wool"
+    },
+    {
+      "water": 181.46442361106205,
+      "energy": 42.81277363700441,
+      "type": "hemp"
+    },
+    {
+      "water": 560.7922407027278,
+      "energy": 61.94173487273009,
+      "type": "cotton"
+    },
+    {
+      "water": 440.31892566980724,
+      "energy": 35.01431538228613,
+      "type": "bamboo"
+    },
+    {
+      "water": 985.6371514448165,
+      "energy": 40.47023398028755,
+      "type": "wool"
+    },
+    {
+      "water": 494.568012264524,
+      "energy": 18.939057128044126,
+      "type": "polyester"
+    },
+    {
+      "water": 1378.2601108870103,
+      "energy": 10.43758735956047,
+      "type": "wool"
+    },
+    {
+      "water": 1065.610414427983,
+      "energy": 24.09397701343182,
+      "type": "polyester"
+    },
+    {
+      "water": 397.47501271100083,
+      "energy": 68.24354348929913,
+      "type": "wool"
+    },
+    {
+      "water": 354.8996341787712,
+      "energy": 54.72370042066147,
+      "type": "polyester"
+    },
+    {
+      "water": 343.60862373195863,
+      "energy": 9.235481421665819,
+      "type": "hemp"
+    },
+    {
+      "water": 459.99521106488373,
+      "energy": 42.379290588221146,
+      "type": "polyester"
+    },
+    {
+      "water": 910.0142802797768,
+      "energy": 11.34964696243456,
+      "type": "polyester"
+    },
+    {
+      "water": 546.4193606763208,
+      "energy": 34.67153540038378,
+      "type": "cotton"
+    },
+    {
+      "water": 1172.3033401686705,
+      "energy": 15.798257901504611,
+      "type": "polyester"
+    },
+    {
+      "water": 1161.7645550561333,
+      "energy": 8.732365584164206,
+      "type": "cotton"
+    },
+    {
+      "water": 644.6604686954392,
+      "energy": 86.65147380690313,
+      "type": "bamboo"
+    },
+    {
+      "water": 327.4312139440491,
+      "energy": 22.99321162426994,
+      "type": "cotton"
+    },
+    {
+      "water": 914.2682560783413,
+      "energy": 54.03200688091314,
+      "type": "hemp"
+    },
+    {
+      "water": 1580.1885481157606,
+      "energy": 28.380877582898936,
+      "type": "cotton"
+    },
+    {
+      "water": 950.6597463413872,
+      "energy": 11.199606213931594,
+      "type": "bamboo"
+    },
+    {
+      "water": 655.6100397153833,
+      "energy": 21.870796997693816,
+      "type": "hemp"
+    },
+    {
+      "water": 386.2468275643629,
+      "energy": 13.344607708791504,
+      "type": "wool"
+    },
+    {
+      "water": 489.89990892692634,
+      "energy": 112.21021232951352,
+      "type": "wool"
+    },
+    {
+      "water": 242.25157891008294,
+      "energy": 60.871536035415104,
+      "type": "cotton"
+    },
+    {
+      "water": 340.3833556056729,
+      "energy": 35.61261004669188,
+      "type": "cotton"
+    },
+    {
+      "water": 925.2485513459706,
+      "energy": 52.02692594621135,
+      "type": "bamboo"
+    },
+    {
+      "water": 203.81276813605393,
+      "energy": 58.19758115751967,
+      "type": "bamboo"
+    },
+    {
+      "water": 594.4874941443906,
+      "energy": 58.30435754545612,
+      "type": "polyester"
+    },
+    {
+      "water": 269.9437843054385,
+      "energy": 48.509647276929,
+      "type": "bamboo"
+    },
+    {
+      "water": 276.6649610348733,
+      "energy": 42.130935095194886,
+      "type": "polyester"
+    },
+    {
+      "water": 760.373638552141,
+      "energy": 37.83467372224694,
+      "type": "hemp"
+    },
+    {
+      "water": 425.8043844697017,
+      "energy": 89.1714549138703,
+      "type": "cotton"
+    },
+    {
+      "water": 252.77652597472834,
+      "energy": 36.82670596059731,
+      "type": "hemp"
+    },
+    {
+      "water": 481.0700455688392,
+      "energy": 33.79797279004184,
+      "type": "bamboo"
+    },
+    {
+      "water": 246.40059751053428,
+      "energy": 37.06199239807538,
+      "type": "hemp"
+    },
+    {
+      "water": 1228.3754165122903,
+      "energy": 36.03353629628266,
+      "type": "hemp"
+    },
+    {
+      "water": 1016.9682736776754,
+      "energy": 6.561709000324363,
+      "type": "hemp"
+    },
+    {
+      "water": 1092.4192924803233,
+      "energy": 17.000951844906204,
+      "type": "bamboo"
+    },
+    {
+      "water": 322.5619925452657,
+      "energy": 24.205979870513886,
+      "type": "hemp"
+    },
+    {
+      "water": 875.6052431383689,
+      "energy": 6.202132106756832,
+      "type": "polyester"
+    },
+    {
+      "water": 708.8590351432796,
+      "energy": 30.48798030557385,
+      "type": "bamboo"
+    },
+    {
+      "water": 387.2211242653246,
+      "energy": 35.686682670079286,
+      "type": "hemp"
+    },
+    {
+      "water": 650.9272095160152,
+      "energy": 9.978706292715918,
+      "type": "bamboo"
+    },
+    {
+      "water": 175.24033362481325,
+      "energy": 15.606102379459998,
+      "type": "wool"
+    },
+    {
+      "water": 335.5826462484079,
+      "energy": 76.61931075586342,
+      "type": "polyester"
+    },
+    {
+      "water": 590.807687746409,
+      "energy": 44.91525564442762,
+      "type": "hemp"
+    },
+    {
+      "water": 422.1183020048566,
+      "energy": 39.536603449777175,
+      "type": "wool"
+    },
+    {
+      "water": 895.3302370632279,
+      "energy": 75.90295363652994,
+      "type": "wool"
+    },
+    {
+      "water": 394.05809240132294,
+      "energy": 14.827006126675244,
+      "type": "bamboo"
+    },
+    {
+      "water": 545.8455204483623,
+      "energy": 10.008374878604027,
+      "type": "wool"
+    },
+    {
+      "water": 724.5616062031653,
+      "energy": 69.17117840035212,
+      "type": "polyester"
+    },
+    {
+      "water": 403.84843796638756,
+      "energy": 30.625229701644535,
+      "type": "polyester"
+    },
+    {
+      "water": 540.0155517637501,
+      "energy": 15.683440906240182,
+      "type": "cotton"
+    },
+    {
+      "water": 647.1177973058478,
+      "energy": 5.502826460540314,
+      "type": "polyester"
+    },
+    {
+      "water": 1660.0829640166633,
+      "energy": 40.251182420285566,
+      "type": "wool"
+    },
+    {
+      "water": 436.63125492124874,
+      "energy": 30.096542871406914,
+      "type": "polyester"
+    },
+    {
+      "water": 423.4062086515006,
+      "energy": 20.567010359559397,
+      "type": "bamboo"
+    },
+    {
+      "water": 1031.2841041916136,
+      "energy": 2.3669468894959578,
+      "type": "cotton"
+    },
+    {
+      "water": 1274.191575965413,
+      "energy": 88.40464895284768,
+      "type": "wool"
+    },
+    {
+      "water": 746.2298682914897,
+      "energy": 6.637013632705966,
+      "type": "cotton"
+    },
+    {
+      "water": 1255.928117538514,
+      "energy": 26.238755566218632,
+      "type": "wool"
+    },
+    {
+      "water": 390.45195550793187,
+      "energy": 22.84741820926487,
+      "type": "bamboo"
+    },
+    {
+      "water": 1097.7741920643837,
+      "energy": 45.86039076799507,
+      "type": "cotton"
+    },
+    {
+      "water": 1037.4340372057645,
+      "energy": 6.585820952955737,
+      "type": "hemp"
+    },
+    {
+      "water": 274.09080507743323,
+      "energy": 38.566479743152094,
+      "type": "wool"
+    },
+    {
+      "water": 466.10288234965776,
+      "energy": 31.742176686072145,
+      "type": "hemp"
+    },
+    {
+      "water": 144.02807075425514,
+      "energy": 19.94584990314495,
+      "type": "cotton"
+    },
+    {
+      "water": 591.2190033756219,
+      "energy": 35.896782419515,
+      "type": "hemp"
+    },
+    {
+      "water": 1177.1200895473628,
+      "energy": 32.984420720150254,
+      "type": "hemp"
+    },
+    {
+      "water": 484.1916918156818,
+      "energy": 102.37153673895548,
+      "type": "cotton"
+    },
+    {
+      "water": 323.3268927743907,
+      "energy": 25.778869551117026,
+      "type": "bamboo"
+    },
+    {
+      "water": 282.51965540751155,
+      "energy": 11.743640011112353,
+      "type": "hemp"
+    },
+    {
+      "water": 538.5418750097073,
+      "energy": 37.074780477061026,
+      "type": "hemp"
+    },
+    {
+      "water": 989.8860565360956,
+      "energy": 27.18027312839832,
+      "type": "bamboo"
+    },
+    {
+      "water": 1319.662184965047,
+      "energy": 27.484908698945993,
+      "type": "hemp"
+    },
+    {
+      "water": 133.9791629601937,
+      "energy": 10.867138715280657,
+      "type": "hemp"
+    },
+    {
+      "water": 1342.535011026296,
+      "energy": 46.35437858770617,
+      "type": "hemp"
+    },
+    {
+      "water": 697.2995701597843,
+      "energy": 20.349216870667824,
+      "type": "polyester"
+    },
+    {
+      "water": 1145.9050408509004,
+      "energy": 39.66333037534279,
+      "type": "bamboo"
+    },
+    {
+      "water": 810.2254776052896,
+      "energy": 96.27325228964868,
+      "type": "hemp"
+    },
+    {
+      "water": 744.8059582039405,
+      "energy": 28.720985402526242,
+      "type": "bamboo"
+    },
+    {
+      "water": 571.9682751113284,
+      "energy": 46.59345348320767,
+      "type": "wool"
+    },
+    {
+      "water": 780.1742894096735,
+      "energy": 25.98271048025457,
+      "type": "wool"
+    },
+    {
+      "water": 577.3575026391939,
+      "energy": 18.740193887983928,
+      "type": "hemp"
+    },
+    {
+      "water": 606.1760401173536,
+      "energy": 78.40150390331952,
+      "type": "bamboo"
+    },
+    {
+      "water": 1017.7292703315995,
+      "energy": 4.8664458130835175,
+      "type": "bamboo"
+    },
+    {
+      "water": 373.36402831777735,
+      "energy": 60.03113107946541,
+      "type": "bamboo"
+    },
+    {
+      "water": 974.8856273041807,
+      "energy": 3.1133382039855166,
+      "type": "polyester"
+    },
+    {
+      "water": 1062.7425142664222,
+      "energy": 55.88970877889883,
+      "type": "wool"
+    },
+    {
+      "water": 540.6341733642653,
+      "energy": 35.38838327326128,
+      "type": "bamboo"
+    },
+    {
+      "water": 1023.5011383593613,
+      "energy": 14.984872329686986,
+      "type": "bamboo"
+    },
+    {
+      "water": 814.3648693522272,
+      "energy": 21.500577777363777,
+      "type": "polyester"
+    },
+    {
+      "water": 505.61138913244844,
+      "energy": 57.0986946267133,
+      "type": "polyester"
+    },
+    {
+      "water": 914.2234709023957,
+      "energy": 103.3531359887512,
+      "type": "bamboo"
+    },
+    {
+      "water": 1280.3688449595138,
+      "energy": 5.825347884688878,
+      "type": "cotton"
+    },
+    {
+      "water": 1135.4455641906502,
+      "energy": 13.586092478188347,
+      "type": "bamboo"
+    },
+    {
+      "water": 231.39924316520788,
+      "energy": 8.488954775234065,
+      "type": "bamboo"
+    },
+    {
+      "water": 969.1229236503701,
+      "energy": 30.119069613454982,
+      "type": "polyester"
+    },
+    {
+      "water": 1207.1054285739033,
+      "energy": 66.4044816229461,
+      "type": "polyester"
+    },
+    {
+      "water": 450.11147688239254,
+      "energy": 7.946308392925501,
+      "type": "bamboo"
+    },
+    {
+      "water": 1207.1282685253555,
+      "energy": 32.19661703001129,
+      "type": "bamboo"
+    },
+    {
+      "water": 353.34595027081525,
+      "energy": 51.04829972213788,
+      "type": "bamboo"
+    },
+    {
+      "water": 573.7143839881816,
+      "energy": 23.01666788038096,
+      "type": "polyester"
+    },
+    {
+      "water": 395.3303324029232,
+      "energy": 34.86468568997241,
+      "type": "bamboo"
+    },
+    {
+      "water": 412.98041078870074,
+      "energy": 80.33024112599122,
+      "type": "bamboo"
+    },
+    {
+      "water": 844.4101010186947,
+      "energy": 12.306035425243454,
+      "type": "hemp"
+    },
+    {
+      "water": 267.3669123849192,
+      "energy": 5.139521933068707,
+      "type": "cotton"
+    },
+    {
+      "water": 502.2197946715362,
+      "energy": 34.8864698216621,
+      "type": "wool"
+    },
+    {
+      "water": 714.7103234121425,
+      "energy": 35.59072690655337,
+      "type": "cotton"
+    },
+    {
+      "water": 398.9540138679005,
+      "energy": 20.042452719489084,
+      "type": "hemp"
+    },
+    {
+      "water": 1425.4865010191284,
+      "energy": 19.691157241197605,
+      "type": "wool"
+    },
+    {
+      "water": 527.0044754138122,
+      "energy": 28.23392858127237,
+      "type": "bamboo"
+    },
+    {
+      "water": 1646.642981963607,
+      "energy": 12.093917464639066,
+      "type": "hemp"
+    },
+    {
+      "water": 264.7927812817297,
+      "energy": 13.044157205352143,
+      "type": "bamboo"
+    },
+    {
+      "water": 930.345129029345,
+      "energy": 56.8381569740052,
+      "type": "polyester"
+    },
+    {
+      "water": 766.452301249552,
+      "energy": 11.309888568955898,
+      "type": "hemp"
+    },
+    {
+      "water": 453.1188595763233,
+      "energy": 4.685965777024929,
+      "type": "polyester"
+    },
+    {
+      "water": 694.0956765054982,
+      "energy": 18.252812271020648,
+      "type": "hemp"
+    },
+    {
+      "water": 1010.4885815244638,
+      "energy": 23.85894740868788,
+      "type": "hemp"
+    },
+    {
+      "water": 840.2062185900422,
+      "energy": 36.81061053857463,
+      "type": "polyester"
+    },
+    {
+      "water": 513.1698398025364,
+      "energy": 15.878685647054349,
+      "type": "wool"
+    },
+    {
+      "water": 803.3813429427097,
+      "energy": 76.6777157453359,
+      "type": "cotton"
+    },
+    {
+      "water": 403.18561644586,
+      "energy": 34.69549448243942,
+      "type": "bamboo"
+    },
+    {
+      "water": 1051.652852913462,
+      "energy": 16.10341072885755,
+      "type": "hemp"
+    },
+    {
+      "water": 1355.1941985908625,
+      "energy": 40.8108612924097,
+      "type": "bamboo"
+    },
+    {
+      "water": 1012.8491663465182,
+      "energy": 75.77893479528717,
+      "type": "polyester"
+    },
+    {
+      "water": 395.87438648435915,
+      "energy": 47.79571673805957,
+      "type": "bamboo"
+    },
+    {
+      "water": 389.28180582921163,
+      "energy": 8.01904946450831,
+      "type": "polyester"
+    },
+    {
+      "water": 2216.287299872646,
+      "energy": 23.760407767260578,
+      "type": "bamboo"
+    },
+    {
+      "water": 1523.2008479001922,
+      "energy": 42.230785761678256,
+      "type": "cotton"
+    },
+    {
+      "water": 962.2172701046384,
+      "energy": 46.422980651300506,
+      "type": "cotton"
+    },
+    {
+      "water": 1521.9310076034633,
+      "energy": 28.10284353233997,
+      "type": "cotton"
+    },
+    {
+      "water": 732.914547721804,
+      "energy": 27.006346105480446,
+      "type": "cotton"
+    },
+    {
+      "water": 1110.960078471389,
+      "energy": 109.7148554405511,
+      "type": "cotton"
+    },
+    {
+      "water": 1214.6876410617558,
+      "energy": 48.287908028615696,
+      "type": "cotton"
+    },
+    {
+      "water": 577.1846028596714,
+      "energy": 44.31038436158457,
+      "type": "polyester"
+    },
+    {
+      "water": 830.3267528468396,
+      "energy": 18.806579561487226,
+      "type": "hemp"
+    },
+    {
+      "water": 1235.3027067085306,
+      "energy": 11.926576224502073,
+      "type": "bamboo"
+    },
+    {
+      "water": 278.229464445933,
+      "energy": 36.238906441862234,
+      "type": "cotton"
+    },
+    {
+      "water": 458.59790891082656,
+      "energy": 47.65324454253255,
+      "type": "polyester"
+    },
+    {
+      "water": 1032.1971473202523,
+      "energy": 27.380969069379034,
+      "type": "polyester"
+    },
+    {
+      "water": 658.9287538366355,
+      "energy": 44.346393735849475,
+      "type": "polyester"
+    },
+    {
+      "water": 663.68055125606,
+      "energy": 49.2392322194329,
+      "type": "hemp"
+    },
+    {
+      "water": 540.399407265688,
+      "energy": 47.57665956643941,
+      "type": "bamboo"
+    },
+    {
+      "water": 1290.85818630327,
+      "energy": 7.307685364884672,
+      "type": "hemp"
+    },
+    {
+      "water": 398.5281656593192,
+      "energy": 26.185493493278962,
+      "type": "wool"
+    },
+    {
+      "water": 519.2150852849278,
+      "energy": 46.803493632584114,
+      "type": "polyester"
+    },
+    {
+      "water": 286.1590328254057,
+      "energy": 36.36682486030844,
+      "type": "wool"
+    },
+    {
+      "water": 566.2141786541091,
+      "energy": 53.45785091764033,
+      "type": "cotton"
+    },
+    {
+      "water": 610.9601184408939,
+      "energy": 35.773816676056555,
+      "type": "cotton"
+    },
+    {
+      "water": 182.9016762160436,
+      "energy": 3.0636848884065118,
+      "type": "hemp"
+    },
+    {
+      "water": 375.9850317563732,
+      "energy": 63.39999146059473,
+      "type": "bamboo"
+    },
+    {
+      "water": 778.0383260560325,
+      "energy": 21.874492665916264,
+      "type": "wool"
+    },
+    {
+      "water": 891.3723322416129,
+      "energy": 15.25934205635172,
+      "type": "bamboo"
+    },
+    {
+      "water": 1844.1154007396517,
+      "energy": 72.31748288314809,
+      "type": "hemp"
+    },
+    {
+      "water": 893.8522202782343,
+      "energy": 46.7433983138577,
+      "type": "cotton"
+    },
+    {
+      "water": 572.7340766930497,
+      "energy": 67.89512912536453,
+      "type": "bamboo"
+    },
+    {
+      "water": 601.3001400325235,
+      "energy": 31.928428508468755,
+      "type": "bamboo"
+    },
+    {
+      "water": 701.192167302854,
+      "energy": 22.21096428237257,
+      "type": "cotton"
+    },
+    {
+      "water": 479.762428663793,
+      "energy": 33.45693078562551,
+      "type": "wool"
+    },
+    {
+      "water": 736.2706754056012,
+      "energy": 11.873952486034698,
+      "type": "cotton"
+    },
+    {
+      "water": 426.4322244235147,
+      "energy": 7.578081560591346,
+      "type": "bamboo"
+    },
+    {
+      "water": 663.0870728754537,
+      "energy": 15.421352907368698,
+      "type": "wool"
+    },
+    {
+      "water": 668.652963629478,
+      "energy": 88.4190724474393,
+      "type": "wool"
+    },
+    {
+      "water": 650.1354617468381,
+      "energy": 22.390860666876684,
+      "type": "cotton"
+    },
+    {
+      "water": 614.3368241918682,
+      "energy": 5.681937798231412,
+      "type": "bamboo"
+    },
+    {
+      "water": 856.1147168816794,
+      "energy": 23.205982227487848,
+      "type": "hemp"
+    },
+    {
+      "water": 1080.331641085142,
+      "energy": 22.140478262079185,
+      "type": "bamboo"
+    },
+    {
+      "water": 472.3366118789391,
+      "energy": 56.15569858610703,
+      "type": "polyester"
+    },
+    {
+      "water": 957.1987225559587,
+      "energy": 77.81840044155172,
+      "type": "hemp"
+    },
+    {
+      "water": 711.6459922906405,
+      "energy": 24.944684149524427,
+      "type": "wool"
+    },
+    {
+      "water": 615.6658357664667,
+      "energy": 36.463953671930504,
+      "type": "hemp"
+    },
+    {
+      "water": 520.0292962879117,
+      "energy": 41.94561748812418,
+      "type": "wool"
+    },
+    {
+      "water": 1613.427401401844,
+      "energy": 31.29052804999921,
+      "type": "wool"
+    },
+    {
+      "water": 1636.964681328903,
+      "energy": 29.11785596032541,
+      "type": "hemp"
+    },
+    {
+      "water": 486.9254178595196,
+      "energy": 15.44703414983414,
+      "type": "wool"
+    },
+    {
+      "water": 455.2861238487294,
+      "energy": 3.7620295539472632,
+      "type": "wool"
+    },
+    {
+      "water": 692.8378300028568,
+      "energy": 11.523180400527858,
+      "type": "polyester"
+    },
+    {
+      "water": 876.4594852302024,
+      "energy": 28.102548195749176,
+      "type": "bamboo"
+    },
+    {
+      "water": 376.22913438963974,
+      "energy": 8.573797090685614,
+      "type": "bamboo"
+    },
+    {
+      "water": 389.9611019697541,
+      "energy": 38.00204855317023,
+      "type": "polyester"
+    },
+    {
+      "water": 40.96989486330623,
+      "energy": 27.685385692289987,
+      "type": "hemp"
+    },
+    {
+      "water": 768.2820002640107,
+      "energy": 16.62945223780965,
+      "type": "cotton"
+    },
+    {
+      "water": 249.10210110527504,
+      "energy": 26.12971005345255,
+      "type": "cotton"
+    },
+    {
+      "water": 367.23003695339276,
+      "energy": 7.700437085743206,
+      "type": "cotton"
+    },
+    {
+      "water": 1039.7789582924481,
+      "energy": 53.7069583842511,
+      "type": "polyester"
+    },
+    {
+      "water": 1181.801925983638,
+      "energy": 61.92806102377268,
+      "type": "polyester"
+    },
+    {
+      "water": 1564.606890334163,
+      "energy": 11.316500281565556,
+      "type": "wool"
+    },
+    {
+      "water": 1998.1644507661185,
+      "energy": 12.53536517935311,
+      "type": "cotton"
+    },
+    {
+      "water": 2194.133225801864,
+      "energy": 11.664784638791847,
+      "type": "hemp"
+    },
+    {
+      "water": 447.103202677248,
+      "energy": 39.135701884479815,
+      "type": "hemp"
+    },
+    {
+      "water": 474.402163861403,
+      "energy": 41.85023533840407,
+      "type": "cotton"
+    },
+    {
+      "water": 809.4775031827322,
+      "energy": 61.51193584139834,
+      "type": "cotton"
+    },
+    {
+      "water": 228.73049937144594,
+      "energy": 60.69493840658431,
+      "type": "cotton"
+    },
+    {
+      "water": 596.8241666005588,
+      "energy": 7.185186960352857,
+      "type": "polyester"
+    },
+    {
+      "water": 639.020608187996,
+      "energy": 39.97324633236797,
+      "type": "polyester"
+    },
+    {
+      "water": 774.5068419237303,
+      "energy": 59.076076070142946,
+      "type": "polyester"
+    },
+    {
+      "water": 897.5062784131998,
+      "energy": 22.887138087266326,
+      "type": "bamboo"
+    },
+    {
+      "water": 495.5117711472733,
+      "energy": 27.00135070213433,
+      "type": "hemp"
+    },
+    {
+      "water": 253.72679547548805,
+      "energy": 23.950696526775765,
+      "type": "hemp"
+    },
+    {
+      "water": 319.5095383302333,
+      "energy": 27.047389700489745,
+      "type": "wool"
+    },
+    {
+      "water": 129.87068128384527,
+      "energy": 49.11572983894698,
+      "type": "polyester"
+    },
+    {
+      "water": 410.6658323040863,
+      "energy": 84.13947177334774,
+      "type": "bamboo"
+    },
+    {
+      "water": 224.90819571574986,
+      "energy": 68.67117499262085,
+      "type": "bamboo"
+    },
+    {
+      "water": 506.8924084954618,
+      "energy": 21.411125173860125,
+      "type": "hemp"
+    },
+    {
+      "water": 871.866285159768,
+      "energy": 39.59462973384375,
+      "type": "polyester"
+    },
+    {
+      "water": 304.8184002219005,
+      "energy": 16.492709435531395,
+      "type": "wool"
+    },
+    {
+      "water": 674.1356656938049,
+      "energy": 16.64431700102808,
+      "type": "polyester"
+    },
+    {
+      "water": 469.85962057773514,
+      "energy": 24.907608764378676,
+      "type": "cotton"
+    },
+    {
+      "water": 715.4579741357716,
+      "energy": 14.897442793396808,
+      "type": "polyester"
+    },
+    {
+      "water": 813.8632574461556,
+      "energy": 16.902204148259088,
+      "type": "cotton"
+    },
+    {
+      "water": 516.5024454155451,
+      "energy": 35.91423062686471,
+      "type": "cotton"
+    },
+    {
+      "water": 587.4687611530331,
+      "energy": 39.576324116109134,
+      "type": "wool"
+    },
+    {
+      "water": 583.1406134017227,
+      "energy": 45.889307285296525,
+      "type": "hemp"
+    },
+    {
+      "water": 417.3848760169392,
+      "energy": 37.32728409117824,
+      "type": "polyester"
+    },
+    {
+      "water": 473.8220210013103,
+      "energy": 11.026347783517204,
+      "type": "cotton"
+    },
+    {
+      "water": 771.2392507234663,
+      "energy": 14.234759390054313,
+      "type": "polyester"
+    },
+    {
+      "water": 1411.929558438579,
+      "energy": 33.4644477942353,
+      "type": "hemp"
+    },
+    {
+      "water": 1420.3437297878165,
+      "energy": 72.89257999697402,
+      "type": "hemp"
+    },
+    {
+      "water": 230.16492274881557,
+      "energy": 109.61993411459345,
+      "type": "bamboo"
+    },
+    {
+      "water": 1504.8709155563502,
+      "energy": 43.899826323610206,
+      "type": "hemp"
+    },
+    {
+      "water": 375.3584449236977,
+      "energy": 54.25930694245961,
+      "type": "wool"
+    },
+    {
+      "water": 813.484907273245,
+      "energy": 9.807201366484048,
+      "type": "cotton"
+    },
+    {
+      "water": 770.9957287454812,
+      "energy": 49.154594160719846,
+      "type": "bamboo"
+    },
+    {
+      "water": 252.7804238542552,
+      "energy": 121.57547757340242,
+      "type": "wool"
+    },
+    {
+      "water": 526.1331341884427,
+      "energy": 14.188523981946503,
+      "type": "polyester"
+    },
+    {
+      "water": 1223.5455247570674,
+      "energy": 17.376164808742843,
+      "type": "cotton"
+    },
+    {
+      "water": 104.8254092168612,
+      "energy": 54.736351377919114,
+      "type": "hemp"
+    },
+    {
+      "water": 2310.783278982463,
+      "energy": 33.14333691689014,
+      "type": "cotton"
+    },
+    {
+      "water": 125.11055692665856,
+      "energy": 3.5278446481977475,
+      "type": "polyester"
+    },
+    {
+      "water": 664.6941876892633,
+      "energy": 17.44571426942777,
+      "type": "bamboo"
+    },
+    {
+      "water": 205.79700293492425,
+      "energy": 71.13797977731171,
+      "type": "bamboo"
+    },
+    {
+      "water": 761.4356192115764,
+      "energy": 21.975432167150004,
+      "type": "bamboo"
+    },
+    {
+      "water": 1286.4802241677114,
+      "energy": 25.953686211179864,
+      "type": "hemp"
+    },
+    {
+      "water": 1178.8947422195458,
+      "energy": 61.097952452949926,
+      "type": "wool"
+    },
+    {
+      "water": 1012.7651724263909,
+      "energy": 35.39817690552569,
+      "type": "wool"
+    },
+    {
+      "water": 539.7769570269878,
+      "energy": 22.940900968511517,
+      "type": "cotton"
+    },
+    {
+      "water": 274.4315376223165,
+      "energy": 20.887300303235413,
+      "type": "hemp"
+    },
+    {
+      "water": 1163.3853492308006,
+      "energy": 143.4638288256777,
+      "type": "bamboo"
+    },
+    {
+      "water": 2021.245577528005,
+      "energy": 74.98277447306732,
+      "type": "bamboo"
+    },
+    {
+      "water": 591.9017418800319,
+      "energy": 37.31744005375246,
+      "type": "polyester"
+    },
+    {
+      "water": 585.8677070865155,
+      "energy": 52.03207038373488,
+      "type": "polyester"
+    },
+    {
+      "water": 443.74479887434217,
+      "energy": 31.707806018699866,
+      "type": "bamboo"
+    },
+    {
+      "water": 1135.842102208367,
+      "energy": 44.662874497874334,
+      "type": "bamboo"
+    },
+    {
+      "water": 992.8093901813198,
+      "energy": 21.849204792482755,
+      "type": "hemp"
+    },
+    {
+      "water": 586.0307262075961,
+      "energy": 16.62004195827846,
+      "type": "wool"
+    },
+    {
+      "water": 1305.824402977828,
+      "energy": 34.45346230646791,
+      "type": "polyester"
+    },
+    {
+      "water": 1081.936678157845,
+      "energy": 27.169471190309217,
+      "type": "wool"
+    },
+    {
+      "water": 671.8339530904309,
+      "energy": 40.859274784199606,
+      "type": "hemp"
+    },
+    {
+      "water": 903.2309973234068,
+      "energy": 54.16476992810053,
+      "type": "bamboo"
+    },
+    {
+      "water": 284.9524841967079,
+      "energy": 37.1061648071852,
+      "type": "wool"
+    },
+    {
+      "water": 886.6477423372753,
+      "energy": 12.110451611105328,
+      "type": "bamboo"
+    },
+    {
+      "water": 397.3734216227497,
+      "energy": 24.860381283366387,
+      "type": "bamboo"
+    },
+    {
+      "water": 423.55221931339827,
+      "energy": 21.680935027399837,
+      "type": "cotton"
+    },
+    {
+      "water": 611.8682884057802,
+      "energy": 58.86907295145786,
+      "type": "wool"
+    },
+    {
+      "water": 1844.5918775402663,
+      "energy": 61.53809301634198,
+      "type": "wool"
+    },
+    {
+      "water": 737.9552944327107,
+      "energy": 16.347379132073918,
+      "type": "bamboo"
+    },
+    {
+      "water": 424.43645566676673,
+      "energy": 10.76679261618413,
+      "type": "hemp"
+    },
+    {
+      "water": 711.2440420667093,
+      "energy": 118.3464882486302,
+      "type": "cotton"
+    },
+    {
+      "water": 820.9346007729392,
+      "energy": 37.79207056043873,
+      "type": "bamboo"
+    },
+    {
+      "water": 1085.4581198541612,
+      "energy": 7.0209373662481,
+      "type": "polyester"
+    },
+    {
+      "water": 577.9847197751392,
+      "energy": 17.138576856755368,
+      "type": "polyester"
+    },
+    {
+      "water": 350.7454056752777,
+      "energy": 52.97633602241714,
+      "type": "cotton"
+    },
+    {
+      "water": 2118.4613637481093,
+      "energy": 118.52145395444377,
+      "type": "hemp"
+    },
+    {
+      "water": 906.3827569575425,
+      "energy": 114.17283178258933,
+      "type": "bamboo"
+    },
+    {
+      "water": 319.6581412453776,
+      "energy": 34.99575795028938,
+      "type": "wool"
+    },
+    {
+      "water": 679.4058377385813,
+      "energy": 32.58505040824003,
+      "type": "cotton"
+    },
+    {
+      "water": 423.69055511076215,
+      "energy": 11.063132077391957,
+      "type": "hemp"
+    },
+    {
+      "water": 1175.906502823631,
+      "energy": 29.36593762560951,
+      "type": "wool"
+    },
+    {
+      "water": 964.8508705638899,
+      "energy": 14.769362156456655,
+      "type": "polyester"
+    },
+    {
+      "water": 481.30162830890526,
+      "energy": 19.69070847999043,
+      "type": "polyester"
+    },
+    {
+      "water": 1229.6090986792424,
+      "energy": 59.254994070738924,
+      "type": "wool"
+    },
+    {
+      "water": 521.9519291394893,
+      "energy": 21.762581902218304,
+      "type": "cotton"
+    },
+    {
+      "water": 541.0642240139377,
+      "energy": 20.61594749707823,
+      "type": "polyester"
+    },
+    {
+      "water": 426.3828514966296,
+      "energy": 31.252441785232538,
+      "type": "bamboo"
+    },
+    {
+      "water": 342.57742386587614,
+      "energy": 123.73267955997473,
+      "type": "wool"
+    },
+    {
+      "water": 1647.697562631887,
+      "energy": 9.510412198912919,
+      "type": "wool"
+    },
+    {
+      "water": 966.7181988813824,
+      "energy": 32.37968554644912,
+      "type": "polyester"
+    },
+    {
+      "water": 160.12857608270983,
+      "energy": 92.23179334368014,
+      "type": "cotton"
+    },
+    {
+      "water": 390.8738658748307,
+      "energy": 33.579514488111876,
+      "type": "bamboo"
+    },
+    {
+      "water": 264.6130130215634,
+      "energy": 62.665028669061684,
+      "type": "cotton"
+    },
+    {
+      "water": 663.7662313073414,
+      "energy": 8.600277009198768,
+      "type": "hemp"
+    },
+    {
+      "water": 429.4240285012829,
+      "energy": 22.335288861905916,
+      "type": "hemp"
+    },
+    {
+      "water": 1546.5178960945723,
+      "energy": 16.233446784542707,
+      "type": "polyester"
+    },
+    {
+      "water": 455.2962155239541,
+      "energy": 24.979414368995336,
+      "type": "polyester"
+    },
+    {
+      "water": 2072.0517422674084,
+      "energy": 33.851809883076626,
+      "type": "polyester"
+    },
+    {
+      "water": 531.7569532400624,
+      "energy": 27.447548812377722,
+      "type": "hemp"
+    },
+    {
+      "water": 2158.20700369762,
+      "energy": 58.87932002293283,
+      "type": "cotton"
+    },
+    {
+      "water": 657.9181678527835,
+      "energy": 2.5904076120133523,
+      "type": "cotton"
+    },
+    {
+      "water": 499.48118236914945,
+      "energy": 15.745406280925698,
+      "type": "polyester"
+    },
+    {
+      "water": 1272.7922631361716,
+      "energy": 41.04625550553567,
+      "type": "bamboo"
+    },
+    {
+      "water": 918.260366957034,
+      "energy": 3.7666779086074453,
+      "type": "cotton"
+    },
+    {
+      "water": 233.93765613588258,
+      "energy": 42.925617724750225,
+      "type": "hemp"
+    },
+    {
+      "water": 589.2575084986507,
+      "energy": 15.491603104686385,
+      "type": "wool"
+    },
+    {
+      "water": 569.2107473394894,
+      "energy": 30.231916501803898,
+      "type": "wool"
+    },
+    {
+      "water": 505.69514498408665,
+      "energy": 60.7176761876276,
+      "type": "wool"
+    },
+    {
+      "water": 587.5475006888759,
+      "energy": 61.641357341551114,
+      "type": "bamboo"
+    },
+    {
+      "water": 489.1139299802552,
+      "energy": 43.843894081222814,
+      "type": "polyester"
+    },
+    {
+      "water": 654.9024087779844,
+      "energy": 9.687452690431652,
+      "type": "hemp"
+    },
+    {
+      "water": 284.1530146237424,
+      "energy": 40.40480798136645,
+      "type": "bamboo"
+    },
+    {
+      "water": 248.7064780039258,
+      "energy": 56.42590994874431,
+      "type": "hemp"
+    },
+    {
+      "water": 1022.0067353385124,
+      "energy": 38.436059205808775,
+      "type": "hemp"
+    },
+    {
+      "water": 1415.6525447449335,
+      "energy": 91.16346076995616,
+      "type": "polyester"
+    },
+    {
+      "water": 986.0193753696007,
+      "energy": 29.32455203766397,
+      "type": "wool"
+    },
+    {
+      "water": 599.0878741159089,
+      "energy": 69.81468118738316,
+      "type": "polyester"
+    },
+    {
+      "water": 508.18313919252904,
+      "energy": 75.85530757450327,
+      "type": "bamboo"
+    },
+    {
+      "water": 391.3748325678444,
+      "energy": 45.20611144783737,
+      "type": "bamboo"
+    },
+    {
+      "water": 407.637870894845,
+      "energy": 40.55242307331013,
+      "type": "bamboo"
+    },
+    {
+      "water": 532.1166115295987,
+      "energy": 36.839248479035696,
+      "type": "polyester"
+    },
+    {
+      "water": 1046.9835878123336,
+      "energy": 78.20701132340837,
+      "type": "hemp"
+    },
+    {
+      "water": 471.04103821534005,
+      "energy": 72.829156799012,
+      "type": "hemp"
+    },
+    {
+      "water": 1097.9083658139054,
+      "energy": 10.848297411350604,
+      "type": "cotton"
+    },
+    {
+      "water": 240.0956438888945,
+      "energy": 43.58206985082544,
+      "type": "bamboo"
+    },
+    {
+      "water": 859.4223097187098,
+      "energy": 16.682371183508614,
+      "type": "hemp"
+    },
+    {
+      "water": 828.5605487938832,
+      "energy": 17.254955689364298,
+      "type": "cotton"
+    },
+    {
+      "water": 532.8935047032165,
+      "energy": 25.88548938411017,
+      "type": "hemp"
+    },
+    {
+      "water": 361.99164261743545,
+      "energy": 9.050205865584623,
+      "type": "bamboo"
+    },
+    {
+      "water": 946.164968043279,
+      "energy": 12.341550256839158,
+      "type": "wool"
+    },
+    {
+      "water": 656.5606024111651,
+      "energy": 80.96523789002782,
+      "type": "bamboo"
+    },
+    {
+      "water": 2717.514192566687,
+      "energy": 20.023241456664984,
+      "type": "polyester"
+    },
+    {
+      "water": 1307.4521677266214,
+      "energy": 59.1076166124228,
+      "type": "hemp"
+    },
+    {
+      "water": 1313.3393938653446,
+      "energy": 37.02072645539439,
+      "type": "hemp"
+    },
+    {
+      "water": 74.6792934479413,
+      "energy": 39.18282057326423,
+      "type": "polyester"
+    },
+    {
+      "water": 409.0724186011509,
+      "energy": 46.12842212849279,
+      "type": "polyester"
+    },
+    {
+      "water": 285.11662413460584,
+      "energy": 12.918126634638513,
+      "type": "wool"
+    },
+    {
+      "water": 118.35616412523498,
+      "energy": 47.54861838608988,
+      "type": "hemp"
+    },
+    {
+      "water": 729.2802721547638,
+      "energy": 11.090980703288963,
+      "type": "hemp"
+    },
+    {
+      "water": 1017.5073704581961,
+      "energy": 16.54674671429354,
+      "type": "wool"
+    },
+    {
+      "water": 359.46159190662587,
+      "energy": 49.46437166422729,
+      "type": "cotton"
+    },
+    {
+      "water": 154.00691982656647,
+      "energy": 13.148024497004249,
+      "type": "wool"
+    },
+    {
+      "water": 321.77076853539023,
+      "energy": 3.3001969141771363,
+      "type": "bamboo"
+    },
+    {
+      "water": 579.4110066223002,
+      "energy": 38.880738003103524,
+      "type": "hemp"
+    },
+    {
+      "water": 645.4182188742672,
+      "energy": 7.4086742716695815,
+      "type": "polyester"
+    },
+    {
+      "water": 563.6242162121005,
+      "energy": 42.62214258797277,
+      "type": "bamboo"
+    },
+    {
+      "water": 716.2073248515654,
+      "energy": 20.574973894058502,
+      "type": "hemp"
+    },
+    {
+      "water": 740.2957805437707,
+      "energy": 44.892227981775974,
+      "type": "wool"
+    },
+    {
+      "water": 962.5110608189414,
+      "energy": 34.79927631306475,
+      "type": "bamboo"
+    },
+    {
+      "water": 294.0919059438049,
+      "energy": 44.84058178614861,
+      "type": "hemp"
+    },
+    {
+      "water": 538.8554980395585,
+      "energy": 46.60183817775065,
+      "type": "cotton"
+    },
+    {
+      "water": 822.937936345922,
+      "energy": 11.030808983835554,
+      "type": "cotton"
+    },
+    {
+      "water": 756.650854414585,
+      "energy": 24.678024983967273,
+      "type": "polyester"
+    },
+    {
+      "water": 1798.741068715998,
+      "energy": 41.65004571465678,
+      "type": "hemp"
+    },
+    {
+      "water": 317.06549209967466,
+      "energy": 70.64677717764808,
+      "type": "cotton"
+    },
+    {
+      "water": 793.7619685486251,
+      "energy": 41.03901863491471,
+      "type": "wool"
+    },
+    {
+      "water": 388.1789426765599,
+      "energy": 66.63247989263905,
+      "type": "hemp"
+    },
+    {
+      "water": 360.4645121625921,
+      "energy": 36.58987664226312,
+      "type": "wool"
+    },
+    {
+      "water": 1068.897558650698,
+      "energy": 57.90040678256124,
+      "type": "wool"
+    },
+    {
+      "water": 577.6638661565266,
+      "energy": 33.15981060738926,
+      "type": "cotton"
+    },
+    {
+      "water": 749.0358942233869,
+      "energy": 61.428366387034856,
+      "type": "hemp"
+    },
+    {
+      "water": 482.1125265797234,
+      "energy": 24.431780605000025,
+      "type": "bamboo"
+    },
+    {
+      "water": 538.958279704538,
+      "energy": 96.79759731569705,
+      "type": "cotton"
+    },
+    {
+      "water": 192.51853580945513,
+      "energy": 39.58118498123332,
+      "type": "cotton"
+    },
+    {
+      "water": 624.7966338931877,
+      "energy": 6.839454781817996,
+      "type": "hemp"
+    },
+    {
+      "water": 287.64352111997954,
+      "energy": 36.098383987025905,
+      "type": "hemp"
+    },
+    {
+      "water": 512.7961730936454,
+      "energy": 41.133256344408224,
+      "type": "wool"
+    },
+    {
+      "water": 1049.364460595433,
+      "energy": 55.63095361605721,
+      "type": "hemp"
+    },
+    {
+      "water": 146.1696824264723,
+      "energy": 89.40441187598725,
+      "type": "wool"
+    },
+    {
+      "water": 3121.3068882855973,
+      "energy": 23.001283555848616,
+      "type": "cotton"
+    },
+    {
+      "water": 420.18701165420794,
+      "energy": 111.17226170954842,
+      "type": "polyester"
+    },
+    {
+      "water": 521.9422446732625,
+      "energy": 26.325216423735615,
+      "type": "bamboo"
+    },
+    {
+      "water": 654.9294367436133,
+      "energy": 13.862232372251567,
+      "type": "cotton"
+    },
+    {
+      "water": 410.84344220622836,
+      "energy": 21.7496691810559,
+      "type": "hemp"
+    },
+    {
+      "water": 551.4406264932774,
+      "energy": 52.585485032798246,
+      "type": "bamboo"
+    },
+    {
+      "water": 1088.6801459622698,
+      "energy": 12.693737641959636,
+      "type": "polyester"
+    },
+    {
+      "water": 861.7911453682807,
+      "energy": 20.008246641973827,
+      "type": "polyester"
+    },
+    {
+      "water": 591.5102515976221,
+      "energy": 41.90236007422417,
+      "type": "wool"
+    },
+    {
+      "water": 639.2835433505176,
+      "energy": 82.546439446026,
+      "type": "bamboo"
+    },
+    {
+      "water": 754.4810900853583,
+      "energy": 59.08701731578981,
+      "type": "wool"
+    },
+    {
+      "water": 884.2577135360165,
+      "energy": 31.022593229355113,
+      "type": "cotton"
+    },
+    {
+      "water": 1074.649889156262,
+      "energy": 52.417044646705705,
+      "type": "bamboo"
+    },
+    {
+      "water": 831.5348575459653,
+      "energy": 32.96744913223253,
+      "type": "cotton"
+    },
+    {
+      "water": 533.4080226253445,
+      "energy": 11.282260484226008,
+      "type": "wool"
+    },
+    {
+      "water": 597.7511093448837,
+      "energy": 80.56769706962706,
+      "type": "bamboo"
+    },
+    {
+      "water": 1302.4073549935658,
+      "energy": 97.3116421871893,
+      "type": "wool"
+    },
+    {
+      "water": 2115.4350680703874,
+      "energy": 30.673732377085674,
+      "type": "bamboo"
+    },
+    {
+      "water": 587.760607607353,
+      "energy": 18.095683070193815,
+      "type": "wool"
+    },
+    {
+      "water": 488.27805035781347,
+      "energy": 11.537817774902383,
+      "type": "polyester"
+    },
+    {
+      "water": 374.47134239134044,
+      "energy": 46.92181048959031,
+      "type": "wool"
+    },
+    {
+      "water": 987.1323544667438,
+      "energy": 51.063594013193466,
+      "type": "polyester"
+    },
+    {
+      "water": 219.62744673519683,
+      "energy": 16.165755666469448,
+      "type": "wool"
+    },
+    {
+      "water": 992.8791218705394,
+      "energy": 39.29896036715694,
+      "type": "bamboo"
+    },
+    {
+      "water": 1080.0944827263602,
+      "energy": 62.283598649655296,
+      "type": "bamboo"
+    },
+    {
+      "water": 499.70586722295025,
+      "energy": 21.15569378568076,
+      "type": "bamboo"
+    },
+    {
+      "water": 646.3526817027501,
+      "energy": 22.45443183044187,
+      "type": "hemp"
+    },
+    {
+      "water": 557.3315042873944,
+      "energy": 25.46602272749722,
+      "type": "cotton"
+    },
+    {
+      "water": 246.89773951423354,
+      "energy": 15.780475154274985,
+      "type": "bamboo"
+    },
+    {
+      "water": 951.2283944725174,
+      "energy": 28.249846831572064,
+      "type": "polyester"
+    },
+    {
+      "water": 971.5937415041204,
+      "energy": 7.5656137284799225,
+      "type": "bamboo"
+    },
+    {
+      "water": 565.8037446832836,
+      "energy": 28.50400807732949,
+      "type": "hemp"
+    },
+    {
+      "water": 1693.7036243565265,
+      "energy": 21.639414511200226,
+      "type": "polyester"
+    },
+    {
+      "water": 696.0463276011609,
+      "energy": 30.96978833047125,
+      "type": "hemp"
+    },
+    {
+      "water": 154.550554349885,
+      "energy": 42.577309459564056,
+      "type": "polyester"
+    },
+    {
+      "water": 1341.1361307384987,
+      "energy": 11.464597109420977,
+      "type": "wool"
+    },
+    {
+      "water": 1084.7683845295214,
+      "energy": 12.692231252955757,
+      "type": "cotton"
+    },
+    {
+      "water": 1247.4512051603776,
+      "energy": 17.999943489930047,
+      "type": "cotton"
+    },
+    {
+      "water": 380.1755886983671,
+      "energy": 10.308773712422376,
+      "type": "hemp"
+    },
+    {
+      "water": 727.0857989909124,
+      "energy": 46.06038836852152,
+      "type": "cotton"
+    },
+    {
+      "water": 582.955372158934,
+      "energy": 17.253078367889312,
+      "type": "hemp"
+    },
+    {
+      "water": 502.4649113535496,
+      "energy": 25.61591740906119,
+      "type": "hemp"
+    },
+    {
+      "water": 1155.8934452479355,
+      "energy": 12.50192111137341,
+      "type": "hemp"
+    },
+    {
+      "water": 647.8686272128313,
+      "energy": 22.39494383601003,
+      "type": "cotton"
+    },
+    {
+      "water": 578.3651492594811,
+      "energy": 43.81439270018091,
+      "type": "hemp"
+    },
+    {
+      "water": 533.653617162486,
+      "energy": 42.12528773586644,
+      "type": "cotton"
+    },
+    {
+      "water": 360.39293915807815,
+      "energy": 14.226250232170072,
+      "type": "hemp"
+    },
+    {
+      "water": 686.1129854483385,
+      "energy": 28.165738610340384,
+      "type": "bamboo"
+    },
+    {
+      "water": 1205.9302480885253,
+      "energy": 12.693518117283709,
+      "type": "hemp"
+    },
+    {
+      "water": 608.4352517933867,
+      "energy": 31.928853688376243,
+      "type": "polyester"
+    },
+    {
+      "water": 657.334157600493,
+      "energy": 15.331751468000746,
+      "type": "hemp"
+    },
+    {
+      "water": 616.0694240112765,
+      "energy": 103.90509043687827,
+      "type": "wool"
+    },
+    {
+      "water": 530.91101274311,
+      "energy": 46.528048370598505,
+      "type": "hemp"
+    },
+    {
+      "water": 898.6213929733595,
+      "energy": 35.09888886478066,
+      "type": "polyester"
+    },
+    {
+      "water": 280.6069190892475,
+      "energy": 21.976891157720093,
+      "type": "polyester"
+    },
+    {
+      "water": 200.00334426644403,
+      "energy": 49.71742638236442,
+      "type": "cotton"
+    },
+    {
+      "water": 1054.652388512635,
+      "energy": 26.398747517448086,
+      "type": "bamboo"
+    },
+    {
+      "water": 396.6173327495806,
+      "energy": 78.38177827986709,
+      "type": "hemp"
+    },
+    {
+      "water": 499.47245313508176,
+      "energy": 57.98599353108315,
+      "type": "cotton"
+    },
+    {
+      "water": 1898.0221500854766,
+      "energy": 19.480726648017093,
+      "type": "bamboo"
+    },
+    {
+      "water": 997.7401880986539,
+      "energy": 82.9453528183674,
+      "type": "hemp"
+    },
+    {
+      "water": 357.51559528371416,
+      "energy": 24.072787472713323,
+      "type": "wool"
+    },
+    {
+      "water": 1096.5287706390113,
+      "energy": 91.27040058244823,
+      "type": "hemp"
+    },
+    {
+      "water": 1179.577900824486,
+      "energy": 100.17714139464279,
+      "type": "polyester"
+    },
+    {
+      "water": 44.11881141641648,
+      "energy": 40.52467996247606,
+      "type": "polyester"
+    },
+    {
+      "water": 642.8548961154403,
+      "energy": 6.193128808396472,
+      "type": "wool"
+    },
+    {
+      "water": 290.37874811031793,
+      "energy": 32.38090085874187,
+      "type": "cotton"
+    },
+    {
+      "water": 706.9835690784297,
+      "energy": 12.883674035961864,
+      "type": "bamboo"
+    },
+    {
+      "water": 2119.207111144233,
+      "energy": 19.47328229038591,
+      "type": "hemp"
+    },
+    {
+      "water": 920.3752678128218,
+      "energy": 16.74305660996641,
+      "type": "polyester"
+    },
+    {
+      "water": 991.4184107860867,
+      "energy": 9.584013549318417,
+      "type": "cotton"
+    },
+    {
+      "water": 521.9415447922969,
+      "energy": 32.47043256442409,
+      "type": "wool"
+    },
+    {
+      "water": 1230.690688637531,
+      "energy": 17.569976486175072,
+      "type": "polyester"
+    },
+    {
+      "water": 363.74412066236744,
+      "energy": 22.875980698470862,
+      "type": "wool"
+    },
+    {
+      "water": 695.9772814474202,
+      "energy": 19.27141767660212,
+      "type": "hemp"
+    },
+    {
+      "water": 938.9601897741393,
+      "energy": 39.148634551795105,
+      "type": "bamboo"
+    },
+    {
+      "water": 922.6337556084098,
+      "energy": 37.1544841951168,
+      "type": "polyester"
+    },
+    {
+      "water": 199.83201123045654,
+      "energy": 20.47551957159695,
+      "type": "polyester"
+    },
+    {
+      "water": 1504.612005516739,
+      "energy": 38.69530397080975,
+      "type": "hemp"
+    },
+    {
+      "water": 303.9860155625259,
+      "energy": 60.007364078431,
+      "type": "cotton"
+    },
+    {
+      "water": 2386.944749951085,
+      "energy": 2.941689771895406,
+      "type": "bamboo"
+    },
+    {
+      "water": 911.5806576353311,
+      "energy": 16.066923074435177,
+      "type": "polyester"
+    },
+    {
+      "water": 1073.844105746682,
+      "energy": 14.165316105246191,
+      "type": "bamboo"
+    },
+    {
+      "water": 429.31201215890303,
+      "energy": 19.83800970854787,
+      "type": "polyester"
+    },
+    {
+      "water": 504.40199588649585,
+      "energy": 2.444005587453943,
+      "type": "bamboo"
+    },
+    {
+      "water": 1778.8299406855413,
+      "energy": 3.009950539417252,
+      "type": "wool"
+    },
+    {
+      "water": 1332.55673994317,
+      "energy": 17.343599278468645,
+      "type": "polyester"
+    },
+    {
+      "water": 675.8400253070491,
+      "energy": 22.58371180701278,
+      "type": "bamboo"
+    },
+    {
+      "water": 640.8084875001329,
+      "energy": 87.7436274878952,
+      "type": "cotton"
+    },
+    {
+      "water": 652.5296407733322,
+      "energy": 38.970979011586046,
+      "type": "wool"
+    },
+    {
+      "water": 1200.8442833401655,
+      "energy": 43.42892332584835,
+      "type": "wool"
+    },
+    {
+      "water": 993.3775487278966,
+      "energy": 214.36116478111734,
+      "type": "cotton"
+    },
+    {
+      "water": 938.5957040758324,
+      "energy": 105.67088824281143,
+      "type": "bamboo"
+    },
+    {
+      "water": 700.0986431869852,
+      "energy": 28.95477049615005,
+      "type": "hemp"
+    },
+    {
+      "water": 527.2670952589853,
+      "energy": 19.41689656893182,
+      "type": "cotton"
+    },
+    {
+      "water": 2090.373932469225,
+      "energy": 17.060071933288995,
+      "type": "bamboo"
+    },
+    {
+      "water": 247.4073897781837,
+      "energy": 38.3270221432367,
+      "type": "cotton"
+    },
+    {
+      "water": 503.51827660483616,
+      "energy": 21.330594413351584,
+      "type": "cotton"
+    },
+    {
+      "water": 675.5320112327252,
+      "energy": 9.32457391769775,
+      "type": "polyester"
+    },
+    {
+      "water": 185.84208676149248,
+      "energy": 16.8001870838762,
+      "type": "bamboo"
+    },
+    {
+      "water": 408.52863120545413,
+      "energy": 35.864058314110395,
+      "type": "hemp"
+    },
+    {
+      "water": 2265.6608402296374,
+      "energy": 57.06824080710366,
+      "type": "polyester"
+    },
+    {
+      "water": 1001.3474773749562,
+      "energy": 88.66383310810768,
+      "type": "cotton"
+    },
+    {
+      "water": 517.230256988153,
+      "energy": 37.72658653578497,
+      "type": "cotton"
+    },
+    {
+      "water": 507.12577652893293,
+      "energy": 83.1982584974247,
+      "type": "cotton"
+    },
+    {
+      "water": 217.68050304019192,
+      "energy": 22.486865353114556,
+      "type": "bamboo"
+    },
+    {
+      "water": 524.2381874078432,
+      "energy": 30.91073452840144,
+      "type": "bamboo"
+    },
+    {
+      "water": 963.87599706241,
+      "energy": 29.66093587747968,
+      "type": "polyester"
+    },
+    {
+      "water": 802.109999013106,
+      "energy": 35.27120564474436,
+      "type": "hemp"
+    },
+    {
+      "water": 437.7787338655213,
+      "energy": 48.18534432631349,
+      "type": "polyester"
+    },
+    {
+      "water": 401.3416542992072,
+      "energy": 24.04558278472062,
+      "type": "wool"
+    },
+    {
+      "water": 617.9947394714148,
+      "energy": 14.86040006075936,
+      "type": "cotton"
+    },
+    {
+      "water": 656.4479952534563,
+      "energy": 67.81246825245864,
+      "type": "cotton"
+    },
+    {
+      "water": 1097.0401069709872,
+      "energy": 59.91854372885268,
+      "type": "cotton"
+    },
+    {
+      "water": 795.9740191731387,
+      "energy": 85.45726983550925,
+      "type": "polyester"
+    },
+    {
+      "water": 733.4092651528349,
+      "energy": 19.54304888207601,
+      "type": "polyester"
+    },
+    {
+      "water": 1103.4866782618285,
+      "energy": 21.853720611939565,
+      "type": "cotton"
+    },
+    {
+      "water": 1388.78941369002,
+      "energy": 54.65920687085151,
+      "type": "polyester"
+    },
+    {
+      "water": 929.1237483190065,
+      "energy": 23.815062922819255,
+      "type": "bamboo"
+    },
+    {
+      "water": 707.0382397894373,
+      "energy": 41.54532108334135,
+      "type": "bamboo"
+    },
+    {
+      "water": 520.771760096229,
+      "energy": 22.563875490802214,
+      "type": "polyester"
+    },
+    {
+      "water": 319.1260063130107,
+      "energy": 33.40579873693508,
+      "type": "cotton"
+    },
+    {
+      "water": 926.7893959884448,
+      "energy": 9.14600685179866,
+      "type": "polyester"
+    },
+    {
+      "water": 825.4379375620863,
+      "energy": 28.02097555336824,
+      "type": "polyester"
+    },
+    {
+      "water": 625.3430596465932,
+      "energy": 67.65709178769586,
+      "type": "polyester"
+    },
+    {
+      "water": 858.7845950596903,
+      "energy": 60.58979453608848,
+      "type": "wool"
+    },
+    {
+      "water": 1062.0436722746329,
+      "energy": 11.296770343505422,
+      "type": "bamboo"
+    },
+    {
+      "water": 1551.4210678653324,
+      "energy": 106.95976479757394,
+      "type": "hemp"
+    },
+    {
+      "water": 88.58225983059394,
+      "energy": 64.88350798906704,
+      "type": "hemp"
+    },
+    {
+      "water": 424.34811427551904,
+      "energy": 10.936183506183937,
+      "type": "wool"
+    },
+    {
+      "water": 728.1134390063593,
+      "energy": 22.528493901774585,
+      "type": "polyester"
+    },
+    {
+      "water": 334.2001183438663,
+      "energy": 12.498024447158933,
+      "type": "wool"
+    },
+    {
+      "water": 685.4244562135304,
+      "energy": 35.713015338274126,
+      "type": "wool"
+    },
+    {
+      "water": 475.67231620180405,
+      "energy": 20.152411292084814,
+      "type": "cotton"
+    },
+    {
+      "water": 826.344747818742,
+      "energy": 4.2169531021321225,
+      "type": "bamboo"
+    },
+    {
+      "water": 485.0760290483551,
+      "energy": 30.80261787679121,
+      "type": "hemp"
+    },
+    {
+      "water": 402.6640276611295,
+      "energy": 49.48347352301281,
+      "type": "polyester"
+    },
+    {
+      "water": 759.3184582587669,
+      "energy": 32.52520998284028,
+      "type": "hemp"
+    },
+    {
+      "water": 1176.1558239517888,
+      "energy": 48.19147071502128,
+      "type": "hemp"
+    },
+    {
+      "water": 911.7896441334854,
+      "energy": 34.886839596057314,
+      "type": "bamboo"
+    },
+    {
+      "water": 731.903037712067,
+      "energy": 58.85109803453986,
+      "type": "hemp"
+    },
+    {
+      "water": 151.47691811766617,
+      "energy": 34.12010122895946,
+      "type": "hemp"
+    },
+    {
+      "water": 528.5106646616761,
+      "energy": 31.77754161755319,
+      "type": "wool"
+    },
+    {
+      "water": 491.68989501002073,
+      "energy": 37.59292679647213,
+      "type": "bamboo"
+    },
+    {
+      "water": 854.491315689253,
+      "energy": 70.73074134515196,
+      "type": "cotton"
+    },
+    {
+      "water": 645.1400003088311,
+      "energy": 42.42330739017641,
+      "type": "polyester"
+    },
+    {
+      "water": 839.4019812497689,
+      "energy": 15.016017585174973,
+      "type": "hemp"
+    },
+    {
+      "water": 438.75031761038804,
+      "energy": 37.14286814658609,
+      "type": "polyester"
+    },
+    {
+      "water": 1246.7079546773007,
+      "energy": 35.25030005972687,
+      "type": "cotton"
+    },
+    {
+      "water": 656.8607281429447,
+      "energy": 24.32357153621654,
+      "type": "polyester"
+    },
+    {
+      "water": 421.17900897533735,
+      "energy": 4.572306869190751,
+      "type": "cotton"
+    },
+    {
+      "water": 347.02674324011025,
+      "energy": 12.942539545538411,
+      "type": "wool"
+    },
+    {
+      "water": 909.1837932757775,
+      "energy": 24.94164783025977,
+      "type": "hemp"
+    },
+    {
+      "water": 410.49099695532107,
+      "energy": 115.17291924390132,
+      "type": "cotton"
+    },
+    {
+      "water": 371.8937488505116,
+      "energy": 37.424748904078996,
+      "type": "polyester"
+    },
+    {
+      "water": 322.98680353136103,
+      "energy": 7.037136686587698,
+      "type": "hemp"
+    },
+    {
+      "water": 1133.9573657626281,
+      "energy": 32.522319744395645,
+      "type": "wool"
+    },
+    {
+      "water": 357.4779965631518,
+      "energy": 72.55856467754882,
+      "type": "hemp"
+    },
+    {
+      "water": 1610.8631655772058,
+      "energy": 19.910868639150305,
+      "type": "cotton"
+    },
+    {
+      "water": 906.7337393415035,
+      "energy": 66.27540064851905,
+      "type": "wool"
+    },
+    {
+      "water": 322.09762989059186,
+      "energy": 7.2939884346019666,
+      "type": "polyester"
+    },
+    {
+      "water": 793.591396806287,
+      "energy": 0.5094821873502865,
+      "type": "wool"
+    },
+    {
+      "water": 1588.2935718364558,
+      "energy": 78.66629356366658,
+      "type": "wool"
+    },
+    {
+      "water": 534.4489917369374,
+      "energy": 17.913792466082302,
+      "type": "bamboo"
+    },
+    {
+      "water": 1693.4230126860878,
+      "energy": 25.488164844076948,
+      "type": "wool"
+    },
+    {
+      "water": 740.4919901792903,
+      "energy": 30.315411529583795,
+      "type": "wool"
+    },
+    {
+      "water": 384.4592509991216,
+      "energy": 36.484434518062514,
+      "type": "hemp"
+    },
+    {
+      "water": 1959.1974822990278,
+      "energy": 1.3709134430437935,
+      "type": "polyester"
+    },
+    {
+      "water": 213.3154618953113,
+      "energy": 15.011632644291666,
+      "type": "hemp"
+    },
+    {
+      "water": 478.4998892418316,
+      "energy": 28.77567939583857,
+      "type": "hemp"
+    },
+    {
+      "water": 627.3543006225881,
+      "energy": 41.6286311305581,
+      "type": "cotton"
+    },
+    {
+      "water": 1552.9039131589795,
+      "energy": 11.137396021139763,
+      "type": "hemp"
+    },
+    {
+      "water": 1067.0614380170855,
+      "energy": 27.571226033816732,
+      "type": "bamboo"
+    },
+    {
+      "water": 816.7051326726831,
+      "energy": 16.802647498966497,
+      "type": "bamboo"
+    },
+    {
+      "water": 363.2434465049492,
+      "energy": 32.557962456954485,
+      "type": "cotton"
+    },
+    {
+      "water": 546.9453081777439,
+      "energy": 60.31600483468416,
+      "type": "polyester"
+    },
+    {
+      "water": 446.1126094709452,
+      "energy": 22.844916344850365,
+      "type": "polyester"
+    },
+    {
+      "water": 764.4254461838085,
+      "energy": 7.071227249027221,
+      "type": "hemp"
+    },
+    {
+      "water": 1085.3405999353743,
+      "energy": 14.305840368233454,
+      "type": "hemp"
+    },
+    {
+      "water": 2393.8659629016274,
+      "energy": 98.66244710021276,
+      "type": "hemp"
+    },
+    {
+      "water": 518.7113437540992,
+      "energy": 15.350825674234104,
+      "type": "polyester"
+    },
+    {
+      "water": 218.84265931903252,
+      "energy": 9.0185435361965,
+      "type": "wool"
+    },
+    {
+      "water": 571.4957367272793,
+      "energy": 23.521983507242144,
+      "type": "bamboo"
+    },
+    {
+      "water": 1144.9779356997433,
+      "energy": 27.881791563573582,
+      "type": "wool"
+    },
+    {
+      "water": 318.93848669780357,
+      "energy": 16.890998862589772,
+      "type": "wool"
+    },
+    {
+      "water": 587.7667264619294,
+      "energy": 6.210272384560175,
+      "type": "polyester"
+    },
+    {
+      "water": 972.3510784508414,
+      "energy": 41.286764347702146,
+      "type": "wool"
+    },
+    {
+      "water": 485.08420719896833,
+      "energy": 35.54503141464957,
+      "type": "cotton"
+    },
+    {
+      "water": 735.183284174696,
+      "energy": 49.14826853552064,
+      "type": "hemp"
+    },
+    {
+      "water": 369.4229308188427,
+      "energy": 37.864228116578026,
+      "type": "cotton"
+    },
+    {
+      "water": 1128.2322341151976,
+      "energy": 75.37487049182114,
+      "type": "bamboo"
+    },
+    {
+      "water": 598.8033203202095,
+      "energy": 56.18026046286533,
+      "type": "hemp"
+    },
+    {
+      "water": 662.2699179610455,
+      "energy": 41.042795311295784,
+      "type": "wool"
+    },
+    {
+      "water": 185.05498497131754,
+      "energy": 73.05893208232119,
+      "type": "bamboo"
+    },
+    {
+      "water": 309.09816004429103,
+      "energy": 33.381301939542006,
+      "type": "hemp"
+    },
+    {
+      "water": 1216.875920149691,
+      "energy": 28.042356503696617,
+      "type": "wool"
+    },
+    {
+      "water": 420.62415561806205,
+      "energy": 33.07124228370927,
+      "type": "cotton"
+    },
+    {
+      "water": 411.6436954499814,
+      "energy": 4.276721427190242,
+      "type": "hemp"
+    },
+    {
+      "water": 243.47041994023465,
+      "energy": 36.2504088375602,
+      "type": "wool"
+    },
+    {
+      "water": 1116.1841919925184,
+      "energy": 24.37581764026419,
+      "type": "cotton"
+    },
+    {
+      "water": 840.4407420980633,
+      "energy": 35.73976189413921,
+      "type": "bamboo"
+    },
+    {
+      "water": 924.2930643830906,
+      "energy": 61.302407232535735,
+      "type": "bamboo"
+    },
+    {
+      "water": 1367.2006640902716,
+      "energy": 39.9928390296515,
+      "type": "bamboo"
+    },
+    {
+      "water": 457.0399905974595,
+      "energy": 14.340441017482414,
+      "type": "bamboo"
+    },
+    {
+      "water": 210.74283156830256,
+      "energy": 47.77199153430246,
+      "type": "polyester"
+    },
+    {
+      "water": 581.1047505249592,
+      "energy": 76.10113889785242,
+      "type": "hemp"
+    },
+    {
+      "water": 1586.4747699598356,
+      "energy": 57.19053640402721,
+      "type": "hemp"
+    },
+    {
+      "water": 616.3532970536957,
+      "energy": 8.127837869985608,
+      "type": "polyester"
+    },
+    {
+      "water": 1222.1013987941496,
+      "energy": 45.36377429490131,
+      "type": "wool"
+    },
+    {
+      "water": 268.29933233639497,
+      "energy": 11.148871264444134,
+      "type": "wool"
+    },
+    {
+      "water": 342.0597691114537,
+      "energy": 20.90351455893832,
+      "type": "bamboo"
+    },
+    {
+      "water": 1175.686716457569,
+      "energy": 43.30870671976873,
+      "type": "cotton"
+    },
+    {
+      "water": 773.1721865224389,
+      "energy": 39.25064508315343,
+      "type": "wool"
+    },
+    {
+      "water": 603.8983906509117,
+      "energy": 61.56406072376609,
+      "type": "cotton"
+    },
+    {
+      "water": 1060.9984754169463,
+      "energy": 76.34639687439287,
+      "type": "hemp"
+    },
+    {
+      "water": 942.3345903573085,
+      "energy": 37.558104906515304,
+      "type": "cotton"
+    },
+    {
+      "water": 846.1117879148162,
+      "energy": 26.163152988989744,
+      "type": "hemp"
+    },
+    {
+      "water": 97.14731980411601,
+      "energy": 4.2356847485622335,
+      "type": "polyester"
+    },
+    {
+      "water": 701.1118397722337,
+      "energy": 78.26566097457523,
+      "type": "polyester"
+    },
+    {
+      "water": 761.856895220584,
+      "energy": 25.642645527643634,
+      "type": "bamboo"
+    },
+    {
+      "water": 203.5859295838899,
+      "energy": 33.99127554690714,
+      "type": "wool"
+    },
+    {
+      "water": 746.7955976736598,
+      "energy": 28.389720522205973,
+      "type": "bamboo"
+    },
+    {
+      "water": 1140.1853887684922,
+      "energy": 38.057103299630995,
+      "type": "hemp"
+    },
+    {
+      "water": 592.5689359206267,
+      "energy": 38.86882763640109,
+      "type": "bamboo"
+    },
+    {
+      "water": 325.8906413200616,
+      "energy": 24.200473422344043,
+      "type": "cotton"
+    },
+    {
+      "water": 100.51881252691396,
+      "energy": 27.75567214137616,
+      "type": "hemp"
+    },
+    {
+      "water": 755.533163629727,
+      "energy": 16.55403553882561,
+      "type": "polyester"
+    },
+    {
+      "water": 224.05494815193882,
+      "energy": 19.107305024956585,
+      "type": "wool"
+    },
+    {
+      "water": 996.5492564494156,
+      "energy": 17.666130363922566,
+      "type": "hemp"
+    },
+    {
+      "water": 1964.4159900017528,
+      "energy": 32.08467534149235,
+      "type": "hemp"
+    },
+    {
+      "water": 352.7169094652321,
+      "energy": 11.91353189902349,
+      "type": "cotton"
+    },
+    {
+      "water": 561.3989428620895,
+      "energy": 0.4654887322581392,
+      "type": "wool"
+    },
+    {
+      "water": 1882.8268043162993,
+      "energy": 23.947818677923443,
+      "type": "polyester"
+    },
+    {
+      "water": 752.6291684074952,
+      "energy": 10.24149996508228,
+      "type": "hemp"
+    },
+    {
+      "water": 423.32025257463357,
+      "energy": 28.538055625572422,
+      "type": "hemp"
+    },
+    {
+      "water": 1001.8116212997631,
+      "energy": 15.74825406889922,
+      "type": "cotton"
+    },
+    {
+      "water": 459.18687968252675,
+      "energy": 38.399424537682734,
+      "type": "bamboo"
+    },
+    {
+      "water": 385.3640388298353,
+      "energy": 10.376005986944685,
+      "type": "polyester"
+    },
+    {
+      "water": 911.6930731948905,
+      "energy": 4.928347226128831,
+      "type": "wool"
+    },
+    {
+      "water": 1397.0785533166554,
+      "energy": 32.44525640381248,
+      "type": "hemp"
+    },
+    {
+      "water": 351.5539017119153,
+      "energy": 19.556905247201026,
+      "type": "hemp"
+    },
+    {
+      "water": 668.8033655692383,
+      "energy": 7.903193554354921,
+      "type": "polyester"
+    },
+    {
+      "water": 528.7545500162086,
+      "energy": 47.56391555837346,
+      "type": "bamboo"
+    },
+    {
+      "water": 582.367065394998,
+      "energy": 11.19926022049807,
+      "type": "hemp"
+    },
+    {
+      "water": 328.1248870806902,
+      "energy": 15.69195352950831,
+      "type": "polyester"
+    },
+    {
+      "water": 952.1915601757735,
+      "energy": 58.85070823301298,
+      "type": "cotton"
+    },
+    {
+      "water": 1359.8714100881243,
+      "energy": 40.01079643114686,
+      "type": "bamboo"
+    },
+    {
+      "water": 440.56135478371533,
+      "energy": 12.795213371440683,
+      "type": "wool"
+    },
+    {
+      "water": 1031.0479689670924,
+      "energy": 24.86357344309956,
+      "type": "hemp"
+    },
+    {
+      "water": 1224.0458786848292,
+      "energy": 10.722587307544764,
+      "type": "polyester"
+    },
+    {
+      "water": 847.463027151549,
+      "energy": 65.24983705760009,
+      "type": "cotton"
+    },
+    {
+      "water": 851.1123590235102,
+      "energy": 51.24373256136412,
+      "type": "wool"
+    },
+    {
+      "water": 407.48663426479715,
+      "energy": 95.76435898029139,
+      "type": "polyester"
+    },
+    {
+      "water": 1556.295184604113,
+      "energy": 130.42276940495583,
+      "type": "polyester"
+    },
+    {
+      "water": 1052.351083020716,
+      "energy": 15.58770403220306,
+      "type": "wool"
+    },
+    {
+      "water": 1120.7274066198165,
+      "energy": 43.5720530241162,
+      "type": "cotton"
+    },
+    {
+      "water": 338.4788294202436,
+      "energy": 4.746583589588103,
+      "type": "cotton"
+    },
+    {
+      "water": 789.315814110084,
+      "energy": 31.636100330388395,
+      "type": "bamboo"
+    },
+    {
+      "water": 463.27785004659165,
+      "energy": 44.429917403021214,
+      "type": "hemp"
+    },
+    {
+      "water": 1380.4562846757462,
+      "energy": 11.79347853427426,
+      "type": "wool"
+    },
+    {
+      "water": 414.9725241198847,
+      "energy": 18.262573510827973,
+      "type": "wool"
+    },
+    {
+      "water": 868.0178319239737,
+      "energy": 65.52540458894453,
+      "type": "wool"
+    },
+    {
+      "water": 159.52237939585768,
+      "energy": 48.71369627559209,
+      "type": "cotton"
+    },
+    {
+      "water": 649.010215354242,
+      "energy": 76.83701800539764,
+      "type": "hemp"
+    },
+    {
+      "water": 268.16670661323934,
+      "energy": 74.38154964490766,
+      "type": "bamboo"
+    },
+    {
+      "water": 776.0445372661708,
+      "energy": 4.919414437175677,
+      "type": "polyester"
+    },
+    {
+      "water": 538.5603048910184,
+      "energy": 17.772986663111013,
+      "type": "polyester"
+    },
+    {
+      "water": 446.593251959743,
+      "energy": 10.163713412111175,
+      "type": "wool"
+    },
+    {
+      "water": 1527.431329897002,
+      "energy": 51.26984223208608,
+      "type": "hemp"
+    },
+    {
+      "water": 2035.8777606150647,
+      "energy": 37.08866347699681,
+      "type": "cotton"
+    },
+    {
+      "water": 233.30939573295936,
+      "energy": 12.40142230407958,
+      "type": "hemp"
+    },
+    {
+      "water": 520.9382146851309,
+      "energy": 14.310280082555318,
+      "type": "hemp"
+    },
+    {
+      "water": 1126.103428018076,
+      "energy": 75.20009349412967,
+      "type": "cotton"
+    },
+    {
+      "water": 803.0418873850268,
+      "energy": 21.298859621995955,
+      "type": "wool"
+    },
+    {
+      "water": 1174.5552704225067,
+      "energy": 3.797131309554478,
+      "type": "hemp"
+    },
+    {
+      "water": 716.2501598257692,
+      "energy": 13.25550953100436,
+      "type": "polyester"
+    },
+    {
+      "water": 1333.6176756749949,
+      "energy": 108.27344939174395,
+      "type": "cotton"
+    },
+    {
+      "water": 724.8114208278056,
+      "energy": 60.02855852852866,
+      "type": "bamboo"
+    },
+    {
+      "water": 831.0415238273813,
+      "energy": 9.266665569274325,
+      "type": "wool"
+    },
+    {
+      "water": 292.79579845965606,
+      "energy": 34.500245623290894,
+      "type": "cotton"
+    },
+    {
+      "water": 595.9055563299545,
+      "energy": 50.31194488087472,
+      "type": "bamboo"
+    },
+    {
+      "water": 958.7886649127165,
+      "energy": 5.070579628604112,
+      "type": "bamboo"
+    },
+    {
+      "water": 679.8557669577132,
+      "energy": 54.19828036282875,
+      "type": "hemp"
+    },
+    {
+      "water": 641.1074580315094,
+      "energy": 38.012283418671785,
+      "type": "hemp"
+    },
+    {
+      "water": 861.6642344160283,
+      "energy": 15.98459316354897,
+      "type": "hemp"
+    },
+    {
+      "water": 722.3656533607385,
+      "energy": 46.31501332502432,
+      "type": "cotton"
+    },
+    {
+      "water": 548.2303662559146,
+      "energy": 32.791198140359995,
+      "type": "cotton"
+    },
+    {
+      "water": 931.5578897365654,
+      "energy": 34.45683039450763,
+      "type": "wool"
+    },
+    {
+      "water": 550.1558829384544,
+      "energy": 30.77666816368847,
+      "type": "hemp"
+    },
+    {
+      "water": 326.5276147153221,
+      "energy": 16.135369427275144,
+      "type": "bamboo"
+    },
+    {
+      "water": 1364.615368034472,
+      "energy": 14.947598765700038,
+      "type": "polyester"
+    },
+    {
+      "water": 381.6613856713186,
+      "energy": 21.70001886362565,
+      "type": "wool"
+    },
+    {
+      "water": 196.56624065090753,
+      "energy": 27.196535654382465,
+      "type": "cotton"
+    },
+    {
+      "water": 1001.1242059975997,
+      "energy": 52.294357657900875,
+      "type": "wool"
+    },
+    {
+      "water": 1396.4356117016816,
+      "energy": 88.81012777677289,
+      "type": "wool"
+    },
+    {
+      "water": 1014.970472350191,
+      "energy": 38.68163299678348,
+      "type": "wool"
+    },
+    {
+      "water": 1598.4038653024782,
+      "energy": 55.615329026350565,
+      "type": "wool"
+    },
+    {
+      "water": 325.3127305414111,
+      "energy": 50.872192628100336,
+      "type": "polyester"
+    },
+    {
+      "water": 259.1732463564639,
+      "energy": 45.898917581370306,
+      "type": "hemp"
+    },
+    {
+      "water": 563.0488402445292,
+      "energy": 14.460134429771324,
+      "type": "bamboo"
+    },
+    {
+      "water": 1081.3903820744931,
+      "energy": 67.65637720612236,
+      "type": "wool"
+    },
+    {
+      "water": 777.6430955282984,
+      "energy": 57.95706145075317,
+      "type": "wool"
+    },
+    {
+      "water": 927.1839530684458,
+      "energy": 33.230232651589645,
+      "type": "wool"
+    },
+    {
+      "water": 757.4016624768296,
+      "energy": 15.275660965908786,
+      "type": "hemp"
+    },
+    {
+      "water": 482.3497335061539,
+      "energy": 28.14468601734918,
+      "type": "cotton"
+    },
+    {
+      "water": 778.0909124064117,
+      "energy": 6.909117823854586,
+      "type": "cotton"
+    },
+    {
+      "water": 636.2420841701287,
+      "energy": 86.94046506021138,
+      "type": "polyester"
+    },
+    {
+      "water": 503.1840632260922,
+      "energy": 17.64934599906811,
+      "type": "cotton"
+    },
+    {
+      "water": 713.9643110295726,
+      "energy": 20.818034253530314,
+      "type": "wool"
+    },
+    {
+      "water": 598.956762223157,
+      "energy": 82.88701335652559,
+      "type": "wool"
+    },
+    {
+      "water": 698.2814467173373,
+      "energy": 64.65535821991901,
+      "type": "wool"
+    },
+    {
+      "water": 174.6636003578418,
+      "energy": 44.987202987969305,
+      "type": "polyester"
+    },
+    {
+      "water": 785.0512217319206,
+      "energy": 95.60464976330732,
+      "type": "wool"
+    },
+    {
+      "water": 596.6241940270081,
+      "energy": 14.035461909118347,
+      "type": "cotton"
+    },
+    {
+      "water": 1411.669197646357,
+      "energy": 38.57500464937386,
+      "type": "hemp"
+    },
+    {
+      "water": 189.95335840879306,
+      "energy": 11.42463622157351,
+      "type": "hemp"
+    },
+    {
+      "water": 808.2383437928981,
+      "energy": 74.13057224106895,
+      "type": "bamboo"
+    },
+    {
+      "water": 965.4267376778753,
+      "energy": 56.8704673946125,
+      "type": "cotton"
+    },
+    {
+      "water": 702.1707264012994,
+      "energy": 107.75100671047669,
+      "type": "wool"
+    },
+    {
+      "water": 494.1366407567725,
+      "energy": 27.49331887272458,
+      "type": "hemp"
+    },
+    {
+      "water": 919.7378793886176,
+      "energy": 95.6135011093023,
+      "type": "cotton"
+    },
+    {
+      "water": 803.0970438837796,
+      "energy": 11.053110786893816,
+      "type": "hemp"
+    },
+    {
+      "water": 914.5827240527196,
+      "energy": 28.764718016626407,
+      "type": "wool"
+    },
+    {
+      "water": 503.8234761515686,
+      "energy": 12.473384605065966,
+      "type": "hemp"
+    },
+    {
+      "water": 464.20870792157564,
+      "energy": 34.792384606661926,
+      "type": "bamboo"
+    },
+    {
+      "water": 762.3133318915574,
+      "energy": 13.51380608296088,
+      "type": "bamboo"
+    },
+    {
+      "water": 1284.727954164344,
+      "energy": 74.26729543658806,
+      "type": "hemp"
+    },
+    {
+      "water": 222.90745694170286,
+      "energy": 37.14550779571939,
+      "type": "cotton"
+    },
+    {
+      "water": 563.8550425034082,
+      "energy": 10.179215432365558,
+      "type": "cotton"
+    },
+    {
+      "water": 437.86509120010777,
+      "energy": 49.389171327573735,
+      "type": "cotton"
+    },
+    {
+      "water": 660.7799409217779,
+      "energy": 84.18516990239097,
+      "type": "hemp"
+    },
+    {
+      "water": 996.8612095813345,
+      "energy": 45.415253372865884,
+      "type": "cotton"
+    },
+    {
+      "water": 409.68121726811484,
+      "energy": 8.816418614029528,
+      "type": "wool"
+    },
+    {
+      "water": 816.8389358298243,
+      "energy": 23.335996280082426,
+      "type": "bamboo"
+    },
+    {
+      "water": 600.4257735007196,
+      "energy": 57.844330834585904,
+      "type": "wool"
+    },
+    {
+      "water": 1100.123297272544,
+      "energy": 22.64769954868429,
+      "type": "cotton"
+    },
+    {
+      "water": 425.8472725704748,
+      "energy": 12.904235451588946,
+      "type": "wool"
+    },
+    {
+      "water": 1183.5512533209708,
+      "energy": 74.33940343504699,
+      "type": "cotton"
+    },
+    {
+      "water": 251.7335457118808,
+      "energy": 21.876129742727688,
+      "type": "hemp"
+    },
+    {
+      "water": 854.4709717777448,
+      "energy": 98.25611726889566,
+      "type": "wool"
+    },
+    {
+      "water": 1023.5865800641892,
+      "energy": 21.099647254835055,
+      "type": "hemp"
+    },
+    {
+      "water": 433.4184844716062,
+      "energy": 24.651105238545426,
+      "type": "hemp"
+    },
+    {
+      "water": 102.80462241621935,
+      "energy": 15.932538829047099,
+      "type": "polyester"
+    },
+    {
+      "water": 569.1304859674577,
+      "energy": 30.698884959883962,
+      "type": "cotton"
+    },
+    {
+      "water": 720.5283362561947,
+      "energy": 45.45237555299839,
+      "type": "bamboo"
+    },
+    {
+      "water": 627.5103636219127,
+      "energy": 14.591317233585714,
+      "type": "cotton"
+    },
+    {
+      "water": 420.6790283213269,
+      "energy": 9.522156344232696,
+      "type": "bamboo"
+    },
+    {
+      "water": 1060.2078939800983,
+      "energy": 5.391624773398016,
+      "type": "cotton"
+    },
+    {
+      "water": 1375.1397632484716,
+      "energy": 5.027671254981858,
+      "type": "hemp"
+    },
+    {
+      "water": 1074.0273203044453,
+      "energy": 7.209736734109537,
+      "type": "wool"
+    },
+    {
+      "water": 783.7854433479087,
+      "energy": 17.75020190111221,
+      "type": "wool"
+    },
+    {
+      "water": 1076.3315767948322,
+      "energy": 40.043511569277236,
+      "type": "polyester"
+    },
+    {
+      "water": 327.0896380944652,
+      "energy": 36.94334179371598,
+      "type": "bamboo"
+    },
+    {
+      "water": 680.8043553281431,
+      "energy": 35.91240341238414,
+      "type": "bamboo"
+    },
+    {
+      "water": 814.5861145825344,
+      "energy": 90.9124768914621,
+      "type": "bamboo"
+    },
+    {
+      "water": 778.5906941549856,
+      "energy": 94.63911247883784,
+      "type": "hemp"
+    },
+    {
+      "water": 706.3973458583439,
+      "energy": 21.959891474597597,
+      "type": "bamboo"
+    },
+    {
+      "water": 721.6203121605303,
+      "energy": 13.763512634953532,
+      "type": "wool"
+    },
+    {
+      "water": 743.1602406410092,
+      "energy": 99.4672818196027,
+      "type": "hemp"
+    },
+    {
+      "water": 875.765479643964,
+      "energy": 78.21531834579909,
+      "type": "cotton"
+    },
+    {
+      "water": 687.1782939704256,
+      "energy": 58.42406479630744,
+      "type": "bamboo"
+    },
+    {
+      "water": 383.03239437452896,
+      "energy": 17.151425665082254,
+      "type": "bamboo"
+    },
+    {
+      "water": 302.84667474662797,
+      "energy": 54.8074511492962,
+      "type": "cotton"
+    },
+    {
+      "water": 780.8543795805584,
+      "energy": 33.34888707177598,
+      "type": "bamboo"
+    },
+    {
+      "water": 438.7121904884978,
+      "energy": 24.774442759505806,
+      "type": "cotton"
+    },
+    {
+      "water": 376.80977569435646,
+      "energy": 24.74134096201391,
+      "type": "hemp"
+    },
+    {
+      "water": 1038.6393926174528,
+      "energy": 46.96173504255947,
+      "type": "wool"
+    },
+    {
+      "water": 685.2461213158243,
+      "energy": 86.24825917672149,
+      "type": "cotton"
+    },
+    {
+      "water": 1201.8496240072425,
+      "energy": 104.81848479760355,
+      "type": "polyester"
+    },
+    {
+      "water": 788.5834415031061,
+      "energy": 18.856009607509954,
+      "type": "cotton"
+    },
+    {
+      "water": 467.91846827478463,
+      "energy": 40.571674572352016,
+      "type": "bamboo"
+    },
+    {
+      "water": 965.4784453240112,
+      "energy": 27.761168619821095,
+      "type": "hemp"
+    },
+    {
+      "water": 895.0162242160424,
+      "energy": 44.757258582796034,
+      "type": "hemp"
+    },
+    {
+      "water": 391.15961020704873,
+      "energy": 25.12143478805899,
+      "type": "cotton"
+    },
+    {
+      "water": 463.5338519069767,
+      "energy": 16.890396335960755,
+      "type": "wool"
+    },
+    {
+      "water": 822.212325122352,
+      "energy": 18.877568653937384,
+      "type": "polyester"
+    },
+    {
+      "water": 214.7688064348713,
+      "energy": 22.10397846327242,
+      "type": "hemp"
+    },
+    {
+      "water": 121.34661372768586,
+      "energy": 24.485537589013052,
+      "type": "bamboo"
+    },
+    {
+      "water": 845.797996005853,
+      "energy": 10.350731626142364,
+      "type": "bamboo"
+    },
+    {
+      "water": 808.9511776334044,
+      "energy": 22.464065253473315,
+      "type": "wool"
+    },
+    {
+      "water": 763.1288616523186,
+      "energy": 41.02364745969724,
+      "type": "hemp"
+    },
+    {
+      "water": 810.3174856040447,
+      "energy": 47.6062656254184,
+      "type": "cotton"
+    },
+    {
+      "water": 913.3516624521316,
+      "energy": 39.28192205705671,
+      "type": "bamboo"
+    },
+    {
+      "water": 1279.0991496586842,
+      "energy": 75.04573665143764,
+      "type": "wool"
+    },
+    {
+      "water": 712.4217583272176,
+      "energy": 45.71662428418643,
+      "type": "hemp"
+    },
+    {
+      "water": 220.01679116751544,
+      "energy": 67.29919905196691,
+      "type": "hemp"
+    },
+    {
+      "water": 167.04692321969466,
+      "energy": 119.85017283927242,
+      "type": "hemp"
+    },
+    {
+      "water": 485.1409209834061,
+      "energy": 51.1174968174013,
+      "type": "hemp"
+    },
+    {
+      "water": 537.8465639415075,
+      "energy": 8.916667249211791,
+      "type": "hemp"
+    },
+    {
+      "water": 236.31610519741542,
+      "energy": 32.6629964386648,
+      "type": "bamboo"
+    },
+    {
+      "water": 130.9984067647369,
+      "energy": 38.96298660341073,
+      "type": "wool"
+    },
+    {
+      "water": 442.0897625293081,
+      "energy": 73.61300380664578,
+      "type": "hemp"
+    },
+    {
+      "water": 1458.757254432497,
+      "energy": 25.192436802326437,
+      "type": "polyester"
+    },
+    {
+      "water": 960.4830282209949,
+      "energy": 17.39820259683447,
+      "type": "polyester"
+    },
+    {
+      "water": 782.1577185698151,
+      "energy": 20.21311828801311,
+      "type": "wool"
+    },
+    {
+      "water": 689.483350711027,
+      "energy": 10.808475003610738,
+      "type": "cotton"
+    },
+    {
+      "water": 572.7519294974168,
+      "energy": 116.4183934048079,
+      "type": "cotton"
+    },
+    {
+      "water": 1016.6526421542418,
+      "energy": 35.51268417544707,
+      "type": "cotton"
+    },
+    {
+      "water": 317.42914042324026,
+      "energy": 11.027546931432672,
+      "type": "polyester"
+    },
+    {
+      "water": 2126.9534934842272,
+      "energy": 104.03849901050017,
+      "type": "cotton"
+    },
+    {
+      "water": 334.28415910027064,
+      "energy": 107.48190075887995,
+      "type": "bamboo"
+    },
+    {
+      "water": 840.3102843470416,
+      "energy": 31.40539469884109,
+      "type": "hemp"
+    },
+    {
+      "water": 287.41752328562643,
+      "energy": 7.3717850150656705,
+      "type": "polyester"
+    },
+    {
+      "water": 704.8896044895185,
+      "energy": 20.628449416597803,
+      "type": "wool"
+    },
+    {
+      "water": 1135.138894506803,
+      "energy": 29.40048332656996,
+      "type": "wool"
+    },
+    {
+      "water": 180.87644452690216,
+      "energy": 27.32698235506289,
+      "type": "hemp"
+    },
+    {
+      "water": 353.448374482992,
+      "energy": 11.48697224467465,
+      "type": "polyester"
+    },
+    {
+      "water": 369.3284432559324,
+      "energy": 58.94190610686094,
+      "type": "cotton"
+    },
+    {
+      "water": 602.8869086106906,
+      "energy": 3.0881909249213835,
+      "type": "cotton"
+    },
+    {
+      "water": 693.9357701001809,
+      "energy": 60.11903021326839,
+      "type": "bamboo"
+    },
+    {
+      "water": 1475.3003458735875,
+      "energy": 68.8632872246422,
+      "type": "bamboo"
+    },
+    {
+      "water": 403.3104043343315,
+      "energy": 19.56746404789665,
+      "type": "cotton"
+    },
+    {
+      "water": 1423.0048868368715,
+      "energy": 26.155319639396456,
+      "type": "wool"
+    },
+    {
+      "water": 941.0383592029862,
+      "energy": 95.03402253310077,
+      "type": "wool"
+    },
+    {
+      "water": 276.22965599195703,
+      "energy": 44.23475092070586,
+      "type": "bamboo"
+    },
+    {
+      "water": 518.5791645976174,
+      "energy": 20.14633869883102,
+      "type": "hemp"
+    },
+    {
+      "water": 222.79795751918718,
+      "energy": 23.199066950326067,
+      "type": "cotton"
+    },
+    {
+      "water": 617.6718832382625,
+      "energy": 50.779252559398174,
+      "type": "bamboo"
+    },
+    {
+      "water": 549.1339174696653,
+      "energy": 109.61175072289392,
+      "type": "bamboo"
+    },
+    {
+      "water": 622.8302181361641,
+      "energy": 22.699302215421433,
+      "type": "cotton"
+    },
+    {
+      "water": 995.0021910333976,
+      "energy": 24.322489143369726,
+      "type": "cotton"
+    },
+    {
+      "water": 672.833916744215,
+      "energy": 33.65179903831946,
+      "type": "wool"
+    },
+    {
+      "water": 352.61890187242204,
+      "energy": 33.8059890785887,
+      "type": "hemp"
+    },
+    {
+      "water": 1370.2973383489095,
+      "energy": 38.148522012191385,
+      "type": "hemp"
+    },
+    {
+      "water": 1667.233732804782,
+      "energy": 28.60460746982052,
+      "type": "cotton"
+    },
+    {
+      "water": 633.4339856449735,
+      "energy": 73.93895831050244,
+      "type": "polyester"
+    },
+    {
+      "water": 687.7801597453373,
+      "energy": 12.15371302418407,
+      "type": "bamboo"
+    },
+    {
+      "water": 659.2960099074409,
+      "energy": 48.15968755240441,
+      "type": "bamboo"
+    },
+    {
+      "water": 834.4050851474029,
+      "energy": 49.53632914033431,
+      "type": "cotton"
+    },
+    {
+      "water": 676.2502038617342,
+      "energy": 13.796177681178094,
+      "type": "polyester"
+    },
+    {
+      "water": 238.9613018258095,
+      "energy": 35.859387775946225,
+      "type": "wool"
+    },
+    {
+      "water": 535.6351274284663,
+      "energy": 43.26486627785117,
+      "type": "cotton"
+    },
+    {
+      "water": 1242.0017208921777,
+      "energy": 1.4693061408692418,
+      "type": "cotton"
+    },
+    {
+      "water": 999.9655775081759,
+      "energy": 11.632516034520894,
+      "type": "bamboo"
+    },
+    {
+      "water": 617.7731500900453,
+      "energy": 100.3525390788813,
+      "type": "cotton"
+    },
+    {
+      "water": 746.0052484937487,
+      "energy": 18.4097422833967,
+      "type": "cotton"
+    },
+    {
+      "water": 554.5684738462596,
+      "energy": 10.154134791337214,
+      "type": "cotton"
+    },
+    {
+      "water": 1016.8697953098684,
+      "energy": 4.758473779277045,
+      "type": "bamboo"
+    },
+    {
+      "water": 239.59027980602932,
+      "energy": 13.53478632673332,
+      "type": "wool"
+    },
+    {
+      "water": 763.6815092642113,
+      "energy": 24.202580723277396,
+      "type": "wool"
+    },
+    {
+      "water": 1421.541594989929,
+      "energy": 9.436205082901337,
+      "type": "cotton"
+    },
+    {
+      "water": 449.47874757880953,
+      "energy": 52.76346309483039,
+      "type": "bamboo"
+    },
+    {
+      "water": 1150.3730856019401,
+      "energy": 12.954004736177065,
+      "type": "wool"
+    },
+    {
+      "water": 896.0393411402279,
+      "energy": 44.757727992458285,
+      "type": "wool"
+    },
+    {
+      "water": 620.1290121676774,
+      "energy": 77.92822476906015,
+      "type": "wool"
+    },
+    {
+      "water": 461.106366444873,
+      "energy": 65.36439185693875,
+      "type": "bamboo"
+    },
+    {
+      "water": 1172.933860530315,
+      "energy": 33.14561148664431,
+      "type": "bamboo"
+    },
+    {
+      "water": 486.22086224785164,
+      "energy": 9.514409549763728,
+      "type": "cotton"
+    },
+    {
+      "water": 1540.6176000697028,
+      "energy": 29.175165869794053,
+      "type": "hemp"
+    },
+    {
+      "water": 1442.7052782312605,
+      "energy": 38.79958070440036,
+      "type": "wool"
+    },
+    {
+      "water": 440.89469110144216,
+      "energy": 123.19259996822338,
+      "type": "hemp"
+    },
+    {
+      "water": 678.163651968796,
+      "energy": 5.0615414005574575,
+      "type": "bamboo"
+    },
+    {
+      "water": 173.25286044810062,
+      "energy": 31.69410967959911,
+      "type": "bamboo"
+    },
+    {
+      "water": 553.401291100689,
+      "energy": 41.547064668887835,
+      "type": "bamboo"
+    },
+    {
+      "water": 623.9408001497039,
+      "energy": 30.205936929422524,
+      "type": "hemp"
+    },
+    {
+      "water": 1316.360356135835,
+      "energy": 38.71955451869645,
+      "type": "bamboo"
+    },
+    {
+      "water": 1362.3601587783692,
+      "energy": 14.324513240435476,
+      "type": "cotton"
+    },
+    {
+      "water": 989.2831934536017,
+      "energy": 58.2364691496723,
+      "type": "bamboo"
+    },
+    {
+      "water": 1014.6496750386668,
+      "energy": 27.31450483637494,
+      "type": "polyester"
+    },
+    {
+      "water": 629.4157453208696,
+      "energy": 38.61462959943888,
+      "type": "hemp"
+    },
+    {
+      "water": 309.29958955848423,
+      "energy": 67.74099470104909,
+      "type": "polyester"
+    },
+    {
+      "water": 831.1314349680276,
+      "energy": 25.571560811866334,
+      "type": "bamboo"
+    },
+    {
+      "water": 1303.948026552336,
+      "energy": 77.98022494351606,
+      "type": "cotton"
+    },
+    {
+      "water": 79.31098625252912,
+      "energy": 9.865749032517279,
+      "type": "wool"
+    },
+    {
+      "water": 641.7678175465192,
+      "energy": 34.07663912015049,
+      "type": "bamboo"
+    },
+    {
+      "water": 155.8296293551857,
+      "energy": 12.916287907173174,
+      "type": "cotton"
+    },
+    {
+      "water": 393.06936717959087,
+      "energy": 11.418125811831656,
+      "type": "hemp"
+    },
+    {
+      "water": 716.8110531854555,
+      "energy": 100.40928101964421,
+      "type": "polyester"
+    },
+    {
+      "water": 1499.736249624882,
+      "energy": 9.610929983464263,
+      "type": "polyester"
+    },
+    {
+      "water": 658.7167954565614,
+      "energy": 31.686436915008667,
+      "type": "polyester"
+    },
+    {
+      "water": 873.293228566347,
+      "energy": 8.124378322464906,
+      "type": "hemp"
+    },
+    {
+      "water": 889.9527907387218,
+      "energy": 80.50971384441492,
+      "type": "cotton"
+    },
+    {
+      "water": 357.8201480397354,
+      "energy": 18.98952859437253,
+      "type": "hemp"
+    },
+    {
+      "water": 922.4570300480419,
+      "energy": 67.49734107140665,
+      "type": "polyester"
+    },
+    {
+      "water": 326.7077668343006,
+      "energy": 54.06581735712268,
+      "type": "bamboo"
+    },
+    {
+      "water": 653.0298794951976,
+      "energy": 121.68511554299374,
+      "type": "wool"
+    },
+    {
+      "water": 1547.388287612755,
+      "energy": 8.26138282401012,
+      "type": "hemp"
+    },
+    {
+      "water": 637.644132466673,
+      "energy": 11.015614221657707,
+      "type": "hemp"
+    },
+    {
+      "water": 826.5951393254348,
+      "energy": 65.01852163758257,
+      "type": "cotton"
+    },
+    {
+      "water": 573.0297447036762,
+      "energy": 41.71795072229668,
+      "type": "cotton"
+    },
+    {
+      "water": 189.61292497527194,
+      "energy": 21.891033191772195,
+      "type": "hemp"
+    },
+    {
+      "water": 496.28009383993987,
+      "energy": 93.87990028533329,
+      "type": "polyester"
+    },
+    {
+      "water": 1059.7369364462668,
+      "energy": 30.0158700763196,
+      "type": "wool"
+    },
+    {
+      "water": 888.5451447372046,
+      "energy": 16.555456498143954,
+      "type": "cotton"
+    },
+    {
+      "water": 340.37148202714036,
+      "energy": 73.29152510267174,
+      "type": "polyester"
+    },
+    {
+      "water": 156.6188709448048,
+      "energy": 28.23121868621729,
+      "type": "bamboo"
+    },
+    {
+      "water": 371.979894720922,
+      "energy": 29.94126841670852,
+      "type": "cotton"
+    },
+    {
+      "water": 499.3874257567012,
+      "energy": 43.00849330938408,
+      "type": "polyester"
+    },
+    {
+      "water": 595.9974489116064,
+      "energy": 50.51432829818916,
+      "type": "polyester"
+    },
+    {
+      "water": 550.7444666947999,
+      "energy": 11.392451239283083,
+      "type": "wool"
+    },
+    {
+      "water": 709.4000843907138,
+      "energy": 25.858569523692935,
+      "type": "wool"
+    },
+    {
+      "water": 731.528423426789,
+      "energy": 7.061175598381897,
+      "type": "bamboo"
+    },
+    {
+      "water": 591.0881422445384,
+      "energy": 45.41985713939165,
+      "type": "polyester"
+    },
+    {
+      "water": 305.37301922631127,
+      "energy": 86.83389495326372,
+      "type": "polyester"
+    },
+    {
+      "water": 1040.7581654790313,
+      "energy": 15.07818735157746,
+      "type": "wool"
+    },
+    {
+      "water": 939.8924397229154,
+      "energy": 5.71691656593993,
+      "type": "cotton"
+    },
+    {
+      "water": 399.7626889281063,
+      "energy": 15.371606491803647,
+      "type": "cotton"
+    },
+    {
+      "water": 1601.3287001002138,
+      "energy": 21.738376581099224,
+      "type": "hemp"
+    },
+    {
+      "water": 1697.574461760971,
+      "energy": 59.300517732094455,
+      "type": "wool"
+    },
+    {
+      "water": 357.70683337549366,
+      "energy": 26.587626527618223,
+      "type": "hemp"
+    },
+    {
+      "water": 158.31211691920842,
+      "energy": 34.51637407204829,
+      "type": "wool"
+    },
+    {
+      "water": 537.23065271925,
+      "energy": 18.21473784517089,
+      "type": "bamboo"
+    },
+    {
+      "water": 765.9482356712257,
+      "energy": 25.954326570904644,
+      "type": "polyester"
+    },
+    {
+      "water": 1815.1420788933651,
+      "energy": 14.824923859845363,
+      "type": "bamboo"
+    },
+    {
+      "water": 1781.2457127976859,
+      "energy": 10.844503359552549,
+      "type": "wool"
+    },
+    {
+      "water": 1112.9961554844817,
+      "energy": 60.80370975549518,
+      "type": "polyester"
+    },
+    {
+      "water": 598.7706853342744,
+      "energy": 24.564612492281274,
+      "type": "cotton"
+    },
+    {
+      "water": 1141.1819202275522,
+      "energy": 38.103988946555006,
+      "type": "cotton"
+    },
+    {
+      "water": 702.9030328278553,
+      "energy": 14.613111019976088,
+      "type": "hemp"
+    },
+    {
+      "water": 261.68320253445984,
+      "energy": 30.16712187005772,
+      "type": "wool"
+    },
+    {
+      "water": 235.32888437188075,
+      "energy": 2.5763545488015036,
+      "type": "wool"
+    },
+    {
+      "water": 601.3127810683328,
+      "energy": 26.118297519020807,
+      "type": "cotton"
+    },
+    {
+      "water": 1129.8887200202853,
+      "energy": 16.062290502078227,
+      "type": "bamboo"
+    },
+    {
+      "water": 297.89072682672617,
+      "energy": 61.534541062594016,
+      "type": "polyester"
+    },
+    {
+      "water": 471.80772319495827,
+      "energy": 8.465805284600748,
+      "type": "bamboo"
+    },
+    {
+      "water": 1448.0099473595908,
+      "energy": 26.816563628232398,
+      "type": "bamboo"
+    },
+    {
+      "water": 955.9304735118454,
+      "energy": 45.00848212936758,
+      "type": "cotton"
+    },
+    {
+      "water": 802.8438356718945,
+      "energy": 55.77414053324568,
+      "type": "cotton"
+    },
+    {
+      "water": 1008.9290908699745,
+      "energy": 48.28175980938164,
+      "type": "cotton"
+    },
+    {
+      "water": 477.9474313341579,
+      "energy": 26.14492885266342,
+      "type": "hemp"
+    },
+    {
+      "water": 1628.3956043294147,
+      "energy": 34.36929671800847,
+      "type": "bamboo"
+    },
+    {
+      "water": 1051.3264424884462,
+      "energy": 72.67838929330665,
+      "type": "wool"
+    },
+    {
+      "water": 709.2793485806405,
+      "energy": 32.779039529603544,
+      "type": "polyester"
+    },
+    {
+      "water": 1345.7897218233863,
+      "energy": 34.34702737306651,
+      "type": "hemp"
+    }
+  ],
+  "productProfiles": [
+    {
+      "name": "Hemp Bag",
+      "energy": 35.978079182805395,
+      "water": 761.6459868886383,
+      "waste": 0.9218918224554155,
+      "emissions": 0.7430735189312323
+    },
+    {
+      "name": "Bamboo Blouse",
+      "energy": 35.677821567951106,
+      "water": 742.2920384283225,
+      "waste": 0.9035863615723669,
+      "emissions": 0.6436027522809722
+    },
+    {
+      "name": "Polyester Jacket",
+      "energy": 40.87989949233803,
+      "water": 733.0819241448795,
+      "waste": 0.9522235022268704,
+      "emissions": 0.7291853231475904
+    },
+    {
+      "name": "Cotton T-Shirt",
+      "energy": 35.00922447858355,
+      "water": 758.6938898608835,
+      "waste": 0.8523094890615694,
+      "emissions": 0.691543736260947
+    },
+    {
+      "name": "Wool Sweater",
+      "energy": 36.53268717255254,
+      "water": 690.4997451840537,
+      "waste": 0.8558957386592296,
+      "emissions": 0.7134090252337066
+    }
+  ],
+  "metadata": {
+    "timestamp": "2026-04-08T19:29:17.164Z",
+    "totalBrands": 20029,
+    "totalProducts": 1000
+  }
+}

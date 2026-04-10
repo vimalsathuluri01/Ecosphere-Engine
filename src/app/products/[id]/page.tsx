@@ -30,6 +30,20 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     // Prompt says: "/ average_lifespan".
     const metricValue = (product.scope1_scope2_emissions + product.shipping_emissions + product.operational_energy) / product.average_lifespan;
 
+    // --- LOGIC: BETTER ALTERNATIVE (Calculated on Server to reduce client payload) ---
+    let alternative: any = undefined;
+    if (product.compositeScore < 50) {
+        const keywords = product.product_name.split(' ');
+        alternative = allProducts.find(p =>
+            p.compositeScore > 70 &&
+            keywords.some(k => p.product_name.includes(k)) &&
+            p.product_id !== product.product_id
+        );
+        if (!alternative) {
+            alternative = allProducts.find(p => p.compositeScore > 80 && p.product_id !== product.product_id);
+        }
+    }
+
     return (
         <div className="min-h-screen bg-[#FAF9F6] pt-32 pb-20 font-sans text-stone-900 selection:bg-stone-900 selection:text-white">
             <div className="max-w-7xl mx-auto px-6">
@@ -74,12 +88,12 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                         </div>
 
                         {/* HERO METRIC */}
-                        <div className="text-right border border-stone-100 rounded-2xl bg-stone-50 p-6 min-w-[300px]">
-                            <div className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-2">True Carbon / Lifespan</div>
-                            <div className="text-5xl font-mono font-black mb-2 tracking-tighter text-emerald-600">
+                        <div className="text-right border border-stone-200 rounded-3xl bg-stone-50 p-8 min-w-[340px] shadow-sm">
+                            <div className="text-[11px] font-black uppercase tracking-[0.2em] text-stone-400 mb-3">True Carbon / Lifespan</div>
+                            <div className="text-6xl font-mono font-black mb-2 tracking-tighter text-emerald-600 leading-none">
                                 {metricValue.toFixed(2)}
                             </div>
-                            <div className="text-[10px] font-mono text-stone-400">
+                            <div className="text-xs font-mono font-bold text-stone-500 mt-4">
                                 kg CO2e + MJ eq / Year
                             </div>
                         </div>
@@ -90,55 +104,59 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
                     {/* WIDGET 1: LIFECYCLE EMISSIONS */}
-                    <div className="bg-white border border-stone-100 rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
-                        <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-6 flex items-center gap-2">
+                    <div className="bg-white border border-stone-100 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-stone-500 mb-8 flex items-center gap-3">
+                            <div className="w-2 h-2 rounded-full bg-stone-800" />
                             Lifecycle Footprint
                         </h3>
                         <LifecycleBarChart product={product} />
-                        <div className="mt-6 pt-4 border-t border-stone-100 flex justify-between items-center text-[10px] font-mono text-stone-500">
-                            <span>{product.transport_mode}</span>
+                        <div className="mt-8 pt-6 border-t border-stone-100 flex justify-between items-center text-[11px] font-mono font-black text-stone-400 tracking-widest">
+                            <span className="uppercase">{product.transport_mode}</span>
                             <span>{product.shipping_distance.toFixed(0)} km</span>
                         </div>
                     </div>
 
                     {/* WIDGET 2: RESOURCE TELEMETRY */}
-                    <div className="bg-white border border-stone-100 rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
-                        <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-6">
+                    <div className="bg-white border border-stone-100 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-stone-500 mb-8 flex items-center gap-3">
+                            <div className="w-2 h-2 rounded-full bg-stone-800" />
                             Resource Intensity
                         </h3>
                         <ResourceGauge product={product} />
                     </div>
 
                     {/* WIDGET 3: ESG RADAR */}
-                    <div className="bg-white border border-stone-100 rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
-                        <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-6">
+                    <div className="bg-white border border-stone-100 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-stone-500 mb-8 flex items-center gap-3">
+                            <div className="w-2 h-2 rounded-full bg-stone-800" />
                             ESG & Labor
                         </h3>
                         <EsgRadar product={product} />
-                        <div className="mt-4 text-center">
-                            <span className="text-[10px] font-bold uppercase bg-stone-50 border border-stone-200 px-2 py-1 rounded-full text-stone-500">
+                        <div className="mt-6 text-center">
+                            <span className="text-[10px] font-black uppercase bg-stone-50 border border-stone-200 px-3 py-1.5 rounded-full text-stone-500 tracking-widest">
                                 Disclosure: {product.supply_chain_disclosure}
                             </span>
                         </div>
                     </div>
 
                     {/* WIDGET 4: CIRCULARITY */}
-                    <div className="bg-white border border-stone-100 rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
-                        <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-6">
+                    <div className="bg-white border border-stone-100 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-stone-500 mb-8 flex items-center gap-3">
+                            <div className="w-2 h-2 rounded-full bg-stone-800" />
                             End of Life
                         </h3>
                         <CircularityPie product={product} />
-                        <div className="mt-6 space-y-2 border-t border-stone-100 pt-4">
-                            <div className="flex justify-between text-[10px] font-mono font-bold">
+                        <div className="mt-8 space-y-3 border-t border-stone-100 pt-6">
+                            <div className="flex justify-between text-[11px] font-mono font-black uppercase tracking-widest">
                                 <span className="text-stone-400">Repair Index</span>
-                                <span className="text-stone-700">{product.repairability_index}/100</span>
+                                <span className="text-stone-800">{product.repairability_index.toFixed(1)}/100</span>
                             </div>
-                            <div className="flex justify-between text-[10px] font-mono font-bold">
-                                <span className={cn("text-stone-400", product.plastic_percentage > 20 ? "text-amber-600" : "")}>
+                            <div className="flex justify-between text-[11px] font-mono font-black uppercase tracking-widest">
+                                <span className={cn(product.plastic_percentage > 20 ? "text-rose-600" : "text-stone-400")}>
                                     Pkg Plastic
                                 </span>
-                                <span className={cn(product.plastic_percentage > 20 ? "text-amber-600" : "text-stone-700")}>
-                                    {product.plastic_percentage}%
+                                <span className={cn(product.plastic_percentage > 20 ? "text-rose-600" : "text-stone-800")}>
+                                    {product.plastic_percentage.toFixed(1)}%
                                 </span>
                             </div>
                         </div>
@@ -147,7 +165,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 </div>
 
                 {/* 3. SECTION C: COGNITIVE TRANSLATION WIDGETS */}
-                <ProductExplanationWidgets product={product} allProducts={allProducts} />
+                <ProductExplanationWidgets product={product} alternative={alternative} />
 
             </div>
         </div>

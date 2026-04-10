@@ -78,28 +78,26 @@ export function computeCompleteEngine(data: BrandData[]): BrandData[] {
     };
 
     data.forEach(d => {
-        // Ensure values exist and are numeric to prevent NaN propagation
         const smp = Number(d.Sustainable_Material_Percent) || 0;
         const ts2024 = Number(d.Transparency_Score_2024) || 0;
-        const rev = Number(d.Revenue_USD_Million) || 1;
         const cF = Number(d.Carbon_Footprint_MT) || 0;
         const wU = Number(d.Water_Usage_Liters) || 0;
         const wP = Number(d.Waste_Production_KG) || 0;
 
-        datasetMinMax.Carbon_Footprint_MT.min = Math.min(datasetMinMax.Carbon_Footprint_MT.min, cF);
-        datasetMinMax.Carbon_Footprint_MT.max = Math.max(datasetMinMax.Carbon_Footprint_MT.max, cF);
+        if (cF < datasetMinMax.Carbon_Footprint_MT.min) datasetMinMax.Carbon_Footprint_MT.min = cF;
+        if (cF > datasetMinMax.Carbon_Footprint_MT.max) datasetMinMax.Carbon_Footprint_MT.max = cF;
 
-        datasetMinMax.Water_Usage_Liters.min = Math.min(datasetMinMax.Water_Usage_Liters.min, wU);
-        datasetMinMax.Water_Usage_Liters.max = Math.max(datasetMinMax.Water_Usage_Liters.max, wU);
+        if (wU < datasetMinMax.Water_Usage_Liters.min) datasetMinMax.Water_Usage_Liters.min = wU;
+        if (wU > datasetMinMax.Water_Usage_Liters.max) datasetMinMax.Water_Usage_Liters.max = wU;
 
-        datasetMinMax.Waste_Production_KG.min = Math.min(datasetMinMax.Waste_Production_KG.min, wP);
-        datasetMinMax.Waste_Production_KG.max = Math.max(datasetMinMax.Waste_Production_KG.max, wP);
+        if (wP < datasetMinMax.Waste_Production_KG.min) datasetMinMax.Waste_Production_KG.min = wP;
+        if (wP > datasetMinMax.Waste_Production_KG.max) datasetMinMax.Waste_Production_KG.max = wP;
 
-        datasetMinMax.Sustainable_Material_Percent.min = Math.min(datasetMinMax.Sustainable_Material_Percent.min, smp);
-        datasetMinMax.Sustainable_Material_Percent.max = Math.max(datasetMinMax.Sustainable_Material_Percent.max, smp);
+        if (smp < datasetMinMax.Sustainable_Material_Percent.min) datasetMinMax.Sustainable_Material_Percent.min = smp;
+        if (smp > datasetMinMax.Sustainable_Material_Percent.max) datasetMinMax.Sustainable_Material_Percent.max = smp;
 
-        datasetMinMax.Transparency_Score_2024.min = Math.min(datasetMinMax.Transparency_Score_2024.min, ts2024);
-        datasetMinMax.Transparency_Score_2024.max = Math.max(datasetMinMax.Transparency_Score_2024.max, ts2024);
+        if (ts2024 < datasetMinMax.Transparency_Score_2024.min) datasetMinMax.Transparency_Score_2024.min = ts2024;
+        if (ts2024 > datasetMinMax.Transparency_Score_2024.max) datasetMinMax.Transparency_Score_2024.max = ts2024;
     });
 
     // STEP 2: Execute the strict non-compensatory algorithm per brand

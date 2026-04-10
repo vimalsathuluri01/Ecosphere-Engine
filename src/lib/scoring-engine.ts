@@ -45,28 +45,40 @@ export class ScoringEngine {
 
     constructor(data: ScoringInput[]) {
         this.inputs = data;
-        this.bounds = this.calculateBounds(data);
-        this.benchmarks = this.calculateBenchmarks(data);
+        const metrics = this.calculateMetrics(data);
+        this.bounds = metrics.bounds;
+        this.benchmarks = metrics.benchmarks;
     }
 
-    private calculateBounds(data: ScoringInput[]) {
-        const keys = Object.keys(data[0]) as (keyof ScoringInput)[];
-        const bounds = {} as any;
-        keys.forEach(k => {
-            const values = data.map(d => d[k]);
-            bounds[k] = { min: Math.min(...values), max: Math.max(...values) };
-        });
-        return bounds;
-    }
+    private calculateMetrics(data: ScoringInput[]) {
+        if (data.length === 0) return { bounds: {} as any, benchmarks: {} as any };
 
-    private calculateBenchmarks(data: ScoringInput[]) {
         const keys = Object.keys(data[0]) as (keyof ScoringInput)[];
-        const avgs = {} as any;
+        const initialBounds = {} as any;
+        const sums = {} as any;
+
         keys.forEach(k => {
-            const sum = data.reduce((acc, d) => acc + d[k], 0);
-            avgs[k] = sum / data.length;
+            initialBounds[k] = { min: Infinity, max: -Infinity };
+            sums[k] = 0;
         });
-        return avgs;
+
+        for (let i = 0; i < data.length; i++) {
+            const d = data[i];
+            for (let j = 0; j < keys.length; j++) {
+                const k = keys[j];
+                const val = d[k];
+                if (val < initialBounds[k].min) initialBounds[k].min = val;
+                if (val > initialBounds[k].max) initialBounds[k].max = val;
+                sums[k] += val;
+            }
+        }
+
+        const benchmarks = {} as any;
+        keys.forEach(k => {
+            benchmarks[k] = sums[k] / data.length;
+        });
+
+        return { bounds: initialBounds, benchmarks };
     }
 
     private normalize(val: number, key: keyof ScoringInput, type: 'COST' | 'BENEFIT'): number {

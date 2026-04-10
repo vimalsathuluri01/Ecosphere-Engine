@@ -17,15 +17,32 @@ export default async function ComparePage() {
 
                 <div className="mb-4">
                     <h1 className="text-4xl md:text-6xl font-sans font-bold text-stone-800 tracking-tighter uppercase mb-4">
-                        Zero-Sum <span className="text-stone-400">Combat Engine</span>
+                        Profile <span className="text-stone-400">Comparison</span>
                     </h1>
-                    <p className="text-stone-500 max-w-2xl text-lg font-serif">
-                        Compare operational intensities and PR divergence head-to-head.
+                    <p className="text-stone-500 max-w-2xl text-lg font-serif italic">
+                        Cross-referenced operational and material disclosure benchmarks for the selected cohort.
                     </p>
                 </div>
 
                 {/* THE ENGINE */}
-                <CompareDashboard allBrands={brands} />
+                <CompareDashboard allBrands={brands.map(b => ({ 
+                    Brand_Name: b.Brand_Name, 
+                    Category: b.Category,
+                    finalScore: b.finalScore,
+                    Carbon_Intensity_MT_per_USD_Million: b.Carbon_Intensity_MT_per_USD_Million,
+                    Water_Usage_Liters: b.Water_Usage_Liters,
+                    Revenue_USD_Million: b.Revenue_USD_Million,
+                    Transparency_Score_2024: b.Transparency_Score_2024,
+                    finalPenalty: b.finalPenalty,
+                    Carbon_Footprint_MT: b.Carbon_Footprint_MT,
+                    Sustainable_Material_Percent: b.Sustainable_Material_Percent,
+                    Waste_Intensity_KG_per_USD_Million: b.Waste_Intensity_KG_per_USD_Million,
+                    contributions: b.contributions,
+                    Renewable_Energy_Ratio: b.Renewable_Energy_Ratio,
+                    Material_Type: b.Material_Type,
+                    Production_Process: b.Production_Process,
+                    Annual_Units_Million: b.Annual_Units_Million
+                }))} />
 
             </div>
         </div>

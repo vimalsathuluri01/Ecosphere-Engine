@@ -7,6 +7,9 @@ import { ScoringEngine, ScoringInput } from './scoring-engine';
 // Singleton Cache
 let cachedBrands: EnrichedBrand[] | null = null;
 let cachedProducts: EnrichedProduct[] | null = null;
+let lastBrandsLoad: number = 0;
+let lastProductsLoad: number = 0;
+const CACHE_TTL = 1000 * 60 * 5; // 5 minutes
 
 const DATA_DIR = path.join(process.cwd(), 'upload'); // Defined by user path
 
@@ -24,10 +27,11 @@ const slugify = (text: string) => {
 // --- LOADERS ---
 
 export async function getBrands(): Promise<EnrichedBrand[]> {
-    if (cachedBrands) return cachedBrands;
+    const now = Date.now();
+    if (cachedBrands && (now - lastBrandsLoad < CACHE_TTL)) return cachedBrands;
 
     try {
-        const csvPath = path.join(DATA_DIR, 'major_fashion_brands_sustainability_data.csv');
+        const csvPath = path.join(DATA_DIR, 'major_fashion_brands_sustainability_data_v2.csv');
 
         if (!fs.existsSync(csvPath)) {
             console.error("CSV File not found at:", csvPath);
@@ -145,6 +149,7 @@ export async function getBrands(): Promise<EnrichedBrand[]> {
         }).sort((a, b) => b.compositeScore - a.compositeScore);
 
         cachedBrands = processed;
+        lastBrandsLoad = Date.now();
         return processed;
 
     } catch (error) {
@@ -154,11 +159,12 @@ export async function getBrands(): Promise<EnrichedBrand[]> {
 }
 
 export async function getProducts(): Promise<EnrichedProduct[]> {
-    if (cachedProducts) return cachedProducts;
+    const now = Date.now();
+    if (cachedProducts && (now - lastProductsLoad < CACHE_TTL)) return cachedProducts;
 
     try {
         const prodPath = path.join(DATA_DIR, 'complete_sustainability_test_data.csv');
-        const mfgPath = path.join(DATA_DIR, 'manufacturing_test_data.csv');
+        const mfgPath = path.join(DATA_DIR, 'manufacturing_test_data_v2.csv');
 
         // Check if files exist to avoid crash
         if (!fs.existsSync(prodPath) || !fs.existsSync(mfgPath)) {
@@ -176,12 +182,15 @@ export async function getProducts(): Promise<EnrichedProduct[]> {
             mfgMap.set(key, m);
         });
 
-        cachedProducts = rawProducts.map(p => {
+        cachedProducts = rawProducts.map((p, pIdx) => {
             const key = `${p.company}|${p.product_name}|${p.material_type}`.toLowerCase();
             const mfg = mfgMap.get(key) || {} as Partial<ManufacturingCSV>;
 
-            // MERGE
+            // MERGE - Ensure we don't lose the base data from p if mfg is missing
             const merged = { ...p, ...mfg };
+
+            // STABLE ID: Ensure ID is deterministic for hydration
+            const stableId = p.product_id?.toString() || `prod-${pIdx}-${p.company.substring(0,3)}`;
 
             // 1. Total Emissions
             const totalEmissions =
@@ -208,7 +217,7 @@ export async function getProducts(): Promise<EnrichedProduct[]> {
 
             return {
                 ...merged,
-                product_id: p.product_id?.toString() || Math.random().toString(),
+                product_id: stableId,
                 compositeScore: Math.max(0, 100 - (flags.length * 20)), // Simple proxy
                 sustainabilityTier: tier,
                 trueCarbonPerWear,
@@ -216,6 +225,7 @@ export async function getProducts(): Promise<EnrichedProduct[]> {
             } as EnrichedProduct;
         });
 
+        lastProductsLoad = Date.now();
         return cachedProducts;
 
     } catch (error) {

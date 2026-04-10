@@ -9,26 +9,37 @@ import { formatScore } from "@/lib/formatters";
 
 interface Props {
     product: EnrichedProduct;
-    allProducts: EnrichedProduct[];
+    alternative?: EnrichedProduct;
 }
 
-export function ProductExplanationWidgets({ product, allProducts }: Props) {
+export function ProductExplanationWidgets({ product, alternative }: Props) {
     // Shared Attributes
     const hasViolations = product.hazardous_chemicals_used === 'yes' || !!product.environmental_violations;
     const isSynthetic = ['Polyester', 'Nylon', 'Acrylic', 'Spandex', 'Elastane', 'Poly'].some(s => product.material_type.includes(s));
     const isBlend = product.material_type.includes('/') || product.material_type.includes('Blend') || product.material_type.includes(' and ');
 
-    // 1. True Price Deficit
-    const retailPrice = 45.00; // Simulated Baseline
-    const costOfCarbon = product.scope1_scope2_emissions * 0.185;
+    // 1. Total Resource Gap (FORENSIC AUDIT)
+    const retailPrice = 45.00; 
+    const isGreenwashedCarbon = product.renewable_energy_ratio < 30 && ['A', 'B'].includes(product.energy_efficiency_rating);
+    const carbonBase = product.scope1_scope2_emissions;
+    const carbonAdjustment = isGreenwashedCarbon ? (carbonBase * 0.45) : 0; // The Forensic "Gross-up"
+    
+    const costOfCarbon = (carbonBase + carbonAdjustment) * 0.185;
     const costOfWater = product.water_consumed_per_unit * 0.002;
     const ecologicalCost = costOfCarbon + costOfWater;
     const truePrice = retailPrice + ecologicalCost;
 
-    // 2. EOL Probability
-    const probability = (isBlend || isSynthetic || product.plastic_percentage > 0) ? 0 : product.recyclability_score;
+    // 2. Recycling Reality (FORENSIC AUDIT)
+    const brandClaimEol = product.recyclability_score || 0;
+    const isVetoedEol = isBlend || isSynthetic || product.plastic_percentage > 2;
+    const realityEol = isVetoedEol ? 0 : brandClaimEol;
+    const eolVetoReason = isBlend ? "Mixed Blend Constraint" : isSynthetic ? "Polymer Constraint" : "Plastic Contamination";
 
-    // 3. Carbon Decay Curve (Durability)
+    // 4. Water Footprint
+    const drinkingDays = product.water_consumed_per_unit / 2.5;
+    const drinkingYears = (drinkingDays / 365).toFixed(1);
+
+    // 5. Carbon Amortization
     const lifespan = Math.max(1, product.average_lifespan);
     const decayData = Array.from({ length: Math.ceil(lifespan) }, (_, i) => {
         const year = i + 1;
@@ -37,18 +48,15 @@ export function ProductExplanationWidgets({ product, allProducts }: Props) {
             carbon: Number((product.scope1_scope2_emissions / year).toFixed(2))
         };
     });
-    // 4. Thirst Translator
-    const drinkingDays = product.water_consumed_per_unit / 2.5;
-    const drinkingYears = (drinkingDays / 365).toFixed(1);
 
-    // 6. Supply Chain Shadow
+    // 7. Microplastic Loss
+    const sheds = isSynthetic || product.plastic_percentage > 0;
+    const microplastics = sheds ? Math.round(product.plastic_percentage * 50 * 0.05) : 0;
+
+    // 6. Disclosure Audit
     const disclosure = product.supply_chain_disclosure.toLowerCase();
     const isLowDisclosure = disclosure === 'low' || disclosure === 'none' || product.esg_reporting_score < 40;
     const shadowPenalty = isLowDisclosure ? product.scope1_scope2_emissions * 1.5 : 0;
-
-    // 7. Microplastic Shedding
-    const sheds = isSynthetic || product.plastic_percentage > 0;
-    const microplastics = sheds ? Math.round(product.plastic_percentage * 50 * 0.05) : 0;
 
     // 8. Energy Grid Reality Check
     const gridCoalHeavy = product.renewable_energy_ratio < 30;
@@ -58,19 +66,12 @@ export function ProductExplanationWidgets({ product, allProducts }: Props) {
     const packagingWasteRatio = product.packaging_weight_ratio || (product.plastic_percentage / 10) || 0.5;
 
     // 10. Better Alternative Swap
-    let alternative: EnrichedProduct | undefined = undefined;
-    if (product.compositeScore < 50) {
-        const keywords = product.product_name.split(' ');
-        alternative = allProducts.find(p => p.compositeScore > 70 && keywords.some(k => p.product_name.includes(k)) && p.product_id !== product.product_id);
-        if (!alternative) {
-            alternative = allProducts.find(p => p.compositeScore > 80 && p.product_id !== product.product_id);
-        }
-    }
+    // (Logic moved to server for peak performance)
 
     // Shared Card Style
-    const cardBase = "bg-white border border-stone-100 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col";
-    const headerBase = "text-stone-800 text-lg font-bold mb-2 flex items-center gap-3";
-    const dataLabel = "font-mono text-sm text-stone-500 uppercase tracking-widest";
+    const cardBase = "bg-white border border-stone-100 rounded-3xl p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col";
+    const headerBase = "text-stone-900 text-xl font-black mb-4 flex items-center gap-4 uppercase tracking-tighter";
+    const dataLabel = "font-mono text-[11px] font-black text-stone-400 uppercase tracking-[0.2em]";
 
     return (
         <section className="mt-16 pt-16">
@@ -85,21 +86,29 @@ export function ProductExplanationWidgets({ product, allProducts }: Props) {
                         </div>
                         {/* Data Right Side */}
                         <div className="flex-1 flex flex-col justify-center">
-                            <h3 className={headerBase}><DollarSign className="w-5 h-5 text-stone-400" /> The True Ecological Price</h3>
-                            <p className="text-stone-500 text-sm mb-6">Retail prices hide the externalized cost of carbon and water remediation.</p>
+                            <h3 className={headerBase}><DollarSign className="w-6 h-6 text-stone-400" /> Total Resource Gap</h3>
+                            <p className="text-stone-500 text-base mb-8 font-serif italic text-balance">Retail prices externalize the systemic cost of carbon and water restoration. This represents the hidden ecological debt.</p>
 
-                            <div className="space-y-3">
-                                <div className="flex justify-between items-center border-b border-stone-100 pb-3">
-                                    <span className={dataLabel}>Retail Base Price</span>
-                                    <span className="font-mono text-stone-800">${retailPrice.toFixed(2)}</span>
+                            <div className="space-y-4">
+                                <div className="flex justify-between items-center border-b border-stone-100 pb-4">
+                                    <span className={dataLabel}>Primary Base Price</span>
+                                    <span className="font-mono text-lg text-stone-800 font-bold">${retailPrice.toFixed(2)}</span>
                                 </div>
-                                <div className="flex justify-between items-center border-b border-stone-100 pb-3">
-                                    <span className={dataLabel}>Planetary Hidden Tax</span>
-                                    <span className="font-mono text-rose-500">+${ecologicalCost.toFixed(2)}</span>
+                                <div className="flex justify-between items-center border-b border-stone-100 pb-4">
+                                    <span className={dataLabel}>Restoration Cost</span>
+                                    <span className="font-mono text-lg text-stone-900 font-black">+${ecologicalCost.toFixed(2)}</span>
                                 </div>
-                                <div className="flex justify-between items-center pt-2">
-                                    <span className="font-bold text-stone-800 uppercase tracking-widest">True Cost Limit</span>
-                                    <span className="font-mono text-2xl font-black text-stone-900">${truePrice.toFixed(2)}</span>
+                                
+                                {isGreenwashedCarbon && (
+                                    <div className="flex justify-between items-center bg-rose-50 px-3 py-2 rounded-lg border border-rose-100">
+                                        <span className="text-[11px] font-black text-rose-600 uppercase tracking-widest">Physical Baseline Adjustment</span>
+                                        <span className="font-mono text-xs text-rose-500 font-bold">Offset Discount Rejected</span>
+                                    </div>
+                                )}
+
+                                <div className="flex justify-between items-center pt-4">
+                                    <span className="font-black text-stone-900 uppercase tracking-[0.2em] text-xs">Systemic Total</span>
+                                    <span className="font-mono text-4xl font-black text-stone-900 tracking-tighter">${truePrice.toFixed(2)}</span>
                                 </div>
                             </div>
                         </div>
@@ -125,122 +134,132 @@ export function ProductExplanationWidgets({ product, allProducts }: Props) {
                     </div>
                 </div>
 
-                {/* WIDGET 3: The Thirst Translator (col-span-12 lg:col-span-6) */}
+                {/* WIDGET 3: The Water Footprint (col-span-12 lg:col-span-6) */}
                 <div className={cn(cardBase, "col-span-12 lg:col-span-6")}>
-                    <h3 className={headerBase}><Droplets className="w-5 h-5 text-blue-400" /> The Thirst Translator</h3>
-                    <p className="text-stone-500 text-sm mb-8">
-                        The {product.water_consumed_per_unit.toLocaleString()}L abstracted footprint translated to human necessity.
+                    <h3 className={headerBase}><Droplets className="w-6 h-6 text-blue-500" /> Water Footprint</h3>
+                    <p className="text-stone-500 text-base mb-10 font-serif italic">
+                        Abstracted water volume required for fiber growth and industrial processing.
                     </p>
-                    <div className="flex items-end gap-3 mt-auto border-t border-stone-100 pt-6">
-                        <div className="text-5xl font-black text-stone-800 tracking-tighter">{drinkingYears}</div>
-                        <div className={dataLabel}>Years of Human Drinking Water</div>
+                    <div className="flex items-end gap-5 mt-auto border-t border-stone-100 pt-8">
+                        <div className="text-7xl font-black text-stone-900 tracking-tighter leading-none">{drinkingYears}</div>
+                        <div className={cn(dataLabel, "mb-1")}>Years of Human Usage</div>
                     </div>
                 </div>
 
-                {/* WIDGET 4: Microplastic Predictor (col-span-12 lg:col-span-6) */}
+                {/* WIDGET 4: Microplastic Loss (col-span-12 lg:col-span-6) */}
                 <div className={cn(cardBase, "col-span-12 lg:col-span-6", sheds ? "bg-stone-50" : "")}>
-                    <h3 className={headerBase}><CloudSnow className="w-5 h-5 text-stone-400" /> Shedding Predictor</h3>
-                    <p className="text-stone-500 text-sm mb-8">
-                        {sheds
-                            ? "Synthetic fibers shed directly into local water systems with every wash cycle."
-                            : "No synthetic microfibers detected. Zero shedding penalty applied."}
+                    <h3 className={headerBase}><CloudSnow className="w-6 h-6 text-stone-500" /> Microplastic Loss</h3>
+                    <p className="text-stone-500 text-base mb-10 font-serif italic">
+                        Estimated fiber release into drainage systems per 50 standard wash cycles.
                     </p>
-                    <div className="flex items-end gap-3 mt-auto border-t border-stone-100 pt-6">
-                        <div className="text-5xl font-black text-stone-800 tracking-tighter">{sheds ? `${microplastics}M` : "0"}</div>
-                        <div className={dataLabel}>Fibers over 50 washes</div>
+                    <div className="flex items-end gap-5 mt-auto border-t border-stone-100 pt-8">
+                        <div className="text-7xl font-black text-stone-900 tracking-tighter leading-none">{sheds ? `${microplastics}M` : "0"}</div>
+                        <div className={cn(dataLabel, "mb-1")}>Fibers Released</div>
                     </div>
                 </div>
 
                 {/* WIDGET 5: Carbon Decay Curve (col-span-12 lg:col-span-8) */}
                 <div className={cn(cardBase, "col-span-12 lg:col-span-8")}>
-                    <h3 className={headerBase}><Zap className="w-5 h-5 text-stone-400" /> Carbon Debt Decay (Durability)</h3>
-                    <p className="text-stone-500 text-sm mb-6">
-                        Wearing this garment across its {lifespan} year lifespan mathematically amortizes its initial manufacturing debt.
+                    <h3 className={headerBase}><Zap className="w-6 h-6 text-stone-500" /> Carbon Amortization</h3>
+                    <p className="text-stone-500 text-base mb-8 font-serif italic">
+                        The physical manufacturing footprint is amortized over the projected garment durability.
                     </p>
-                    <div className="h-[180px] w-full mt-auto">
+                    <div className="h-[220px] w-full mt-auto">
                         <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={decayData} margin={{ top: 5, right: 0, left: 0, bottom: 0 }}>
+                            <AreaChart data={decayData} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
                                 <defs>
                                     <linearGradient id="decayColor" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#d6d3d1" stopOpacity={0.6} />
-                                        <stop offset="95%" stopColor="#d6d3d1" stopOpacity={0} />
+                                        <stop offset="5%" stopColor="#292524" stopOpacity={0.2} />
+                                        <stop offset="95%" stopColor="#292524" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
-                                <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fill: '#a8a29e', fontSize: 12, fontFamily: 'monospace' }} />
+                                <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fill: '#78716c', fontSize: 13, fontWeight: 700, fontFamily: 'monospace' }} />
                                 <YAxis hide domain={[0, 'dataMax']} />
-                                <Tooltip cursor={{ stroke: '#e7e5e4', strokeWidth: 1 }} contentStyle={{ background: '#fff', border: '1px solid #f5f5f4', borderRadius: '12px', fontSize: '12px', color: '#57534e', fontFamily: 'monospace' }} />
-                                <Area type="monotone" dataKey="carbon" stroke="#a8a29e" strokeWidth={2} fillOpacity={1} fill="url(#decayColor)" />
+                                <Tooltip cursor={{ stroke: '#e7e5e4', strokeWidth: 1 }} contentStyle={{ background: '#fff', border: '1px solid #f5f5f4', borderRadius: '16px', fontSize: '14px', fontWeight: 'bold', color: '#1c1917', fontFamily: 'monospace', boxShadow: '0 10px 40px rgba(0,0,0,0.05)' }} />
+                                <Area type="monotone" dataKey="carbon" stroke="#1c1917" strokeWidth={3} fillOpacity={1} fill="url(#decayColor)" />
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
 
-                {/* WIDGET 6: EOL Matrix (col-span-12 lg:col-span-4) */}
-                <div className={cn(cardBase, "col-span-12 lg:col-span-4", probability === 0 ? "bg-stone-50" : "")}>
-                    <h3 className={headerBase}><Trash2 className="w-5 h-5 text-stone-400" /> EOL Matrix</h3>
-                    <p className="text-stone-500 text-sm mb-8">
-                        {probability === 0
-                            ? "Mixed material construction makes recycling mathematically impossible at scale."
-                            : "Mono-material permits mechanical scale recycling."}
-                    </p>
-                    <div className="mt-auto border-t border-stone-100 pt-6">
-                        <div className="text-4xl font-black text-stone-800 tracking-tighter mb-1">{probability}%</div>
-                        <div className={dataLabel}>Will hit {probability === 0 ? 'Landfill' : 'Recycler'}</div>
+                {/* WIDGET 6: Recycling Reality (col-span-12 lg:col-span-4) */}
+                <div className={cn(cardBase, "col-span-12 lg:col-span-4", isVetoedEol ? "bg-rose-50/50 border-rose-100 shadow-none text-rose-900" : "")}>
+                    <h3 className={cn(headerBase, isVetoedEol ? "text-rose-900" : "")}><RefreshCw className={cn("w-6 h-6", isVetoedEol ? "text-rose-500" : "text-stone-500")} /> Recycling Reality</h3>
+                    
+                    <div className="space-y-6 mb-10">
+                        <div className="flex justify-between items-center text-[11px] font-mono font-black uppercase tracking-widest">
+                            <span className={isVetoedEol ? "text-rose-400" : "text-stone-400"}>Brand Claim</span>
+                            <span className={cn(isVetoedEol ? "text-rose-600 line-through opacity-50" : "text-stone-800")}>{brandClaimEol.toFixed(1)}% Potential</span>
+                        </div>
+                        {isVetoedEol && (
+                            <div className="flex justify-between items-center text-[11px] font-mono font-black text-rose-600 uppercase tracking-widest">
+                                <span>Audit Adjustment</span>
+                                <span>-{brandClaimEol.toFixed(1)}%</span>
+                            </div>
+                        )}
+                        <div className={cn("text-base font-serif italic", isVetoedEol ? "text-rose-800/80" : "text-stone-500")}>
+                            {isVetoedEol 
+                                ? `Measurement Veto: ${eolVetoReason}. Real-world mechanical separation is unsupported.`
+                                : "Mono-material profile supports standard local processing."}
+                        </div>
+                    </div>
+
+                    <div className="mt-auto border-t border-stone-100 pt-8">
+                        <div className={cn("text-6xl font-black tracking-tighter mb-2 leading-none", isVetoedEol ? "text-rose-600" : "text-emerald-600")}>
+                            {realityEol.toFixed(1)}%
+                        </div>
+                        <div className={cn(dataLabel, isVetoedEol ? "text-rose-400" : "")}>Final State: {isVetoedEol ? 'Disposal' : 'Recovery'}</div>
                     </div>
                 </div>
 
-                {/* WIDGET 7: Supply Chain Shadow (col-span-12 lg:col-span-4) */}
+                {/* WIDGET 7: Disclosure Audit (col-span-12 lg:col-span-4) */}
                 <div className={cn(cardBase, "col-span-12 lg:col-span-4")}>
-                    <h3 className={headerBase}><Factory className="w-5 h-5 text-stone-400" /> Supply Shadow</h3>
-                    <p className="text-stone-500 text-sm mb-6">
+                    <h3 className={headerBase}><Factory className="w-6 h-6 text-stone-500" /> Disclosure Audit</h3>
+                    <p className="text-stone-500 text-base mb-8">
                         {isLowDisclosure
                             ? "Hidden Tier-3 data forces the Engine to apply a worst-case baseline shadow penalty."
                             : "High disclosure eliminates estimated shadow penalties."}
                     </p>
                     <div className="mt-auto">
-                        <div className="h-4 w-full bg-stone-100 rounded-full flex overflow-hidden mb-2">
-                            <div className="bg-stone-800 h-full" style={{ width: `${(product.scope1_scope2_emissions / (product.scope1_scope2_emissions + shadowPenalty)) * 100}%` }} />
-                            {isLowDisclosure && <div className="bg-rose-200 h-full" style={{ width: `${(shadowPenalty / (product.scope1_scope2_emissions + shadowPenalty)) * 100}%` }} />}
+                        <div className="h-6 w-full bg-stone-100 rounded-full flex overflow-hidden mb-4 shadow-inner">
+                            <div className="bg-stone-900 h-full" style={{ width: `${((product.scope1_scope2_emissions || 0) / Math.max(0.001, (product.scope1_scope2_emissions || 0) + shadowPenalty)) * 100}%` }} />
+                            {isLowDisclosure && <div className="bg-rose-300 h-full" style={{ width: `${(shadowPenalty / Math.max(0.001, (product.scope1_scope2_emissions || 0) + shadowPenalty)) * 100}%` }} />}
                         </div>
-                        <div className="flex justify-between text-[10px] font-mono uppercase text-stone-400">
-                            <span>Known Data</span>
-                            {isLowDisclosure && <span className="text-rose-500">+ Shadow Penalty</span>}
+                        <div className="flex justify-between text-[11px] font-mono font-black uppercase tracking-widest text-stone-400">
+                            <span>{isLowDisclosure ? 'Partial Data' : 'Verified Data'}</span>
+                            {isLowDisclosure && <span className="text-rose-600">+ Risk Factor</span>}
                         </div>
                     </div>
                 </div>
 
-                {/* WIDGET 8: Energy Grid Reality (col-span-12 lg:col-span-4) */}
+                {/* WIDGET 8: Energy Profile (col-span-12 lg:col-span-4) */}
                 <div className={cn(cardBase, "col-span-12 lg:col-span-4")}>
-                    <h3 className={headerBase}><Flame className="w-5 h-5 text-stone-400" /> Grid Reality</h3>
-                    <p className="text-stone-500 text-sm mb-6">
-                        {falseEfficiency
-                            ? `Factory claims high efficiency (${product.energy_efficiency_rating}), but operates on a coal-heavy grid.`
-                            : "Efficiency claims align with the local grid's renewable baseline."}
+                    <h3 className={headerBase}><Flame className="w-6 h-6 text-stone-500" /> Energy Profile</h3>
+                    <p className="text-stone-500 text-base mb-8 font-serif italic">
+                        Alignment between manufacturing efficiency and the regional renewable energy baseline.
                     </p>
-                    <div className="mt-auto border-t border-stone-100 pt-6">
+                    <div className="mt-auto border-t border-stone-100 pt-8">
                         {falseEfficiency ? (
-                            <div className="flex justify-between items-center text-rose-600 font-mono text-sm uppercase">
-                                <span>Hidden Grid Penalty</span>
-                                <span className="font-bold">+40% CO2e</span>
+                            <div className="flex justify-between items-center text-rose-600 font-mono text-sm font-black uppercase tracking-widest">
+                                <span className="flex items-center gap-2"><ShieldAlert size={14}/> Grid Liability</span>
+                                <span className="text-xl">+40% CO2e</span>
                             </div>
                         ) : (
-                            <div className="text-emerald-600 font-mono text-sm uppercase">Grid Aligned</div>
+                            <div className="text-emerald-600 font-mono text-xs font-black uppercase tracking-[0.2em]">Verified Grid Baseline</div>
                         )}
                     </div>
                 </div>
 
-                {/* WIDGET 9: Packaging Disproportion (col-span-12 lg:col-span-4) */}
+                {/* WIDGET 9: Packaging Performance (col-span-12 lg:col-span-4) */}
                 <div className={cn(cardBase, "col-span-12 lg:col-span-4")}>
-                    <h3 className={headerBase}><Box className="w-5 h-5 text-stone-400" /> Pkg Disproportion</h3>
-                    <p className="text-stone-500 text-sm mb-6">
-                        {packagingWasteRatio > 1
-                            ? "Single-use plastic shipping materials generate more footprint than the core product."
-                            : "Packaging mass is structurally beneath the product mass."}
+                    <h3 className={headerBase}><Box className="w-6 h-6 text-stone-500" /> Packaging Profile</h3>
+                    <p className="text-stone-500 text-base mb-8 font-serif italic">
+                        Measurement of disposable shipping mass relative to product mass.
                     </p>
-                    <div className="mt-auto border-t border-stone-100 pt-6">
+                    <div className="mt-auto border-t border-stone-100 pt-8">
                         <div className="flex justify-between items-center">
-                            <span className={dataLabel}>Ratio (Pkg:Product)</span>
-                            <span className="font-mono text-xl font-bold text-stone-800">{packagingWasteRatio.toFixed(1)}x</span>
+                            <span className={dataLabel}>Mass Ratio</span>
+                            <span className="font-mono text-2xl font-black text-stone-900 tracking-tighter">{packagingWasteRatio.toFixed(1)}x</span>
                         </div>
                     </div>
                 </div>

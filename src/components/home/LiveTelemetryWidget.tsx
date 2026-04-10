@@ -14,8 +14,10 @@ const generateTelemetryData = () => {
 
 export function LiveTelemetryWidget() {
     const [telemetry, setTelemetry] = useState(generateTelemetryData());
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         const interval = setInterval(() => {
             setTelemetry(prev => {
                 const newData = [...prev.slice(1)];
@@ -30,6 +32,17 @@ export function LiveTelemetryWidget() {
         }, 1000);
         return () => clearInterval(interval);
     }, []);
+
+    if (!mounted) {
+        return (
+            <div className="relative h-[400px] md:h-[500px] w-full bg-stone-900 rounded-[2rem] p-6 shadow-2xl overflow-hidden border border-stone-800 flex flex-col">
+                <div className="flex justify-between items-center mb-6">
+                    <div className="text-[10px] font-mono uppercase tracking-widest text-stone-500">Live Telemetry // Global Emissions</div>
+                    <Activity className="w-4 h-4 text-emerald-500 opacity-50" />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="relative h-[400px] md:h-[500px] w-full bg-stone-900 rounded-[2rem] p-6 shadow-2xl overflow-hidden border border-stone-800 flex flex-col">

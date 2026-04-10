@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ShieldAlert, Zap, Droplets, Factory, AlertCircle, Box } from 'lucide-react';
+import { ShieldAlert, Zap, Droplets, Factory, AlertCircle, Box, Shirt, ShoppingBag, Footprints, Archive } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { EnrichedProduct } from '@/lib/types';
 import { formatEmission, formatWater, formatWaste, formatScore } from '@/lib/formatters';
@@ -61,10 +61,19 @@ export function ProductCard({ product }: ProductCardProps) {
     let materialTruth = '';
     if (isBlend || isSynthetic || product.plastic_percentage > 0) {
         const baseMat = isBlend ? 'Blend' : product.material_type;
-        materialTruth = `Unrecyclable ${baseMat}${product.plastic_percentage > 0 ? ` (${product.plastic_percentage}% Plastic)` : ''}`;
+        materialTruth = `Unrecyclable ${baseMat}${product.plastic_percentage > 0 ? ` (${product.plastic_percentage.toFixed(1)}% Plastic)` : ''}`;
     } else {
         materialTruth = `100% ${product.material_type}`;
     }
+
+    // 4. Category-Specific Iconography
+    const pName = product.product_name.toLowerCase();
+    let CategoryIcon = Archive;
+    if (pName.includes('shirt') || pName.includes('tee') || pName.includes('blouse') || pName.includes('sweater') || pName.includes('hoodie')) CategoryIcon = Shirt;
+    else if (pName.includes('bag') || pName.includes('tote') || pName.includes('backpack')) CategoryIcon = ShoppingBag;
+    else if (pName.includes('shoe') || pName.includes('boot') || pName.includes('sneaker')) CategoryIcon = Footprints;
+    else if (pName.includes('pant') || pName.includes('jeans') || pName.includes('trousers') || pName.includes('shorts')) CategoryIcon = Archive; 
+    else CategoryIcon = Box;
 
     return (
         <Link href={`/products/${product.product_id}`} className="group block h-full">
@@ -73,19 +82,24 @@ export function ProductCard({ product }: ProductCardProps) {
                 hasViolations && "bg-rose-50/50 border-rose-100"
             )}>
 
-                {/* 1. Image Header Area (Simulated since we lack actual images, using a sleek placeholder shape) */}
-                <div className="h-48 w-full bg-stone-50 rounded-2xl mb-6 relative overflow-hidden flex items-center justify-center border border-stone-100/50">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-stone-100 to-stone-50 mix-blend-multiply" />
+                {/* 1. CATEGORY ICON HEADER (Replaces empty photos with high-end iconography) */}
+                <div className="h-48 w-full bg-[#fcfbfa] rounded-2xl mb-6 relative overflow-hidden flex items-center justify-center border border-stone-100 shadow-[inset_0_2px_10px_rgba(0,0,0,0.01)] group-hover:bg-[#f8f7f5] transition-colors">
+                    
+                    {/* Subtle Background Structural Grid */}
+                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+                         style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+
                     {/* The Grade Badge floating top right */}
                     <div className={cn(
-                        "absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-sm",
+                        "absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-md z-10 transition-transform group-hover:scale-110",
                         gradeColors[grade]
                     )}>
                         {grade}
                     </div>
-                    {/* Generic item icon based on material for visual texture */}
-                    <div className="text-stone-300">
-                        {product.material_type.includes('Leather') ? <Box className="w-12 h-12" /> : <Factory className="w-12 h-12" />}
+
+                    {/* Highly stylized, large categorical icon */}
+                    <div className="relative z-0 text-stone-200 group-hover:text-stone-300 transition-all duration-500 transform group-hover:scale-110">
+                        <CategoryIcon strokeWidth={1} className="w-24 h-24" />
                     </div>
                 </div>
 

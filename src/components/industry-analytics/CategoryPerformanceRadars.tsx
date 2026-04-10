@@ -7,10 +7,12 @@ import { cn } from '@/lib/utils';
 
 const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
+        const hex = payload[0].color.replace('#', '');
         return (
             <div className="bg-white border border-stone-100 p-3 shadow-lg rounded-xl z-50">
+                <style dangerouslySetInnerHTML={{ __html: `.color-${hex} { color: ${payload[0].color}; }` }} />
                 <div className="text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-1">{payload[0].payload.metric}</div>
-                <div className="text-xs font-mono font-bold text-stone-700" style={{ color: payload[0].color }}>
+                <div className={`text-xs font-mono font-bold text-stone-700 color-${hex}`}>
                     Score: {payload[0].value.toFixed(1)} / 100
                 </div>
             </div>
@@ -67,34 +69,38 @@ export function CategoryPerformanceRadars({ brands }: { brands: BrandData[] }) {
 
             <div className="bg-white border border-stone-100 rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                    {data.map((catData) => (
-                        <div key={catData.category} className="flex flex-col items-center">
-                            <h3 className="text-sm font-black uppercase tracking-widest mb-6" style={{ color: colors[catData.category] }}>
-                                {catData.category} Vector
-                            </h3>
-                            <div className="h-[250px] w-full max-w-[300px]">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <RadarChart cx="50%" cy="50%" outerRadius="75%" data={catData.metrics}>
-                                        <PolarGrid stroke="#f5f5f4" />
-                                        <PolarAngleAxis
-                                            dataKey="metric"
-                                            tick={{ fill: '#78716c', fontSize: 10, fontWeight: 'bold' }}
-                                        />
-                                        <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
-                                        <Radar
-                                            name={catData.category}
-                                            dataKey="value"
-                                            stroke={colors[catData.category]}
-                                            strokeWidth={2}
-                                            fill={colors[catData.category]}
-                                            fillOpacity={0.15}
-                                        />
-                                        <Tooltip content={<CustomTooltip />} />
-                                    </RadarChart>
-                                </ResponsiveContainer>
+                    {data.map((catData) => {
+                        const hex = colors[catData.category].replace('#', '');
+                        return (
+                            <div key={catData.category} className="flex flex-col items-center">
+                                <style dangerouslySetInnerHTML={{ __html: `.color-${hex} { color: ${colors[catData.category]}; }` }} />
+                                <h3 className={`text-sm font-black uppercase tracking-widest mb-6 color-${hex}`}>
+                                    {catData.category} Vector
+                                </h3>
+                                <div className="h-[250px] w-full max-w-[300px]">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <RadarChart cx="50%" cy="50%" outerRadius="75%" data={catData.metrics}>
+                                            <PolarGrid stroke="#f5f5f4" />
+                                            <PolarAngleAxis
+                                                dataKey="metric"
+                                                tick={{ fill: '#78716c', fontSize: 10, fontWeight: 'bold' }}
+                                            />
+                                            <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
+                                            <Radar
+                                                name={catData.category}
+                                                dataKey="value"
+                                                stroke={colors[catData.category]}
+                                                strokeWidth={2}
+                                                fill={colors[catData.category]}
+                                                fillOpacity={0.15}
+                                            />
+                                            <Tooltip content={<CustomTooltip />} />
+                                        </RadarChart>
+                                    </ResponsiveContainer>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </section >

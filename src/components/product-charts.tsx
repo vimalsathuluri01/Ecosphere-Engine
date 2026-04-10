@@ -12,13 +12,16 @@ import { formatEmission, formatEnergy, formatWater, formatWaste } from '@/lib/fo
 const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-white border border-stone-100 p-3 shadow-lg rounded-xl">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-1">{label}</p>
-                {payload.map((entry: any, index: number) => (
-                    <p key={index} className="text-xs font-mono font-bold text-stone-700">
-                        {entry.name}: {entry.value} {entry.unit}
-                    </p>
-                ))}
+            <div className="bg-white border border-stone-200 p-4 shadow-xl rounded-2xl">
+                <p className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">{label}</p>
+                {payload.map((entry: any, index: number) => {
+                    const displayValue = typeof entry.value === 'number' ? entry.value.toFixed(2) : entry.value;
+                    return (
+                        <p key={index} className="text-sm font-mono font-black text-stone-800">
+                            {entry.name}: {displayValue} {entry.unit || ''}
+                        </p>
+                    );
+                })}
             </div>
         );
     }
@@ -43,17 +46,17 @@ export function LifecycleBarChart({ product }: { product: EnrichedProduct }) {
     // Let's us keep it as is for now.
 
     return (
-        <div className="w-full h-[250px] font-mono text-[10px]">
+        <div className="w-full h-[280px] font-mono text-[12px]">
             <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data} layout="vertical" margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                <BarChart data={data} layout="vertical" margin={{ top: 20, right: 30, left: 40, bottom: 5 }} barSize={32}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f5f5f4" horizontal={false} />
-                    <XAxis type="number" stroke="#a8a29e" />
-                    <YAxis type="category" dataKey="name" stroke="#a8a29e" width={60} />
+                    <XAxis type="number" stroke="#a8a29e" tick={{ fontSize: 11 }} />
+                    <YAxis type="category" dataKey="name" stroke="#a8a29e" width={100} tick={{ fontSize: 12, fontWeight: 700 }} />
                     <Tooltip cursor={{ fill: '#fafaf9' }} content={<CustomTooltip />} />
-                    <Legend />
-                    <Bar dataKey="Manufacturing" stackId="a" fill="#57534e" name="Mfg (Scope 1+2)" />
-                    <Bar dataKey="Logistics" stackId="a" fill="#a8a29e" name="Logistics" />
-                    <Bar dataKey="Operations" stackId="a" fill="#e7e5e4" name="Usage Phase" />
+                    <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '11px', fontWeight: 600 }} />
+                    <Bar dataKey="Manufacturing" stackId="a" fill="#292524" name="Mfg (Scope 1+2)" radius={[0, 0, 0, 0]} />
+                    <Bar dataKey="Logistics" stackId="a" fill="#78716c" name="Logistics" />
+                    <Bar dataKey="Operations" stackId="a" fill="#d6d3d1" name="Usage Phase" radius={[0, 4, 4, 0]} />
                 </BarChart>
             </ResponsiveContainer>
         </div>
@@ -67,44 +70,44 @@ export function ResourceGauge({ product }: { product: EnrichedProduct }) {
     const maxWaste = 20;
 
     return (
-        <div className="space-y-6 font-mono text-xs">
+        <div className="space-y-8 font-mono text-sm">
             {/* Renewable Energy */}
             <div>
-                <div className="flex justify-between mb-1">
+                <div className="flex justify-between mb-2">
                     <span className="font-bold uppercase tracking-widest text-stone-500">Renewable Energy</span>
-                    <span className="font-bold text-emerald-600">{product.renewable_energy_ratio.toFixed(1)}%</span>
+                    <span className="font-black text-emerald-600 text-base">{product.renewable_energy_ratio.toFixed(1)}%</span>
                 </div>
-                <div className="h-4 bg-stone-50 border border-stone-100 rounded-full overflow-hidden w-full relative">
+                <div className="h-6 bg-stone-50 border border-stone-100 rounded-full overflow-hidden w-full relative">
                     <div
                         style={{ '--width': `${Math.min(100, product.renewable_energy_ratio)}%` } as React.CSSProperties}
-                        className="h-full bg-emerald-400 absolute top-0 left-0 w-[var(--width)] rounded-full transition-all duration-1000 ease-out"
+                        className="h-full bg-emerald-500 absolute top-0 left-0 w-[var(--width)] rounded-full transition-all duration-1000 ease-out shadow-sm"
                     />
                 </div>
             </div>
 
             {/* Energy Efficiency */}
             <div>
-                <div className="flex justify-between mb-1">
+                <div className="flex justify-between mb-2">
                     <span className="font-bold uppercase tracking-widest text-stone-500">Efficiency</span>
-                    <span className="font-bold text-stone-800 max-w-[50%] truncate">{product.energy_used_per_unit.toFixed(1)} MJ/Unit</span>
+                    <span className="font-black text-stone-800 text-base">{product.energy_used_per_unit.toFixed(1)} MJ/Unit</span>
                 </div>
-                <div className="h-4 bg-stone-50 border border-stone-100 rounded-full overflow-hidden w-full relative flex items-center">
+                <div className="h-6 bg-stone-50 border border-stone-100 rounded-full overflow-hidden w-full relative flex items-center">
                     <div className="w-1/2 h-full border-r border-stone-200 bg-stone-100/50" />
-                    <div className="absolute top-0 right-0 h-full w-1.5 rounded-full bg-stone-700 left-[var(--left)] transition-all duration-1000 ease-out" style={{ '--left': `${Math.min(99, (product.energy_used_per_unit / 200) * 100)}%` } as React.CSSProperties} />
+                    <div className="absolute top-0 right-0 h-full w-2.5 rounded-full bg-stone-900 left-[var(--left)] transition-all duration-1000 ease-out shadow-md" style={{ '--left': `${Math.min(99, (product.energy_used_per_unit / 200) * 100)}%` } as React.CSSProperties} />
                 </div>
             </div>
 
             {/* Water */}
             <div>
-                <div className="flex justify-between mb-1">
+                <div className="flex justify-between mb-2">
                     <span className="font-bold uppercase tracking-widest text-stone-500">Water Intensity</span>
-                    <span className="font-bold text-sky-600">{formatWater(product.water_consumed_per_unit)}</span>
+                    <span className="font-black text-sky-600 text-base">{formatWater(product.water_consumed_per_unit)}</span>
                 </div>
-                <div className="flex gap-1 h-2">
+                <div className="flex gap-2 h-3">
                     {Array.from({ length: 10 }).map((_, i) => (
                         <div
                             key={i}
-                            className={`flex-1 rounded-full ${i < (product.water_consumed_per_unit / maxWater) * 10 ? 'bg-sky-400' : 'bg-stone-100'}`}
+                            className={`flex-1 rounded-sm ${i < (product.water_consumed_per_unit / maxWater) * 10 ? 'bg-sky-500' : 'bg-stone-100'}`}
                         />
                     ))}
                 </div>
@@ -112,12 +115,12 @@ export function ResourceGauge({ product }: { product: EnrichedProduct }) {
 
             {/* Waste */}
             <div>
-                <div className="flex justify-between mb-1">
+                <div className="flex justify-between mb-2">
                     <span className="font-bold uppercase tracking-widest text-stone-500">Mfg Waste</span>
-                    <span className="font-bold text-stone-800">{formatWaste(product.manufacturing_waste)}</span>
+                    <span className="font-black text-stone-800 text-base">{formatWaste(product.manufacturing_waste)}</span>
                 </div>
-                <div className="w-full bg-stone-100 rounded-full h-1.5 overflow-hidden">
-                    <div className="h-full bg-stone-600 rounded-full w-[var(--width)] transition-all duration-1000 ease-out" style={{ '--width': `${(product.manufacturing_waste / maxWaste) * 100}%` } as React.CSSProperties} />
+                <div className="w-full bg-stone-100 rounded-full h-3 overflow-hidden">
+                    <div className="h-full bg-stone-800 rounded-full w-[var(--width)] transition-all duration-1000 ease-out" style={{ '--width': `${(product.manufacturing_waste / maxWaste) * 100}%` } as React.CSSProperties} />
                 </div>
             </div>
         </div>
@@ -135,19 +138,19 @@ export function EsgRadar({ product }: { product: EnrichedProduct }) {
     ];
 
     return (
-        <div className="w-full h-[250px] font-mono text-[10px]">
+        <div className="w-full h-[280px] font-mono text-xs">
             <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
-                    <PolarGrid stroke="#f5f5f4" />
-                    <PolarAngleAxis dataKey="subject" tick={{ fill: '#78716c', fontSize: 9, fontWeight: 700, textAnchor: 'middle' }} />
+                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+                    <PolarGrid stroke="#e7e5e4" />
+                    <PolarAngleAxis dataKey="subject" tick={{ fill: '#57534e', fontSize: 11, fontWeight: 900, textAnchor: 'middle' }} />
                     <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
                     <Radar
                         name="ESG Metrics"
                         dataKey="A"
-                        stroke="#57534e"
-                        strokeWidth={2}
-                        fill="#f5f5f4"
-                        fillOpacity={0.8}
+                        stroke="#1c1917"
+                        strokeWidth={3}
+                        fill="#57534e"
+                        fillOpacity={0.15}
                     />
                     <Tooltip cursor={false} content={<CustomTooltip />} />
                 </RadarChart>
@@ -166,20 +169,20 @@ export function CircularityPie({ product }: { product: EnrichedProduct }) {
     const COLORS = ['#10b981', '#f5f5f4']; // Emerald for recyclable, stone-100 for waste
 
     return (
-        <div className="w-full h-[250px] relative font-mono">
+        <div className="w-full h-[280px] relative font-mono">
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     <Pie
                         data={data}
                         cx="50%"
                         cy="50%"
-                        innerRadius={60}
-                        outerRadius={80}
+                        innerRadius={80}
+                        outerRadius={105}
                         fill="#8884d8"
                         paddingAngle={5}
                         dataKey="value"
                         stroke="none"
-                        cornerRadius={4}
+                        cornerRadius={6}
                     >
                         {data.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -190,8 +193,8 @@ export function CircularityPie({ product }: { product: EnrichedProduct }) {
             </ResponsiveContainer>
             {/* Center Label */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-3xl font-black text-stone-800">{product.recyclability_score.toFixed(0)}%</span>
-                <span className="text-[9px] uppercase font-bold text-stone-400 tracking-wider">Circularity</span>
+                <span className="text-5xl font-black text-stone-900">{product.recyclability_score.toFixed(0)}%</span>
+                <span className="text-xs uppercase font-black text-stone-400 tracking-widest mt-1">Circularity</span>
             </div>
         </div>
     );

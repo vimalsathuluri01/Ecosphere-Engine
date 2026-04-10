@@ -50,23 +50,30 @@ export function BoundaryBreachGauge({ brands }: { brands: BrandData[] }) {
 
         const displayVal = mInfo.scale ? (val / mInfo.scale).toFixed(1) : val.toFixed(1);
         const finalUnit = mInfo.displayUnit || mInfo.unit;
+        const cleanKey = metricKey.replace(/\W/g, '').toLowerCase() + '-' + Math.round(val * 100);
 
         return (
             <div className="flex flex-col gap-1 w-full">
+                <style dangerouslySetInnerHTML={{
+                    __html: `
+                    .track-p50-${cleanKey} { width: ${p50Loc}%; }
+                    .track-p75-${cleanKey} { left: ${p50Loc}%; width: ${p75Loc - p50Loc}%; }
+                    .track-danger-${cleanKey} { left: ${p75Loc}%; right: 0; }
+                    .track-val-${cleanKey} { width: ${pVal}%; }
+                `}} />
                 <div className="flex justify-between text-[9px] font-mono font-bold tracking-widest uppercase text-stone-500">
                     <span>{mInfo.label}</span>
                     <span className="text-stone-800">{displayVal} {finalUnit}</span>
                 </div>
                 <div className="relative h-2 bg-slate-100 rounded-full w-full overflow-hidden">
                     {/* Background Tracks */}
-                    <div className="absolute left-0 top-0 bottom-0 bg-emerald-100" style={{ width: `${p50Loc}%` }} />
-                    <div className="absolute top-0 bottom-0 bg-amber-100" style={{ left: `${p50Loc}%`, width: `${p75Loc - p50Loc}%` }} />
-                    <div className="absolute top-0 bottom-0 bg-rose-100" style={{ left: `${p75Loc}%`, right: 0 }} />
+                    <div className={`absolute left-0 top-0 bottom-0 bg-emerald-100 track-p50-${cleanKey}`} />
+                    <div className={`absolute top-0 bottom-0 bg-amber-100 track-p75-${cleanKey}`} />
+                    <div className={`absolute top-0 bottom-0 bg-rose-100 track-danger-${cleanKey}`} />
 
                     {/* Actual Value Bar */}
                     <div
-                        className={cn("absolute left-0 top-0 bottom-0 rounded-full transition-all duration-500", statusColor)}
-                        style={{ width: `${pVal}%` }}
+                        className={cn("absolute left-0 top-0 bottom-0 rounded-full transition-all duration-500", statusColor, `track-val-${cleanKey}`)}
                     />
                 </div>
             </div>

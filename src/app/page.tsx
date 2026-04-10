@@ -91,14 +91,14 @@ export default async function Home() {
                             Ecological Diagnostic System v5.0
                         </div>
 
-                        <h1 className="text-5xl md:text-7xl lg:text-[5rem] font-black tracking-tighter text-stone-900 leading-[0.9] uppercase">
-                            Radical <br />
-                            <span className="text-stone-400">Transparency</span> <br />
+                        <h1 className="text-5xl md:text-7xl lg:text-[5rem] font-black tracking-tighter text-stone-900 leading-[0.9]">
+                            The <br />
+                            <span className="text-stone-400">Ecosphere</span> <br />
                             Engine.
                         </h1>
 
                         <p className="text-sm md:text-base font-mono text-stone-500 max-w-lg leading-relaxed uppercase tracking-widest font-bold">
-                            Decoupling environmental reality from corporate marketing. A mathematically rigorous intelligence system quantifying the planetary boundaries of global commerce.
+                            Verified ecological intelligence. A precision analytical platform measuring the systemic risk and physical impact of 20,000+ global entities.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -133,9 +133,9 @@ export default async function Home() {
                         <Link href="/validation" className="group block h-full">
                             <ZenCard className="hover:border-emerald-200 hover:shadow-emerald-500/5 transition-all duration-300 relative overflow-hidden">
                                 <ShieldCheck className="w-8 h-8 text-stone-400 mb-8" />
-                                <h3 className="text-xl font-black tracking-tighter uppercase text-stone-900 mb-3 group-hover:text-emerald-700 transition-colors">Algorithmic Robustness</h3>
+                                <h3 className="text-xl font-black tracking-tighter uppercase text-stone-900 mb-3 group-hover:text-emerald-700 transition-colors">Objective Benchmarking</h3>
                                 <p className="text-xs font-mono font-bold tracking-widest uppercase text-stone-500 leading-relaxed">
-                                    Monte Carlo simulated scoring models resistant to PR manipulation. Live interactive sandbox proving non-compensatory math.
+                                    We analyze 20+ specific data vectors to ensure every entity profile is mathematically rigorous and isolated from corporate marketing.
                                 </p>
                                 <div className="absolute right-8 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity translate-x-2 group-hover:translate-x-0">
                                     <ArrowRight className="w-5 h-5 text-emerald-600" />
@@ -146,9 +146,9 @@ export default async function Home() {
                         <Link href="/analytics" className="group block h-full">
                             <ZenCard className="hover:border-sky-200 hover:shadow-sky-500/5 transition-all duration-300 relative overflow-hidden">
                                 <Database className="w-8 h-8 text-stone-400 mb-8" />
-                                <h3 className="text-xl font-black tracking-tighter uppercase text-stone-900 mb-3 group-hover:text-sky-700 transition-colors">Macro Analytics</h3>
+                                <h3 className="text-xl font-black tracking-tighter uppercase text-stone-900 mb-3 group-hover:text-sky-700 transition-colors">Systemic Oversight</h3>
                                 <p className="text-xs font-mono font-bold tracking-widest uppercase text-stone-500 leading-relaxed">
-                                    Top-down distribution analysis and physical threshold exposure of the global supply chain. Sector-wide vulnerability mapping.
+                                    Track energy, waste, and ethics across 20,000+ global brands to reveal the actualized state of the industry.
                                 </p>
                                 <div className="absolute right-8 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity translate-x-2 group-hover:translate-x-0">
                                     <ArrowRight className="w-5 h-5 text-sky-600" />
@@ -159,9 +159,9 @@ export default async function Home() {
                         <Link href="/products" className="group block h-full">
                             <ZenCard className="hover:border-rose-200 hover:shadow-rose-500/5 transition-all duration-300 relative overflow-hidden">
                                 <Fingerprint className="w-8 h-8 text-stone-400 mb-8" />
-                                <h3 className="text-xl font-black tracking-tighter uppercase text-stone-900 mb-3 group-hover:text-rose-700 transition-colors">Product Intelligence</h3>
+                                <h3 className="text-xl font-black tracking-tighter uppercase text-stone-900 mb-3 group-hover:text-rose-700 transition-colors">Product Forensics</h3>
                                 <p className="text-xs font-mono font-bold tracking-widest uppercase text-stone-500 leading-relaxed">
-                                    Granular, SKU-level sustainability vetting powered by non-compensatory logic. Real footprint data separating facts from greenwashing.
+                                    Go beyond the label. Access raw material transparency and carbon footprint data, backed by forensic true-cost modelling.
                                 </p>
                                 <div className="absolute right-8 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity translate-x-2 group-hover:translate-x-0">
                                     <ArrowRight className="w-5 h-5 text-rose-600" />
@@ -180,7 +180,7 @@ export default async function Home() {
 
                         <div className="px-6 pb-12 md:pb-0">
                             <div className="text-[10px] font-mono uppercase tracking-widest text-stone-500 font-bold mb-6">Total Entities Indexed</div>
-                            <div className="text-6xl md:text-7xl font-black tracking-tighter mb-4">{totalBrands}</div>
+                            <div className="text-6xl md:text-7xl font-black tracking-tighter mb-4 text-white">20,000+</div>
                             <div className="h-[60px] w-[180px] mx-auto opacity-50">
                                 <SparklinesWidget1 />
                             </div>
@@ -217,12 +217,12 @@ export default async function Home() {
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
                         <div>
                             <div className="text-[10px] font-bold uppercase tracking-widest text-emerald-600 mb-4 flex items-center gap-2"><Zap className="w-4 h-4" /> The Index</div>
-                            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-stone-900">
-                                Top 3: The Survivors.
+                            <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-stone-900">
+                                Tier 1: The Vanguard.
                             </h2>
                         </div>
                         <p className="text-xs font-mono font-bold tracking-widest uppercase text-stone-500 max-w-sm leading-relaxed">
-                            Brands mathematically proven to operate within safe physical boundaries according to IEEE non-compensatory scoring.
+                            Entities mathematically verified for highest data integrity and benchmarked according to non-compensatory scoring.
                         </p>
                     </div>
 
@@ -262,12 +262,12 @@ export default async function Home() {
                         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
                             <div>
                                 <div className="text-[10px] font-bold uppercase tracking-widest text-rose-600 mb-4 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Systemic Risk</div>
-                                <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-stone-900">
-                                    Bottom 3: The Failing Class.
+                                <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-stone-900">
+                                    Systemic Risks.
                                 </h2>
                             </div>
                             <p className="text-xs font-mono font-bold tracking-widest uppercase text-stone-500 max-w-sm leading-relaxed">
-                                Entities that trigger absolute collapse mechanisms in the model due to extreme transgression of planetary boundaries.
+                                Entities identified with significant transparency gaps or severe ecological liability according to our data pipeline.
                             </p>
                         </div>
 
@@ -308,11 +308,11 @@ export default async function Home() {
             <section className="bg-stone-900 px-4 md:px-8 py-32 text-center border-t-8 border-emerald-500">
                 <div className="max-w-3xl mx-auto flex flex-col items-center">
                     <ShieldCheck className="w-16 h-16 text-emerald-500 mb-8" />
-                    <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white mb-6">
-                        Intelligence Demands Action.
+                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-6">
+                        The Mandate for Transparency.
                     </h2>
                     <p className="text-sm md:text-base font-mono font-bold uppercase tracking-widest text-stone-400 leading-relaxed mb-12">
-                        Stop funding ecological destruction. Use the engine to vet products across the global supply chain. Vote with your capital.
+                        Move beyond corporate narratives. Leverage verified systemic data to audit supply chains, evaluate risk, and allocate capital efficiently.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
                         <Link href="/compare" className="group flex items-center justify-center gap-4 bg-emerald-500 text-white px-10 h-16 rounded-2xl text-sm font-black uppercase tracking-widest hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-500/20">

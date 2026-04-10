@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50');
 
     // Load manufacturing data from CSV
-    const records = readCSVFile<any>('manufacturing_test_data.csv');
+    const records = readCSVFile<any>('manufacturing_test_data_v2.csv');
 
     // Apply filters
     let filtered = records;

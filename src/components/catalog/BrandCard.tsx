@@ -40,13 +40,21 @@ export const BrandCard: React.FC<BrandCardProps> = ({ brand }) => {
         }
     };
 
+    const safeId = brand.id.replace(/\W/g, '');
+
     return (
         <article className="relative bg-white border border-stone-100 rounded-[28px] shadow-[0_4px_24px_rgb(0,0,0,0.02)] p-6 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer group isolation-auto">
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                .carbon-bar-${safeId} { width: ${Math.min(brand.carbon.progress, 100)}%; }
+                .water-bar-${safeId} { width: ${Math.min(brand.water.progress, 100)}%; }
+                .sust-bar-${safeId} { width: ${Math.min(brand.sustainable.progress, 100)}%; }
+            `}} />
 
             {/* Absolute Issue Badge (Overhanging) */}
             {brand.issues > 0 && (
-                <div className="absolute -left-3 top-12 bg-rose-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-md z-10">
-                    <span>{brand.issues} Issue</span>
+                <div className="absolute -left-3 top-6 bg-rose-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-md z-10">
+                    <span>{brand.issues} Issue{brand.issues > 1 ? 's' : ''}</span>
                     <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -54,7 +62,7 @@ export const BrandCard: React.FC<BrandCardProps> = ({ brand }) => {
             )}
 
             {/* Header */}
-            <div className="flex justify-between items-start mb-6">
+            <div className="flex justify-between items-start mb-6 pt-2">
                 <div>
                     <h3 className="font-sans font-black text-stone-900 text-lg tracking-tight leading-none">
                         {brand.name.replace('_', ' ')}
@@ -87,8 +95,7 @@ export const BrandCard: React.FC<BrandCardProps> = ({ brand }) => {
                     </div>
                     <div className="h-1 w-full bg-stone-100 rounded-full overflow-hidden">
                         <div
-                            className={`h-full rounded-full ${getStatusColor(brand.carbon.status)}`}
-                            style={{ width: `${Math.min(brand.carbon.progress, 100)}%` }}
+                            className={`h-full rounded-full ${getStatusColor(brand.carbon.status)} carbon-bar-${safeId}`}
                         />
                     </div>
                 </div>
@@ -108,8 +115,7 @@ export const BrandCard: React.FC<BrandCardProps> = ({ brand }) => {
                     </div>
                     <div className="h-1 w-full bg-stone-100 rounded-full overflow-hidden">
                         <div
-                            className={`h-full rounded-full ${getStatusColor(brand.water.status)}`}
-                            style={{ width: `${Math.min(brand.water.progress, 100)}%` }}
+                            className={`h-full rounded-full ${getStatusColor(brand.water.status)} water-bar-${safeId}`}
                         />
                     </div>
                 </div>
@@ -130,8 +136,7 @@ export const BrandCard: React.FC<BrandCardProps> = ({ brand }) => {
                     </div>
                     <div className="h-1 w-full bg-stone-100 rounded-full overflow-hidden">
                         <div
-                            className={`h-full rounded-full ${getStatusColor(brand.sustainable.status)}`}
-                            style={{ width: `${Math.min(brand.sustainable.progress, 100)}%` }}
+                            className={`h-full rounded-full ${getStatusColor(brand.sustainable.status)} sust-bar-${safeId}`}
                         />
                     </div>
                 </div>

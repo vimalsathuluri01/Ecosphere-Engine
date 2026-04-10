@@ -23,8 +23,14 @@ export const PenaltyCard: React.FC<PenaltyCardProps> = ({
     drag,
     icon
 }) => {
+    const safeTitle = title.replace(/\W/g, '').toLowerCase() || 'penalty';
+
     return (
         <article className={`relative bg-white border rounded-[28px] p-6 shadow-sm overflow-hidden ${hasIssue ? 'border-rose-200' : 'border-stone-200'}`}>
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                .progress-${safeTitle} { width: ${Math.min(progressPercent, 100)}%; }
+            `}} />
 
             {/* Background glow if issue exists */}
             {hasIssue && (
@@ -80,8 +86,7 @@ export const PenaltyCard: React.FC<PenaltyCardProps> = ({
             <div className="mb-8">
                 <div className="h-1.5 w-full bg-stone-100 rounded-full overflow-hidden relative">
                     <div
-                        className={`absolute top-0 left-0 bottom-0 rounded-full ${hasIssue ? 'bg-rose-500' : 'bg-stone-800'}`}
-                        style={{ width: `${Math.min(progressPercent, 100)}%` }}
+                        className={`absolute top-0 left-0 bottom-0 rounded-full ${hasIssue ? 'bg-rose-500' : 'bg-stone-800'} progress-${safeTitle}`}
                     />
                 </div>
                 <div className="flex justify-end mt-2">
