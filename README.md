@@ -1,8 +1,5 @@
 Ecosphere Engine
 
-
-A modern, production-ready web application scaffold powered by cutting-edge technologies, designed to accelerate your development with [Z.ai](https://chat.z.ai)'s AI-powered coding assistance.
-
 ## ✨ Technology Stack
 
 This scaffold provides a robust foundation built with:
