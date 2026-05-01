@@ -8,12 +8,10 @@ import { ToxicityMatrix } from './ToxicityMatrix';
 import { EChartsNexus } from './EChartsNexus';
 import { OutlierTearSheet } from './OutlierTearSheet';
 import { ExecutiveBriefing } from './ExecutiveBriefing';
-import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
-import { motion } from 'framer-motion';
-import { Zap, Play } from 'lucide-react';
+import { Zap } from 'lucide-react';
 
 export default function AnalyticsDashboard() {
     const [weightingMode, setWeightingMode] = useState<'entity_mode' | 'volume_mode'>('entity_mode');
@@ -26,18 +24,12 @@ export default function AnalyticsDashboard() {
             .then(d => setData(d));
     }, []);
 
-    if (!data) return (
-        <div className="min-h-screen flex items-center justify-center bg-[#FAF9F6]">
-            <div className="font-mono text-[10px] animate-pulse uppercase tracking-[0.3em] text-stone-400">
-                Calibrating Systemic Matrices...
-            </div>
-        </div>
-    );
+    const currentData = data ? data[weightingMode] : null;
 
-    const currentData = data[weightingMode];
+    // SIMULATION ENGINE (WHAT-IF LOGIC) - Declared BEFORE early return to satisfy Rules of Hooks
+    const simulationResult = useMemo(() => {
+        if (!currentData) return null;
 
-    // SIMULATION ENGINE (WHAT-IF LOGIC)
-    const { simulatedKPIs, simulatedDeciles, briefingMetrics } = useMemo(() => {
         const factor = interventionLevel / 100;
         const deciles = [...currentData.deciles];
         const val10_orig = deciles[9].value;
@@ -81,6 +73,16 @@ export default function AnalyticsDashboard() {
             simulatedDeciles
         };
     }, [interventionLevel, currentData]);
+
+    if (!data || !currentData || !simulationResult) return (
+        <div className="min-h-screen flex items-center justify-center bg-[#FAF9F6]">
+            <div className="font-mono text-[10px] animate-pulse uppercase tracking-[0.3em] text-stone-400">
+                Calibrating Systemic Matrices...
+            </div>
+        </div>
+    );
+
+    const { simulatedKPIs, simulatedDeciles, briefingMetrics } = simulationResult;
 
     return (
         <div className="min-h-screen bg-[#FAF9F6] text-stone-900 selection:bg-stone-900 selection:text-white font-sans pt-36 pb-36 px-4 md:px-8">

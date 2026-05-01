@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowUpRight, ShieldAlert, AlertTriangle, Leaf, Building2, TrendingUp } from 'lucide-react';
+import { ArrowUpRight, AlertTriangle, Leaf, Building2, TrendingUp } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { EnrichedBrand } from '@/lib/types';

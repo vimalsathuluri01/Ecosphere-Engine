@@ -18,27 +18,7 @@ export const formatWaste = (val: number | undefined): string => {
     return `${val.toFixed(2)} kg`;
 };
 
-export const formatPercentage = (val: number | undefined): string => {
-    if (val === undefined || val === null) return 'N/A';
-    return `${val.toFixed(1)}%`;
-};
-
-export const formatDistance = (val: number | undefined): string => {
-    if (val === undefined || val === null) return 'N/A';
-    return `${val.toFixed(0)} km`;
-};
-
 export const formatScore = (val: number | undefined): string => {
     if (val === undefined || val === null) return '-';
     return Math.round(val).toString();
-};
-
-export const formatLifespan = (val: number | undefined): string => {
-    if (val === undefined || val === null) return 'N/A';
-    return `${val.toFixed(1)} yrs`;
-};
-
-export const formatRatio = (val: number | undefined): string => {
-    if (val === undefined || val === null) return 'N/A';
-    return val.toFixed(3);
 };

@@ -2,7 +2,7 @@
 
 import { EnrichedProduct } from "@/lib/types";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { DollarSign, Zap, Factory, Flame, Droplets, ShieldAlert, CloudSnow, Trash2, ArrowRight, Box, RefreshCw } from "lucide-react";
+import { DollarSign, Zap, Factory, Flame, Droplets, ShieldAlert, CloudSnow, ArrowRight, Box, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { formatScore } from "@/lib/formatters";
@@ -15,8 +15,9 @@ interface Props {
 export function ProductExplanationWidgets({ product, alternative }: Props) {
     // Shared Attributes
     const hasViolations = product.hazardous_chemicals_used === 'yes' || !!product.environmental_violations;
-    const isSynthetic = ['Polyester', 'Nylon', 'Acrylic', 'Spandex', 'Elastane', 'Poly'].some(s => product.material_type.includes(s));
-    const isBlend = product.material_type.includes('/') || product.material_type.includes('Blend') || product.material_type.includes(' and ');
+    const materialLower = product.material_type.toLowerCase();
+    const isSynthetic = ['polyester', 'nylon', 'acrylic', 'spandex', 'elastane', 'poly'].some(s => materialLower.includes(s));
+    const isBlend = materialLower.includes('/') || materialLower.includes('blend') || materialLower.includes(' and ');
 
     // 1. Total Resource Gap (FORENSIC AUDIT)
     const retailPrice = 45.00; 
@@ -31,8 +32,22 @@ export function ProductExplanationWidgets({ product, alternative }: Props) {
 
     // 2. Recycling Reality (FORENSIC AUDIT)
     const brandClaimEol = product.recyclability_score || 0;
-    const isVetoedEol = isBlend || isSynthetic || product.plastic_percentage > 2;
-    const realityEol = isVetoedEol ? 0 : brandClaimEol;
+    
+    // Forensic Nuance: Blends and Synthetics are absolute vetoes (0%). 
+    // Plastic contamination is a sliding penalty until it reaches a 5% "unrecoverable" boundary.
+    const isVetoedEol = isBlend || isSynthetic || product.plastic_percentage > 5;
+    
+    let realityEol = 0;
+    if (isBlend || isSynthetic) {
+        realityEol = 0;
+    } else if (product.plastic_percentage > 5) {
+        realityEol = 0;
+    } else {
+        // Sliding scale penalty for minor contamination
+        const contaminationPenalty = (product.plastic_percentage / 5) * brandClaimEol;
+        realityEol = Math.max(0, brandClaimEol - contaminationPenalty);
+    }
+
     const eolVetoReason = isBlend ? "Mixed Blend Constraint" : isSynthetic ? "Polymer Constraint" : "Plastic Contamination";
 
     // 4. Water Footprint

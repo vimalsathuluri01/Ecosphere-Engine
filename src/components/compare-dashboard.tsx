@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrandData } from '@/lib/methodology';
 import { cn } from '@/lib/utils';
-import { ShieldAlert, Zap, Droplets, Factory, AlertCircle, ArrowRightLeft, Target, Scale, Leaf, AlertTriangle, TrendingDown, Users, Plus, X } from 'lucide-react';
+import { Zap, AlertCircle, Target, Scale, Leaf, AlertTriangle, TrendingDown, Users, Plus, X, Globe, FileText } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
     Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
-    ScatterChart, Scatter, ReferenceLine, ReferenceArea, ReferenceDot,
+    ScatterChart, Scatter, ReferenceLine, ReferenceArea,
     Cell
 } from 'recharts';
 
@@ -31,7 +31,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
             <div className="bg-white border border-stone-100 p-3 shadow-lg rounded-xl pointer-events-none z-50">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-1">{label || payload[0].payload.name || payload[0].name}</p>
                 {payload.map((entry: any, index: number) => {
-                    const val = typeof entry.value === 'number' && !Number.isInteger(entry.value) ? entry.value.toFixed(2) : entry.value;
+                    const val = typeof entry.value === 'number' ? 
+                        (Number.isInteger(entry.value) ? entry.value : entry.value.toFixed(2)) : 
+                        (entry.value || '0');
                     const name = entry.payload?.brandName || entry.name;
                     return (
                         <p key={index} className="text-xs font-mono font-bold text-stone-700" style={{ color: entry.stroke || entry.fill }}>
@@ -69,7 +71,12 @@ function BrandSearchSelector({
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState("");
-    const [shuffledPool, setShuffledPool] = useState(() => [...allBrands].sort(() => Math.random() - 0.5));
+    const [shuffledPool, setShuffledPool] = useState<BrandData[]>(allBrands);
+
+    useEffect(() => {
+        // Shuffle only on client after mount to prevent hydration mismatch
+        setShuffledPool([...allBrands].sort(() => Math.random() - 0.5));
+    }, [allBrands]);
 
     const refreshPool = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -83,25 +90,24 @@ function BrandSearchSelector({
         : shuffledPool.slice(0, 50);
 
     return (
-        <div className="flex-1 min-w-[250px] relative">
-            <div className="flex items-center bg-white border border-stone-100 rounded-3xl p-3 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative group">
-                <div className="w-12 h-12 rounded-2xl border border-stone-100 flex items-center justify-center font-black text-white text-xl shrink-0" style={{ backgroundColor: color }}>
-                    {currentValue.charAt(0)}
-                </div>
-                <div className="ml-4 flex-1">
-                    <button
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="text-xl font-bold text-stone-800 bg-transparent border-none p-0 focus:ring-0 cursor-pointer w-full text-left uppercase tracking-tighter truncate pr-4"
-                    >
-                        {currentValue}
-                    </button>
-                </div>
+        <div className="relative h-full flex items-center pr-4">
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center font-black text-white text-xl shrink-0 shadow-inner" style={{ backgroundColor: color }}>
+                {currentValue.charAt(0)}
+            </div>
+            <div className="ml-4 flex-1">
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="text-lg font-black text-stone-800 bg-transparent border-none p-0 focus:ring-0 cursor-pointer w-full text-left uppercase tracking-tighter truncate"
+                >
+                    {currentValue}
+                </button>
+                <div className="text-[10px] font-bold text-stone-400 tracking-widest uppercase">Select Audit Brand</div>
             </div>
 
             {isOpen && (
                 <>
                     <div className="fixed inset-0 z-[60]" onClick={() => setIsOpen(false)} />
-                    <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-stone-100 rounded-3xl shadow-2xl z-[70] p-4 max-h-[450px] flex flex-col">
+                    <div className="absolute top-[calc(100%+0.5rem)] left-0 right-0 bg-white border border-stone-100 rounded-3xl shadow-2xl z-[70] p-4 max-h-[450px] flex flex-col">
                         <div className="flex gap-2 mb-4">
                             <input
                                 autoFocus
@@ -143,18 +149,60 @@ function BrandSearchSelector({
 }
 
 export function CompareDashboard({ allBrands }: CompareProps) {
-    // Optimization: Create a Map for O(1) lookup
-    const brandMap = new Map(allBrands.map(b => [b.Brand_Name, b]));
-
     const [selectedNames, setSelectedNames] = useState<string[]>(() => {
-        // Pick 2 random brands from different score tiers for diversity
-        const shuffled = [...allBrands].sort(() => Math.random() - 0.5);
-        return shuffled.slice(0, 2).map(b => b.Brand_Name);
+        return allBrands.slice(0, 2).map(b => b.Brand_Name);
     });
+    
+    // Worker Orchestration State
+    const [workerResults, setWorkerResults] = useState<any>(null);
+    const [isCalculating, setIsCalculating] = useState(false);
+    const [isPrinting, setIsPrinting] = useState(false);
 
-    const activeBrands = selectedNames.map(name => brandMap.get(name)).filter(Boolean) as BrandData[];
+    const handlePrint = () => {
+        setIsPrinting(true);
+        setTimeout(() => {
+            window.print();
+            setIsPrinting(false);
+        }, 500);
+    };
 
-    if (activeBrands.length < 2) return null;
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setIsCalculating(true);
+            const worker = new Worker('/workers/engine-worker.js');
+            
+            worker.onmessage = (e) => {
+                setWorkerResults(e.data);
+                setIsCalculating(false);
+            };
+
+            worker.postMessage({ allBrands, selectedNames });
+
+            return () => worker.terminate();
+        }
+    }, [allBrands, selectedNames]);
+
+    if (!workerResults || isCalculating) {
+        return (
+            <div className="flex flex-col items-center justify-center h-96 space-y-4">
+                <div className="w-12 h-12 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin"></div>
+                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-stone-400">Re-initializing Engine</div>
+            </div>
+        );
+    }
+
+    const {
+        activeBrands,
+        radarData,
+        sortedByScore,
+        winner,
+        loser,
+        scoreDelta,
+        hypotheticalWaterA,
+        waterSavedA,
+        isPrimaryBestWater,
+        switchCarbonSaved
+    } = workerResults;
 
     const handleBrandChange = (index: number, newName: string) => {
         const newNames = [...selectedNames];
@@ -173,88 +221,115 @@ export function CompareDashboard({ allBrands }: CompareProps) {
         setSelectedNames(selectedNames.filter((_, i) => i !== index));
     };
 
-    // --- MATH DERIVATIONS FOR WIDGETS ---
-    const sortedByScore = [...activeBrands].sort((a, b) => (b.finalScore ?? 0) - (a.finalScore ?? 0));
-    const winner = sortedByScore[0];
-    const loser = sortedByScore[sortedByScore.length - 1]; // Absolute worst in selected group
-    const scoreDelta = (winner.finalScore ?? 0) - (loser.finalScore ?? 0);
-
+    // --- REPLACED LOCAL MATH WITH WORKER RESULTS ---
+    const primary = activeBrands[0];
     const loserViolations = [];
     if (loser.pCarbon && loser.pCarbon < 0.5) loserViolations.push('Carbon Threshold Exception');
     if (loser.pWater && loser.pWater < 0.5) loserViolations.push('Water Usage Variance');
 
-    // Earth Tax Math
-    const primary = activeBrands[0];
-    const bestWaterEfficiency = Math.min(...activeBrands.map(b => b.Water_Usage_Liters / (b.Revenue_USD_Million || 1)));
-    const primaryWaterEfficiency = primary.Water_Usage_Liters / (primary.Revenue_USD_Million || 1);
-    const hypotheticalWaterA = (primary.Revenue_USD_Million || 1) * bestWaterEfficiency;
-    const waterSavedA = primary.Water_Usage_Liters - hypotheticalWaterA;
+    const getSimulatedScore = (b: BrandData) => b.finalScore ?? 0;
+
     const poolsSaved = waterSavedA > 0 ? (waterSavedA / 2500000).toFixed(0) : 0;
-    const isPrimaryBestWater = primaryWaterEfficiency === bestWaterEfficiency;
 
-    // Radar Data
-    const radarData = [
-        { subject: 'Carbon', fullMark: 33.5 },
-        { subject: 'Water', fullMark: 29.0 },
-        { subject: 'Waste', fullMark: 16.5 },
-        { subject: 'Materials', fullMark: 11.2 },
-        { subject: 'PR', fullMark: 9.8 },
-    ].map(item => {
-        const dataPoint: any = { subject: item.subject, fullMark: item.fullMark };
-        activeBrands.forEach((b, i) => {
-            if (item.subject === 'Carbon') dataPoint[`brand${i}`] = b.contributions?.['Carbon Base'] || 0;
-            if (item.subject === 'Water') dataPoint[`brand${i}`] = b.contributions?.['Water Base'] || 0;
-            if (item.subject === 'Waste') dataPoint[`brand${i}`] = b.contributions?.['Waste Base'] || 0;
-            if (item.subject === 'Materials') dataPoint[`brand${i}`] = b.contributions?.['Materials'] || 0;
-            if (item.subject === 'PR') dataPoint[`brand${i}`] = b.contributions?.['Transparency'] || 0;
-        });
-        return dataPoint;
-    });
-
-    // Consumer Switch Math
-    const switchCarbonSaved = ((loser.Carbon_Intensity_MT_per_USD_Million - winner.Carbon_Intensity_MT_per_USD_Million) * (loser.Revenue_USD_Million * 0.01));
+    // Consumer Switch Math (Worker Provided)
 
     return (
-        <div className="space-y-8 font-sans">
-            {/* PART 1: THE SELECTION HEADER */}
-            <div className="sticky top-[80px] z-40 bg-[#FAF9F6]/90 backdrop-blur-md py-4 -mx-6 px-6 border-b border-stone-200/50 flex flex-wrap gap-4 items-center">
+        <div className={cn("space-y-8 font-sans", isPrinting && "print-mode")}>
+            <style jsx global>{`
+                @media print {
+                    .no-print { display: none !important; }
+                    .print-only { display: block !important; }
+                    body { background: white !important; }
+                    .print-mode { space-y: 4 !important; }
+                    .glass { border: none !important; backdrop-filter: none !important; }
+                    .shadow-lg, .shadow-2xl { box-shadow: none !important; }
+                    .rounded-3xl { border-radius: 12px !important; }
+                    @page { margin: 1.5cm; }
+                }
+                .print-only { display: none; }
+            `}</style>
 
-                {activeBrands.map((b, idx) => {
-                    const finalScore = b.finalScore ?? 0;
-                    return (
-                        <div key={`${idx}-${b.Brand_Name}`} className="flex-1 min-w-[300px] flex items-center gap-4 relative">
-                            <BrandSearchSelector
-                                allBrands={allBrands}
-                                currentValue={b.Brand_Name}
-                                color={BRAND_COLORS[idx]}
-                                brandIndex={idx}
-                                disabledNames={selectedNames}
-                                onSelect={(name) => handleBrandChange(idx, name)}
-                            />
-
-                            <div className={cn("px-4 py-4 rounded-[2rem] font-mono font-black text-2xl border shadow-sm flex items-center justify-center min-w-[80px]", finalScore >= 60 ? "bg-emerald-50 border-emerald-100 text-emerald-600" : finalScore >= 40 ? "bg-amber-50 border-amber-100 text-amber-600" : "bg-rose-50 border-rose-100 text-rose-600")}>
-                                {finalScore.toFixed(0)}
-                            </div>
-
-                            {selectedNames.length > 2 && (
-                                <button
-                                    title="Remove brand from comparison"
-                                    onClick={() => removeBrand(idx)}
-                                    className="absolute -top-2 -right-2 bg-white border border-stone-200 hover:bg-rose-500 hover:text-white hover:border-rose-500 text-stone-500 rounded-full w-8 h-8 flex items-center justify-center transition-all z-[50] shadow-sm active:scale-90"
-                                >
-                                    <X className="w-4 h-4" />
-                                </button>
-                            )}
-                        </div>
-                    );
-                })}
-
-                {selectedNames.length < 4 && (
-                    <button title="Add brand to comparison" onClick={addBrand} className="h-[76px] px-6 border-2 border-dashed border-stone-300 rounded-3xl flex items-center justify-center text-stone-400 hover:text-stone-600 hover:border-stone-400 hover:bg-stone-50 transition-all">
-                        <Plus className="w-6 h-6" />
-                    </button>
-                )}
+            <div className="flex justify-between items-end no-print">
+                <div className="space-y-1">
+                    <h1 className="text-4xl font-black uppercase tracking-tighter text-stone-900">Ecosphere <span className="text-emerald-500">Compare</span></h1>
+                    <p className="text-stone-500 text-xs font-mono uppercase tracking-widest">Multi-Entity Forensic Sustainability Audit v2.1</p>
+                </div>
+                <button 
+                    onClick={handlePrint}
+                    className="flex items-center gap-2 bg-stone-900 text-white px-6 py-3 rounded-2xl hover:bg-stone-800 transition-all font-bold uppercase tracking-widest text-[10px]"
+                >
+                    <FileText className="w-4 h-4" /> Generate Audit Dossier
+                </button>
             </div>
+
+            {/* PART 1: THE SELECTION HEADER (MAINFRAME FORENSIC GRID) */}
+            <div className="py-8 border-b border-stone-200/50 no-print">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1400px]">
+                    {activeBrands.map((b, idx) => {
+                        const finalScore = b.finalScore ?? 0;
+                        return (
+                            <div key={`${idx}-${b.Brand_Name}`} className="relative group/brand-node h-20 flex items-stretch bg-white border border-stone-200 rounded-2xl shadow-sm transition-all duration-300 hover:border-stone-400 overflow-hidden">
+                                
+                                {/* Identity Bay (Truncation-Safe) */}
+                                <div className="flex-1 min-w-0 px-4">
+                                    <BrandSearchSelector
+                                        allBrands={allBrands}
+                                        currentValue={b.Brand_Name}
+                                        color={BRAND_COLORS[idx]}
+                                        brandIndex={idx}
+                                        disabledNames={selectedNames}
+                                        onSelect={(name) => handleBrandChange(idx, name)}
+                                    />
+                                </div>
+
+                                {/* Diagnostic Data Bay */}
+                                <div className={cn(
+                                    "w-36 flex items-center justify-center border-l border-stone-100 transition-colors shrink-0",
+                                    getSimulatedScore(b) >= 60 ? "bg-emerald-500/5 text-emerald-600" : 
+                                    getSimulatedScore(b) >= 40 ? "bg-amber-500/5 text-amber-600" : 
+                                    "bg-rose-500/5 text-rose-600"
+                                )}>
+                                    <div className="text-right pr-4">
+                                        <div className="text-[9px] font-black uppercase tracking-[0.2em] opacity-40 leading-none mb-1">
+                                            Score
+                                        </div>
+                                        <div className="text-3xl font-mono font-black tracking-tighter leading-none">{getSimulatedScore(b).toFixed(0)}</div>
+                                    </div>
+                                    
+                                    {/* Vertical Status Accent */}
+                                    <div className={cn("w-1.5 h-12 rounded-full", 
+                                        getSimulatedScore(b) >= 60 ? "bg-emerald-400" : 
+                                        getSimulatedScore(b) >= 40 ? "bg-amber-400" : 
+                                        "bg-rose-400"
+                                    )} />
+                                </div>
+
+                                {selectedNames.length > 2 && (
+                                    <button
+                                        title="Exclude from audit"
+                                        onClick={() => removeBrand(idx)}
+                                        className="absolute top-2 right-2 bg-stone-900/10 hover:bg-rose-600 hover:text-white text-stone-400 rounded-full w-5 h-5 flex items-center justify-center transition-all z-[50] opacity-0 group-hover/brand-node:opacity-100"
+                                    >
+                                        <X className="w-3 h-3" />
+                                    </button>
+                                )}
+                            </div>
+                        );
+                    })}
+
+                    {selectedNames.length < 4 && (
+                        <button 
+                            title="Add brand to audit" 
+                            onClick={addBrand} 
+                            className="h-20 border-2 border-dashed border-stone-200 rounded-2xl flex items-center justify-center text-stone-300 hover:text-stone-600 hover:border-stone-400 hover:bg-white transition-all duration-300 gap-3 group/add"
+                        >
+                            <Plus className="w-5 h-5 group-hover/add:scale-125 transition-transform" />
+                            <span className="text-xs font-bold uppercase tracking-widest">Append Audit Instance</span>
+                        </button>
+                    )}
+                </div>
+            </div>
+
 
             {/* PART 2: THE 10-WIDGET BENTO GRID */}
             <div className="grid grid-cols-12 gap-6">
@@ -280,8 +355,8 @@ export function CompareDashboard({ allBrands }: CompareProps) {
                     <div className="shrink-0 flex items-end gap-3 h-32 w-full md:w-auto justify-center">
                         {sortedByScore.map((b, i) => (
                             <div key={b.Brand_Name} className="flex flex-col items-center">
-                                <div className={cn("text-lg font-mono font-black mb-1", i === 0 ? "text-emerald-600" : "text-stone-400")}>{(b.finalScore ?? 0).toFixed(0)}</div>
-                                <div className={cn("w-12 rounded-t-xl transition-all duration-1000", i === 0 ? "bg-emerald-400" : "bg-stone-200")} style={{ height: `${((b.finalScore ?? 0) / 100) * 80 + 20}px` }}></div>
+                                <div className={cn("text-lg font-mono font-black mb-1", i === 0 ? "text-emerald-600" : "text-stone-400")}>{getSimulatedScore(b).toFixed(0)}</div>
+                                <div className={cn("w-12 rounded-t-xl transition-all duration-1000", i === 0 ? "bg-emerald-400" : "bg-stone-200")} style={{ height: `${(getSimulatedScore(b) / 100) * 80 + 20}px` }}></div>
                                 <div className="mt-2 text-[8px] font-bold text-stone-500 uppercase tracking-widest truncate w-12 text-center">{b.Brand_Name}</div>
                             </div>
                         ))}

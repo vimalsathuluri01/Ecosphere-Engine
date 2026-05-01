@@ -32,24 +32,7 @@ export interface BrandData {
     rank?: number;
 }
 
-export const AHP_WEIGHTS = {
-    carbonIntensity: 0.15,
-    waterIntensity: 0.10,
-    wasteIntensity: 0.10,
-    renewableEnergy: 0.25,
-    transparency: 0.15,
-    sustainableMaterial: 0.15,
-    consumerEngagement: 0.10
-};
 
-export const ALPHA = 0.5;
-
-export const LIMITS = {
-    // We will dynamically compute thresholds based on dataset Medians and steepness
-    carbon: { limit: 1500, k: 0.05 },
-    water: { limit: 250000, k: 0.00005 },
-    waste: { limit: 800, k: 0.02 }
-};
 
 const CRITERIA_MAP = [
     { key: 'Carbon_Intensity_MT_per_USD_Million', ahpKey: 'carbonIntensity', type: 'cost' },
@@ -74,7 +57,8 @@ export function computeCompleteEngine(data: BrandData[]): BrandData[] {
         Water_Usage_Liters: { min: Infinity, max: -Infinity },
         Waste_Production_KG: { min: Infinity, max: -Infinity },
         Sustainable_Material_Percent: { min: Infinity, max: -Infinity },
-        Transparency_Score_2024: { min: Infinity, max: -Infinity }
+        Transparency_Score_2024: { min: Infinity, max: -Infinity },
+        Average_Lifespan_Years: { min: Infinity, max: -Infinity }
     };
 
     data.forEach(d => {
@@ -98,6 +82,12 @@ export function computeCompleteEngine(data: BrandData[]): BrandData[] {
 
         if (ts2024 < datasetMinMax.Transparency_Score_2024.min) datasetMinMax.Transparency_Score_2024.min = ts2024;
         if (ts2024 > datasetMinMax.Transparency_Score_2024.max) datasetMinMax.Transparency_Score_2024.max = ts2024;
+
+        // Methodology specific: Infer lifespan from process if missing
+        const lifespan = d.Production_Process === 'Organic' ? 5.0 : 2.0;
+        if (lifespan < datasetMinMax.Average_Lifespan_Years.min) datasetMinMax.Average_Lifespan_Years.min = lifespan;
+        if (lifespan > datasetMinMax.Average_Lifespan_Years.max) datasetMinMax.Average_Lifespan_Years.max = lifespan;
+        (d as any).Average_Lifespan_Years = lifespan;
     });
 
     // STEP 2: Execute the strict non-compensatory algorithm per brand
@@ -114,6 +104,7 @@ export function computeCompleteEngine(data: BrandData[]): BrandData[] {
             Transparency_Score_2024: Number(d.Transparency_Score_2024) || 0,
             Carbon_Intensity_MT_per_USD_Million: Number(d.Carbon_Intensity_MT_per_USD_Million) || 0,
             Water_Intensity_L_per_USD_Million: Number(d.Water_Intensity_L_per_USD_Million) || 0,
+            Average_Lifespan_Years: (d as any).Average_Lifespan_Years || 3.5
         };
 
         const strictResults = calculateEcosphereScore(brandPayload, datasetMinMax);
@@ -129,13 +120,14 @@ export function computeCompleteEngine(data: BrandData[]): BrandData[] {
         d.finalPenalty = 1 - minFactor;
 
         // Hydrate contributions so the ScoreDecomposition component continues to render, 
-        // mimicking the 5 weight factors 
+        // mimicking the 6 weight factors 
         d.contributions = {
-            'Carbon Base': strictResults.baseScore * 0.335,
-            'Water Base': strictResults.baseScore * 0.290,
-            'Waste Base': strictResults.baseScore * 0.165,
-            'Materials': strictResults.baseScore * 0.112,
-            'Transparency': strictResults.baseScore * 0.098,
+            'Carbon Base': strictResults.baseScore * 0.28,
+            'Water Base': strictResults.baseScore * 0.24,
+            'Waste Base': strictResults.baseScore * 0.14,
+            'Materials': strictResults.baseScore * 0.10,
+            'Transparency': strictResults.baseScore * 0.08,
+            'Durability': strictResults.baseScore * 0.16,
         };
     });
 

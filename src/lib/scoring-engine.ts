@@ -13,6 +13,7 @@ export interface ScoringInput {
     // Market (Benefit Type - Optional Context)
     market_share_percent: number;
     consumer_engagement_score: number;
+    average_lifespan_years: number;
 }
 
 export interface ScoringResult {
@@ -30,24 +31,26 @@ export interface ScoringResult {
     tier: 'Regenerative' | 'Sustainable' | 'Transitional' | 'Unsustainable';
 }
 
-import { THRESHOLDS, AHP_WEIGHTS, MATURITY_TIERS } from './constants';
+import { THRESHOLDS, AHP_WEIGHTS } from './constants';
 
 // --- LOGISTIC FUNCTION ---
 function calculateEcologicalHealth(val: number, limit: number, k: number): number {
     return 1 / (1 + Math.exp(k * (val - limit)));
 }
 
-// --- CORE ENGINE ---
 export class ScoringEngine {
-    private inputs: ScoringInput[];
     private bounds: Record<keyof ScoringInput, { min: number; max: number }>;
     public benchmarks: Record<keyof ScoringInput, number>;
 
-    constructor(data: ScoringInput[]) {
-        this.inputs = data;
-        const metrics = this.calculateMetrics(data);
-        this.bounds = metrics.bounds;
-        this.benchmarks = metrics.benchmarks;
+    constructor(metricsOrData: ScoringInput[] | { bounds: any; benchmarks: any }) {
+        if (Array.isArray(metricsOrData)) {
+            const metrics = this.calculateMetrics(metricsOrData);
+            this.bounds = metrics.bounds;
+            this.benchmarks = metrics.benchmarks;
+        } else {
+            this.bounds = metricsOrData.bounds;
+            this.benchmarks = metricsOrData.benchmarks;
+        }
     }
 
     private calculateMetrics(data: ScoringInput[]) {
@@ -104,6 +107,7 @@ export class ScoringEngine {
             transparency: this.normalize(brand.transparency_score, 'transparency_score', 'BENEFIT'),
             market: this.normalize(brand.market_share_percent, 'market_share_percent', 'BENEFIT'),
             engagement: this.normalize(brand.consumer_engagement_score, 'consumer_engagement_score', 'BENEFIT'),
+            durability: this.normalize(brand.average_lifespan_years, 'average_lifespan_years', 'BENEFIT'),
         };
 
         // 2. Hybrid Weights
@@ -113,21 +117,24 @@ export class ScoringEngine {
         const pCarbon = calculateEcologicalHealth(brand.carbon_footprint_mt, THRESHOLDS.CARBON.limit, THRESHOLDS.CARBON.k);
         const pWater = calculateEcologicalHealth(brand.water_usage_liters, THRESHOLDS.WATER.limit, THRESHOLDS.WATER.k);
         const pWaste = calculateEcologicalHealth(brand.waste_production_kg, THRESHOLDS.WASTE.limit, THRESHOLDS.WASTE.k);
+        const pDurability = 1 / (1 + Math.exp(-2.5 * (brand.average_lifespan_years - 1.2))); // Shifted threshold to 1.2
 
-        const penaltyFactor = Math.min(pCarbon, pWater, pWaste);
+        const penaltyFactor = Math.min(pCarbon, pWater, pWaste, pDurability);
 
         const criticalViolations: string[] = [];
         if (pCarbon < 0.5) criticalViolations.push('Carbon Threshold Exceeded');
         if (pWater < 0.5) criticalViolations.push('Water Stress Critical');
         if (pWaste < 0.5) criticalViolations.push('Waste Output Critical');
+        if (pDurability < 0.3) criticalViolations.push('High Turnover Production Cycle');
 
         // 4. Component Scores
         const rawEnvScore = (
-            (norm.carbon * W.carbon_footprint_mt) +
-            (norm.water * W.water_usage_liters) +
-            (norm.waste * W.waste_production_kg) +
-            (norm.materials * W.sustainable_material_percent)
-        ) / (W.carbon_footprint_mt + W.water_usage_liters + W.waste_production_kg + W.sustainable_material_percent);
+            (norm.carbon * 0.28) +
+            (norm.water * 0.24) +
+            (norm.waste * 0.14) +
+            (norm.materials * 0.10) +
+            (norm.durability * 0.16)
+        );
 
         const envScore = rawEnvScore * 100 * penaltyFactor;
 
@@ -138,8 +145,9 @@ export class ScoringEngine {
             (norm.engagement * W.consumer_engagement_score)
         ) / (W.transparency_score + W.market_share_percent + W.consumer_engagement_score) * 100;
 
-        // 5. Final Strong Score
-        const finalScore = Math.sqrt(envScore * govScore);
+        // 5. Final Professional Index (Weighted Balance)
+        // Shift from geometric mean to weighted average to prevent extreme volatility while maintaining sensitivity
+        const finalScore = (envScore * 0.75) + (govScore * 0.25);
 
         // 6. Tier Determination
         let tier: 'Regenerative' | 'Sustainable' | 'Transitional' | 'Unsustainable' = 'Unsustainable';

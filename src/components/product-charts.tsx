@@ -3,7 +3,7 @@
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
     Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
-    PieChart, Pie, Cell, ReferenceLine
+    PieChart, Pie, Cell
 } from 'recharts';
 import { EnrichedProduct } from '@/lib/types';
 import { formatEmission, formatEnergy, formatWater, formatWaste } from '@/lib/formatters';

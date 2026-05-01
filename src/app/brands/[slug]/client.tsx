@@ -1,7 +1,7 @@
 'use client';
 
-import { BrandData, AHP_WEIGHTS } from '@/lib/methodology';
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { BrandData } from '@/lib/methodology';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import {
     Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer,

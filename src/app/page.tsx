@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Database, Fingerprint, ShieldCheck, Zap, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -21,22 +20,48 @@ const ZenCard = ({ children, className }: { children: React.ReactNode, className
 // Client-side Sparkline Wrappers
 import { SparklinesWidget1, SparklinesWidget2 } from '@/components/home/SparklinesWidget';
 
-
 export default async function Home() {
 
     // 1. Fetch Real Brand Data
     const brands = await getBrands();
 
-    // 2. Extract min/max correctly for the core algorithm
-    const dsMinMax: DatasetMinMax = {
-        Carbon_Footprint_MT: { min: Math.min(...brands.map(b => b.Carbon_Footprint_MT)), max: Math.max(...brands.map(b => b.Carbon_Footprint_MT)) },
-        Water_Usage_Liters: { min: Math.min(...brands.map(b => b.Water_Usage_Liters)), max: Math.max(...brands.map(b => b.Water_Usage_Liters)) },
-        Waste_Production_KG: { min: Math.min(...brands.map(b => b.Waste_Production_KG)), max: Math.max(...brands.map(b => b.Waste_Production_KG)) },
-        Sustainable_Material_Percent: { min: Math.min(...brands.map(b => b.Sustainable_Material_Percent)), max: Math.max(...brands.map(b => b.Sustainable_Material_Percent)) },
-        Transparency_Score_2024: { min: Math.min(...brands.map(b => b.Transparency_Score_2024)), max: Math.max(...brands.map(b => b.Transparency_Score_2024)) },
+    // 2. Optimized Single-Pass Min/Max Extraction
+    const initialMinMax: DatasetMinMax = {
+        Carbon_Footprint_MT: { min: Infinity, max: -Infinity },
+        Water_Usage_Liters: { min: Infinity, max: -Infinity },
+        Waste_Production_KG: { min: Infinity, max: -Infinity },
+        Sustainable_Material_Percent: { min: Infinity, max: -Infinity },
+        Transparency_Score_2024: { min: Infinity, max: -Infinity },
+        Average_Lifespan_Years: { min: Infinity, max: -Infinity },
     };
 
-    // 3. Process each brand strictly through the unedited calculateEcosphereScore logic
+    const dsMinMax = brands.length > 0 ? brands.reduce((acc, b) => {
+        acc.Carbon_Footprint_MT.min = Math.min(acc.Carbon_Footprint_MT.min, b.Carbon_Footprint_MT);
+        acc.Carbon_Footprint_MT.max = Math.max(acc.Carbon_Footprint_MT.max, b.Carbon_Footprint_MT);
+        acc.Water_Usage_Liters.min = Math.min(acc.Water_Usage_Liters.min, b.Water_Usage_Liters);
+        acc.Water_Usage_Liters.max = Math.max(acc.Water_Usage_Liters.max, b.Water_Usage_Liters);
+        acc.Waste_Production_KG.min = Math.min(acc.Waste_Production_KG.min, b.Waste_Production_KG);
+        acc.Waste_Production_KG.max = Math.max(acc.Waste_Production_KG.max, b.Waste_Production_KG);
+        acc.Sustainable_Material_Percent.min = Math.min(acc.Sustainable_Material_Percent.min, b.Sustainable_Material_Percent);
+        acc.Sustainable_Material_Percent.max = Math.max(acc.Sustainable_Material_Percent.max, b.Sustainable_Material_Percent);
+        acc.Transparency_Score_2024.min = Math.min(acc.Transparency_Score_2024.min, b.Transparency_Score_2024);
+        acc.Transparency_Score_2024.max = Math.max(acc.Transparency_Score_2024.max, b.Transparency_Score_2024);
+        const lifespan = b.Average_Lifespan_Years || 3.5;
+        acc.Average_Lifespan_Years.min = Math.min(acc.Average_Lifespan_Years.min, lifespan);
+        acc.Average_Lifespan_Years.max = Math.max(acc.Average_Lifespan_Years.max, lifespan);
+        return acc;
+    }, initialMinMax) : {
+        Carbon_Footprint_MT: { min: 0, max: 100 },
+        Water_Usage_Liters: { min: 0, max: 1000000 },
+        Waste_Production_KG: { min: 0, max: 10000 },
+        Sustainable_Material_Percent: { min: 0, max: 100 },
+        Transparency_Score_2024: { min: 0, max: 100 },
+        Average_Lifespan_Years: { min: 1, max: 10 },
+    };
+
+    // 3. Process scores in a single pass with integrated macro-stats
+    let totalScore = 0;
+    let overloadCount = 0;
     const scoredBrands = brands.map(b => {
         const rawMetrics: BrandMetrics = {
             Brand_Name: b.Brand_Name,
@@ -48,33 +73,32 @@ export default async function Home() {
             Transparency_Score_2024: b.Transparency_Score_2024,
             Carbon_Intensity_MT_per_USD_Million: b.Carbon_Intensity_MT_per_USD_Million,
             Water_Intensity_L_per_USD_Million: b.Water_Intensity_L_per_USD_Million,
+            Average_Lifespan_Years: b.Average_Lifespan_Years || 3.5
         };
 
         const scoreResult = calculateEcosphereScore(rawMetrics, dsMinMax);
+        totalScore += scoreResult.finalScore;
+        
+        const isFailing = scoreResult.finalScore === 0 || scoreResult.carbonPenaltyFactor < 0.9 || scoreResult.waterPenaltyFactor < 0.9;
+        if (isFailing) overloadCount++;
 
         return {
             ...b,
             ecoScore: scoreResult.finalScore,
-            rawCarbonPenalty: scoreResult.carbonPenaltyFactor,
-            rawWaterPenalty: scoreResult.waterPenaltyFactor,
-            isFailing: scoreResult.finalScore === 0 || scoreResult.carbonPenaltyFactor < 0.9 || scoreResult.waterPenaltyFactor < 0.9
+            isFailing
         };
     });
 
-    // 4. Sort and Extract Top/Bottom 3
+    // 4. Sort and Prune for UI
     scoredBrands.sort((a, b) => b.ecoScore - a.ecoScore);
 
-    // Safety check in case of empty data
-    const hasData = scoredBrands.length > 0;
+    const totalBrands = scoredBrands.length;
+    const hasData = totalBrands > 0;
     const top3 = hasData ? scoredBrands.slice(0, 3) : [];
-    // Only grab bottom 3 if there are at least 6 total, otherwise could overlap
     const bottom3Raw = hasData ? scoredBrands.slice(-3).reverse() : [];
     const bottom3 = bottom3Raw.filter(b => !top3.map(t => t.id).includes(b.id));
 
-    // 5. Calculate Real Macro Stats
-    const totalBrands = scoredBrands.length;
-    const avgScore = totalBrands > 0 ? (scoredBrands.reduce((acc, b) => acc + b.ecoScore, 0) / totalBrands).toFixed(0) : "0";
-    const overloadCount = scoredBrands.filter(b => b.isFailing).length;
+    const avgScore = totalBrands > 0 ? (totalScore / totalBrands).toFixed(0) : "0";
     const overloadPercent = totalBrands > 0 ? Math.round((overloadCount / totalBrands) * 100) : 0;
 
     return (

@@ -5,7 +5,7 @@ import {
     ReferenceLine, ScatterChart, Scatter, ZAxis, Cell, LineChart, Line, AreaChart, Area, ComposedChart,
     Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis
 } from 'recharts'
-import { AlertTriangle, ShieldAlert, ArrowDown, Info } from 'lucide-react'
+import { ArrowDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 // ==========================================

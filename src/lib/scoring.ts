@@ -38,7 +38,6 @@ export const OBJECTIVE_WEIGHTS = {
 
 // Cooperative game-theoretic optimization coefficients
 export const ALPHA = 0.58;  // Weight for subjective
-export const BETA = 0.42;   // Weight for objective
 
 // Final Hybrid Weights (Pareto-optimal compromise)
 export const HYBRID_WEIGHTS = {
@@ -434,76 +433,6 @@ export function determineHasSupplierData(brand: BrandRaw): boolean {
 }
 
 /**
- * Calculate full brand data with metrics
- */
-export function calculateFullBrandData(brand: BrandRaw, index: number): Brand {
-  const hasAuditData = determineHasAuditData(brand);
-  const hasSupplierData = determineHasSupplierData(brand);
-  const metrics = calculateBrandMetrics(brand, hasAuditData, hasSupplierData);
-
-  return {
-    ...brand,
-    id: `brand-${index}`,
-    hasAuditData,
-    hasSupplierData,
-    metrics,
-  };
-}
-
-/**
- * Calculate full product data from raw CSV
- */
-export function calculateProductData(product: ProductRaw, index: number): Product {
-  // Normalize scores or calculate if needed. 
-  // CSV has 'recyclability_score', 'ethical_labor_score', etc.
-
-  return {
-    id: `product-${product.product_id || index}`,
-    product_name: product.product_name,
-    company: product.company,
-    category: 'Apparel', // Defaulting as CSV doesn't have category column per se, or inferred
-    sustainability_score: Math.round(
-      (product.recyclability_score + product.ethical_labor_score + (100 - product.carbon_footprint_proxy || 50)) / 3
-    ) || 70, // Fallback calculation if needed
-    metrics: {
-      carbon_footprint: product.scope1_scope2_emissions || 0,
-      water_usage: product.water_consumed_per_unit || 0,
-      recyclability: product.recyclability_score || 0,
-      ethical_labor: product.ethical_labor_score || 0,
-    },
-    details: {
-      material: product.material_type || 'Unknown',
-      lifespan: `${product.average_lifespan} years`,
-      packaging: product.packaging_material || 'Standard',
-      transport: product.transport_mode || 'Standard',
-    },
-    price: 0, // Placeholder
-  };
-}
-
-/**
- * Calculate manufacturing metrics from raw CSV data
- */
-export function calculateManufacturingMetrics(data: ManufacturingRaw): ManufacturingMetrics {
-  return {
-    efficiency: {
-      energyPerUnit: data.energy_used_per_unit,
-      waterPerUnit: data.water_consumed_per_unit,
-      wastePerUnit: data.manufacturing_waste
-    },
-    sustainability: {
-      renewableEnergyRatio: data.renewable_energy_ratio,
-      emissionIntensity: data.scope1_scope2_emissions,
-      chemicalSafety: data.hazardous_chemicals_used.toLowerCase() === 'no'
-    },
-    material: {
-      type: data.material_type,
-      composition: data.material_composition
-    }
-  };
-}
-
-/**
  * Calculate industry average from brands
  */
 export function calculateIndustryAverage(brands: Brand[]): number {
@@ -524,7 +453,6 @@ export const ECOSPHERE_METHODOLOGY = {
   subjectiveWeights: SUBJECTIVE_WEIGHTS,
   objectiveWeights: OBJECTIVE_WEIGHTS,
   alpha: ALPHA,
-  beta: BETA,
 
   thresholds: {
     carbon: CARBON_THRESHOLDS,

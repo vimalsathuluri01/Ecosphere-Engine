@@ -1,6 +1,6 @@
-import { getProductById, getProducts } from '@/lib/data';
+import { getProductById, getProducts, getBrands } from '@/lib/data';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, AlertTriangle, ShieldAlert, TrendingUp } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, ShieldAlert, TrendingUp, Trophy, Users, Award } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { LifecycleBarChart, ResourceGauge, EsgRadar, CircularityPie } from '@/components/product-charts';
@@ -28,7 +28,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     // This mixes units (kg + kg + MJ), but we follow the prompt "True Carbon Per Wear" instruction literally.
     const trueCarbonPerWear = (product.scope1_scope2_emissions + product.shipping_emissions + product.operational_energy) / (product.average_lifespan * 365); // Per day? Or per wear? "average_lifespan" is likely years. Let's assume per YEAR usage for now to get a normalized number, or just div by lifespan.
     // Prompt says: "/ average_lifespan".
-    const metricValue = (product.scope1_scope2_emissions + product.shipping_emissions + product.operational_energy) / product.average_lifespan;
+    const metricValue = (product.scope1_scope2_emissions + product.shipping_emissions + product.operational_energy) / (product.average_lifespan || 1);
 
     // --- LOGIC: BETTER ALTERNATIVE (Calculated on Server to reduce client payload) ---
     let alternative: any = undefined;
@@ -166,7 +166,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
                 {/* 3. SECTION C: COGNITIVE TRANSLATION WIDGETS */}
                 <ProductExplanationWidgets product={product} alternative={alternative} />
-
             </div>
         </div>
     );

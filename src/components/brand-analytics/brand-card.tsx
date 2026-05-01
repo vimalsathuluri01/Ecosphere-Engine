@@ -2,7 +2,6 @@
 
 import { BrandData, getMedians } from '@/lib/methodology';
 import { Leaf, Droplets, Factory } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
 interface BrandCardProps {

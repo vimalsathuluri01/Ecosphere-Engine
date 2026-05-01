@@ -43,7 +43,12 @@ function parseCSVLine(line: string): string[] {
     const char = line[i];
 
     if (char === '"') {
-      inQuotes = !inQuotes;
+      if (inQuotes && line[i + 1] === '"') {
+        current += '"';
+        i++; // Skip next quote
+      } else {
+        inQuotes = !inQuotes;
+      }
     } else if (char === ',' && !inQuotes) {
       result.push(current.trim());
       current = '';
@@ -68,41 +73,7 @@ export function readCSVFile<T extends Record<string, string | number>>(
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     return parseCSV<T>(fileContent);
   } catch (error) {
-    console.error(`Error reading CSV file ${filename}:`, error);
+    // console.error(`Error reading CSV file ${filename}:`, error);
     return [];
   }
-}
-
-/**
- * Convert array of objects to CSV string
- */
-export function toCSV<T extends Record<string, unknown>>(
-  data: T[],
-  headers?: string[]
-): string {
-  if (data.length === 0) return '';
-
-  const keys = headers || Object.keys(data[0]);
-  const headerLine = keys.join(',');
-
-  const lines = data.map((item) => {
-    return keys
-      .map((key) => {
-        const value = item[key];
-        if (typeof value === 'string' && value.includes(',')) {
-          return `"${value}"`;
-        }
-        return String(value ?? '');
-      })
-      .join(',');
-  });
-
-  return [headerLine, ...lines].join('\n');
-}
-
-/**
- * Convert array of objects to JSON string
- */
-export function toJSON<T>(data: T): string {
-  return JSON.stringify(data, null, 2);
 }

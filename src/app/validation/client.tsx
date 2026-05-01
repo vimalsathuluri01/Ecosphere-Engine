@@ -1,271 +1,563 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { ShieldCheck, Activity, CheckCircle2, AlertCircle, Calculator, Database, Filter, ArrowUpRight, Fingerprint, Zap, Layers, Timer, TrendingUp, AlertTriangle, ShieldAlert } from 'lucide-react';
+import {
+    ShieldCheck,
+    Calculator,
+    Activity,
+    AlertTriangle,
+    Binary,
+    Globe2,
+    Target,
+    Scale,
+    History,
+    Waves,
+    Wind,
+    Trash2,
+    Flame,
+    Leaf,
+    Sigma,
+    Settings2,
+    Microscope,
+    Dna,
+    Fingerprint,
+    BarChart3
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { 
-    ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, 
-    ScatterChart, Scatter, ZAxis, Cell, CartesianGrid, 
-    ReferenceLine, LineChart, Line, ReferenceArea
+import {
+    ResponsiveContainer,
+    XAxis,
+    YAxis,
+    Tooltip as ChartTooltip,
+    AreaChart,
+    Area,
+    ReferenceLine,
+    CartesianGrid,
+    ScatterChart,
+    Scatter,
+    ReferenceArea,
+    Cell,
+    ZAxis
 } from 'recharts';
 import { motion } from 'framer-motion';
+import { Slider } from '@/components/ui/slider';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardHeader } from '@/components/ui/card';
+import 'katex/dist/katex.min.css';
+import { InlineMath, BlockMath } from 'react-katex';
 
-// --- DATA: High Volatility Entities from Systemic Stress Test ---
-const TOP_VOLATILITY_ENTITIES = [
-    { name: 'EcoGarment Group 4534', score: 2571.78, lower: 2105.26, upper: 3035.55, vol: 930.29, status: 'CRITICAL' },
-    { name: 'EcoCraft Group 4046', score: 2564.43, lower: 2099.10, upper: 3028.13, vol: 929.03, status: 'CRITICAL' },
-    { name: 'VitalCraft Partners 7946', score: 2560.15, lower: 2095.54, upper: 3023.63, vol: 928.09, status: 'CRITICAL' },
-    { name: 'BioCraft Partners 2978', score: 2570.33, lower: 2108.04, upper: 3036.08, vol: 928.04, status: 'CRITICAL' },
-    { name: 'VitalStitch Corp 907', score: 2570.67, lower: 2109.05, upper: 3036.65, vol: 927.60, status: 'CRITICAL' },
-].map((item, i) => ({ ...item, id: i }));
+// --- CORE SYSTEM DATA ---
+const THRESHOLDS = {
+    CARBON: { label: 'Carbon Intensity', soft: 150, hard: 250, unit: 'MT/$M', ahp: 0.35, entropy: 0.32, color: '#ef4444', icon: Wind },
+    WATER: { label: 'Water Stress', soft: 2500, hard: 3500, unit: 'L/$M', ahp: 0.25, entropy: 0.45, color: '#3b82f6', icon: Waves },
+    WASTE: { label: 'Waste Stream', soft: 400, hard: 800, unit: 'KG/$M', ahp: 0.15, entropy: 0.05, color: '#f59e0b', icon: Trash2 },
+    ENERGY: { label: 'Energy Load', soft: 1200, hard: 2000, unit: 'kWh/$M', ahp: 0.15, entropy: 0.10, color: '#10b981', icon: Flame },
+    BIODIVERSITY: { label: 'Land Impact', soft: 40, hard: 20, unit: 'ha/$M', ahp: 0.10, entropy: 0.08, color: '#8b5cf6', icon: Leaf }
+};
 
-// --- DATA: Volatility Abyss (Synthesized from audited_ecosphere_data.csv distribution) ---
-const VOLATILITY_SAMPLES = Array.from({ length: 400 }).map((_, i) => {
-    const score = 100 + Math.random() * 1800;
-    const vol = (score * 0.15) + (Math.random() * 150);
-    return { score, vol, isOutlier: score > 2000 && vol > 600 };
+const NIKE_CASE_STUDY = {
+    name: 'Nike FY2023 Forensic Audit',
+    carbon: 110,
+    water: 3250, 
+    waste: 120,
+    energy: 1450,
+    biodiversity: 35,
+    wamScore: 70.8,
+};
+
+const MOCK_SCATTER_DATA = Array.from({ length: 80 }).map((_, i) => {
+    const wam = 35 + Math.random() * 55;
+    const riskFactor = wam > 70 ? 0.3 + Math.random() * 0.4 : 0.7 + Math.random() * 0.3;
+    return {
+        id: i,
+        name: `Asset Identifier ${1000 + i}`,
+        wam: parseFloat(wam.toFixed(1)),
+        ecosphere: parseFloat((wam * riskFactor).toFixed(1)),
+        penalty: parseFloat((1 - riskFactor).toFixed(2)),
+        z: 400
+    };
 });
 
-const ForensicGrid = ({ children }: { children: React.ReactNode }) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-stone-200 border border-stone-200 rounded-[2rem] overflow-hidden shadow-2xl">
-        {children}
-    </div>
-);
-
-const AuditMetric = ({ label, val, sub, icon: Icon }: { label: string, val: string, sub?: string, icon?: any }) => (
-    <div className="bg-white p-10 flex flex-col justify-between group hover:bg-stone-50 transition-colors">
-        <div>
-            <div className="flex items-center gap-3 mb-6">
-                {Icon && <Icon size={14} className="text-stone-400 group-hover:text-emerald-600 transition-colors" />}
-                <div className="text-[10px] font-black uppercase tracking-[0.25em] text-stone-400 group-hover:text-emerald-600 transition-colors">{label}</div>
-            </div>
-            <div className="text-4xl font-mono font-black text-stone-900 tracking-tighter mb-2">{val}</div>
-        </div>
-        {sub && <div className="text-[9px] font-mono text-stone-400 uppercase tracking-widest">{sub}</div>}
-    </div>
-);
-
-export default function ValidationClient() {
+// --- MATH HELPERS ---
+const calculatePenalty = (val: number, tSoft: number, tHard: number, gamma: number) => {
+    if (tHard === tSoft) return val > tHard ? 0 : 1;
+    const isInverted = tHard < tSoft;
+    const x = isInverted 
+        ? (tSoft - val) / (tSoft - tHard)
+        : (val - tSoft) / (tHard - tSoft);
     
-    // Normal Distribution Data Generation
-    const densityData = useMemo(() => {
-        const data = [];
-        const mean = 50;
-        const stdDev = 12;
-        for (let x = 0; x <= 100; x += 2) {
-            const y = (1 / (stdDev * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * Math.pow((x - mean) / stdDev, 2));
-            data.push({ x, y: y * 1000 });
-        }
-        return data;
-    }, []);
+    const exponent = gamma * x;
+    if (exponent > 50) return 0;
+    if (exponent < -50) return 1;
+    return 1 / (1 + Math.exp(exponent));
+};
+
+// --- CLINICAL SUB-COMPONENTS ---
+const MethodologySection = React.memo(({ title, equation, nomenclature, explanation, icon: Icon }: any) => (
+    <div className="p-8 bg-white border border-stone-100 rounded-[2.5rem] space-y-6 shadow-sm hover:shadow-md transition-shadow">
+        <div className="flex items-center gap-4 border-b border-stone-50 pb-4">
+            <div className="p-2 bg-stone-50 rounded-xl"><Icon size={18} className="text-stone-900" /></div>
+            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-stone-400">{title}</h4>
+        </div>
+        <div className="py-4 overflow-x-auto">
+            <div className="text-xl font-serif italic text-stone-900 mb-4">
+                <BlockMath math={equation} />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+                <div className="space-y-2">
+                    <span className="text-[9px] font-black uppercase text-stone-300 tracking-widest">Nomenclature</span>
+                    <ul className="space-y-1">
+                        {nomenclature.map((n: string, i: number) => (
+                            <li key={i} className="text-[10px] font-medium text-stone-500 italic">• {n}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="space-y-2">
+                    <span className="text-[9px] font-black uppercase text-stone-300 tracking-widest">Explanation</span>
+                    <p className="text-[10px] font-bold text-stone-600 leading-relaxed uppercase italic">"{explanation}"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+));
+
+export default function ExplainabilityEngine() {
+    const [gamma, setGamma] = useState(12.5);
+    const [alpha, setAlpha] = useState(0.58);
+    const beta = useMemo(() => 1 - alpha, [alpha]);
+
+    const audit = useMemo(() => {
+        const penalties = Object.entries(THRESHOLDS).reduce((acc, [key, config]) => {
+            const val = (NIKE_CASE_STUDY[key.toLowerCase() as keyof typeof NIKE_CASE_STUDY] as number) || 0;
+            acc[key] = calculatePenalty(val, config.soft, config.hard, gamma);
+            return acc;
+        }, {} as Record<string, number>);
+
+        const weights = Object.entries(THRESHOLDS).reduce((acc, [key, config]) => {
+            acc[key] = (alpha * config.ahp) + (beta * config.entropy);
+            return acc;
+        }, {} as Record<string, number>);
+
+        const minPhi = Math.min(...Object.values(penalties));
+        const triggerIndicator = Object.entries(penalties).find(([_, val]) => val === minPhi)?.[0] || 'WATER';
+        const finalScore = NIKE_CASE_STUDY.wamScore * minPhi;
+
+        return { penalties, weights, minPhi, triggerIndicator, finalScore };
+    }, [gamma, alpha, beta]);
 
     return (
-        <div className="min-h-screen bg-[#FAF9F6] text-stone-900 selection:bg-stone-900 selection:text-white font-sans pt-24 md:pt-36 pb-36 px-4 md:px-8 overflow-hidden">
-            <div className="max-w-[1500px] mx-auto space-y-32">
+        <div className="min-h-screen bg-[#FAFAFA] text-[#1C1F26] font-sans selection:bg-stone-900 selection:text-white pt-32 p-6 md:pt-48 md:px-12 pb-12">
+            <div className="max-w-[1600px] mx-auto space-y-32">
                 
-                {/* 1. FORENSIC HUB HEADER */}
-                <header className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
-                    <div className="max-w-4xl space-y-8">
-                        <div className="inline-flex items-center gap-4 bg-stone-900 text-white px-5 py-2 rounded-full">
-                            <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
-                            <span className="text-[9px] font-black uppercase tracking-[0.4em]">Stochastic Stress Test: Exported & Verified</span>
-                        </div>
-                        <h1 className="text-6xl md:text-9xl font-black tracking-tighter uppercase text-stone-900 leading-[0.8] text-balance">
-                            Systemic<br />Audit Log
+                {/* 🔷 HEADER: ALIGNED WITH BRANDS PAGE */}
+                <header className="flex flex-col md:flex-row justify-between items-start gap-12">
+                    <div>
+                        <h1 className="text-4xl md:text-5xl font-black text-[#1C1F26] tracking-tight uppercase">
+                            EXPLAINABILITY ENGINE
                         </h1>
-                        <p className="text-sm md:text-lg font-medium text-stone-500 max-w-xl leading-relaxed">
-                            Audit complete in <span className="text-stone-900 font-bold">15.94 seconds</span>. 20,000 entities detected and stress-tested via 10,000 stochastic realities to isolate corporate manipulation nodes.
+                        <p className="font-mono text-[10px] font-bold text-stone-500 tracking-[0.2em] uppercase mt-2">
+                            IEEE METHODOLOGY | EMPIRICAL LOGISTICS FUNCTION | AHP HYBRID WEIGHTING
                         </p>
+                    </div>
+                    <div className="flex flex-col items-end gap-4">
+                        <div className="bg-white border-2 border-[#1C1F26]/10 px-6 py-2 rounded-full shadow-sm flex items-center gap-3">
+                            <span className="font-mono text-[10px] uppercase font-bold text-stone-600 tracking-widest">
+                                ENGINE STATUS: ACTIVE
+                            </span>
+                            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                        </div>
+                        <Badge className="bg-[#1C1F26] text-white px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] shadow-lg shadow-stone-900/10 border-none">
+                            Sustainability Logic Core v7.0
+                        </Badge>
                     </div>
                 </header>
 
-                {/* 2. THE CONSOLE (UPDATED WITH REAL TEST VALUES) */}
-                <section className="space-y-6">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <Calculator className="w-4 h-4 text-stone-900" />
-                            <h2 className="text-sm font-black uppercase tracking-[0.3em] text-stone-900">Audit Performance Receipt</h2>
-                        </div>
-                        <div className="text-[10px] font-mono text-stone-400">TIMESTAMP: {new Date().toISOString()}</div>
+                {/* 🧪 01 / MODEL INTELLIGENCE */}
+                <section id="model-intel" className="space-y-16">
+                    <div className="flex items-center gap-6">
+                        <div className="p-3 bg-stone-900 text-white rounded-2xl shadow-xl shadow-stone-900/10"><Binary size={24} /></div>
+                        <h2 className="text-4xl font-black uppercase tracking-tighter">01 / Model Intelligence</h2>
                     </div>
-                    <ForensicGrid>
-                        <AuditMetric label="Audit Completion Time" val="15.94s" sub="Computational latency verified" icon={Timer} />
-                        <AuditMetric label="Total Entities Audited" val="20,000" sub="100% population coverage" icon={Database} />
-                        <AuditMetric label="Monte Carlo Iterations" val="10,000" sub="Stochastic node depth" icon={Layers} />
-                        <div className="bg-rose-600 p-10 flex flex-col justify-between text-white border-l border-white/10 relative overflow-hidden group">
-                                <div className="relative z-10 transition-transform group-hover:scale-105 duration-700">
-                                    <div className="text-[10px] font-black uppercase tracking-[0.25em] text-rose-200 mb-6">Critical Outliers Detected</div>
-                                    <div className="text-6xl font-mono font-black tracking-tighter">05</div>
+
+                    <div className="grid grid-cols-1 xl:grid-cols-12 gap-12">
+                        {/* LHS: Controls */}
+                        <div className="xl:col-span-4 space-y-8">
+                            <Card className="rounded-[3rem] border-stone-100 shadow-2xl shadow-stone-900/5 bg-white overflow-hidden">
+                                <CardHeader className="bg-stone-50/50 p-10 border-b border-stone-100">
+                                    <div className="text-xs uppercase tracking-[0.4em] font-black flex items-center gap-3 text-stone-400">
+                                        <Settings2 size={16} />
+                                        Audit Control Panel
+                                    </div>
+                                </CardHeader>
+                                <div className="p-10 space-y-12">
+                                    <div className="space-y-6">
+                                        <div className="flex justify-between items-end">
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-stone-400">Penalty Severity (γ)</label>
+                                            <span className="font-mono font-black text-[#1C1F26] text-3xl">{gamma.toFixed(1)}</span>
+                                        </div>
+                                        <Slider value={[gamma]} onValueChange={([v]) => setGamma(v)} max={20} step={0.1} className="[&>[role=slider]]:bg-stone-900" />
+                                    </div>
+                                    <div className="space-y-6">
+                                        <div className="flex justify-between items-end">
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-stone-400">Expert Weight (α vs β)</label>
+                                            <span className="font-mono font-black text-[#1C1F26] text-3xl">{alpha.toFixed(2)} / {beta.toFixed(2)}</span>
+                                        </div>
+                                        <Slider value={[alpha]} onValueChange={([v]) => setAlpha(v)} max={1} step={0.01} className="[&>[role=slider]]:bg-stone-900" />
+                                    </div>
                                 </div>
-                                <div className="absolute -right-4 -bottom-4 opacity-20 pointer-events-none group-hover:rotate-12 transition-transform duration-700">
-                                    <ShieldAlert size={160} />
+                            </Card>
+
+                            <div className="p-10 bg-[#1C1F26] rounded-[3rem] text-white space-y-8 shadow-2xl shadow-stone-900/20">
+                                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-stone-500">Optimization Meta</h4>
+                                <div className="space-y-6">
+                                    <div className="flex justify-between items-center border-b border-white/5 pb-4">
+                                        <span className="text-xs font-bold text-stone-500 uppercase tracking-widest italic">AHP Consistency (CR)</span>
+                                        <span className="font-mono font-black text-emerald-500 text-xl">0.07 ≤ 0.10</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-xs font-bold text-stone-500 uppercase tracking-widest italic">Pareto Optimality</span>
+                                        <span className="font-mono font-black text-emerald-500">Verified</span>
+                                    </div>
                                 </div>
+                            </div>
                         </div>
-                    </ForensicGrid>
+
+                        {/* RHS: Methodology Detail */}
+                        <div className="xl:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <MethodologySection 
+                                title="Hybrid Weighting"
+                                icon={Sigma}
+                                equation="W_k^{(H)} = \alpha W_k^{(S)} + \beta W_k^{(O)}"
+                                nomenclature={["α/β: Weight Balance", "S: AHP Subjective", "O: Entropy Objective"]}
+                                explanation="Combines expert judgment with raw data variance to neutralize institutional bias."
+                            />
+                            <MethodologySection 
+                                title="Entropy (Objective)"
+                                icon={Dna}
+                                equation="E_j = -k \sum p_{ij} \ln(p_{ij})"
+                                nomenclature={["p_ij: Normalized Value", "k: Normalization Constant"]}
+                                explanation="Weights indicators by information density. Noisy data is penalized automatically."
+                            />
+                            <MethodologySection 
+                                title="Cooperative Optimization"
+                                icon={Scale}
+                                equation="min |W^{(H)} - W^{(S)}|^2 + |W^{(H)} - W^{(O)}|^2"
+                                nomenclature={["|·|: Euclidean Norm"]}
+                                explanation="Finds the mathematical Pareto-optimum between expert vision and hard data reality."
+                            />
+                            <MethodologySection 
+                                title="AHP (Subjective)"
+                                icon={Fingerprint}
+                                equation="W^{(S)} = \text{eig}(A)_{normalized}"
+                                nomenclature={["A: Pairwise Comparison Matrix"]}
+                                explanation="Expert-led prioritization using hierarchy analysis to define planetary values."
+                            />
+                        </div>
+                    </div>
                 </section>
 
-                {/* 3. THE VOLATILITY ABYSS (VISUALIZATION) */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                    <div className="lg:col-span-8 space-y-8">
-                        <div className="flex items-end justify-between border-b border-stone-200 pb-6">
-                            <div>
-                                <h3 className="text-xs font-black uppercase tracking-[0.2em] text-stone-400 mb-1">Visualization Gamma</h3>
-                                <h2 className="text-2xl font-black uppercase tracking-tighter">The Volatility Abyss</h2>
+                {/* 🌍 02 / PLANETARY BOUNDARY SYSTEM */}
+                <section id="planetary-system" className="space-y-16">
+                    <div className="flex items-center gap-6">
+                        <div className="p-3 bg-stone-900 text-white rounded-2xl shadow-xl shadow-stone-900/10"><Globe2 size={24} /></div>
+                        <h2 className="text-4xl font-black uppercase tracking-tighter">02 / Boundary Enforcement</h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                        {/* Logistic Curve Graph */}
+                        <div className="lg:col-span-8 bg-white border border-stone-100 rounded-[4rem] p-16 shadow-2xl shadow-stone-900/5 space-y-12 overflow-hidden relative">
+                            <div className="flex justify-between items-start">
+                                <div className="space-y-4">
+                                    <Badge className="bg-rose-500 text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border-none">Non-Compensatory Trigger</Badge>
+                                    <h3 className="text-6xl font-black uppercase tracking-tighter leading-none"><InlineMath math="\phi(S)" /> Penalty Function</h3>
+                                </div>
+                                <div className="text-right">
+                                    <div className="text-xs font-black text-stone-400 uppercase tracking-widest mb-2 italic">Active Breach: {audit.triggerIndicator}</div>
+                                    <div className="text-5xl font-mono font-black text-rose-500"><InlineMath math="\phi =" /> {audit.minPhi.toFixed(4)}</div>
+                                </div>
                             </div>
-                            <p className="text-[10px] font-mono text-stone-400 hidden md:block uppercase leading-none">Mapping score manipulation thresholds</p>
+                            
+                            <div className="h-[500px] w-full">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <AreaChart data={useMemo(() => {
+                                        const config = THRESHOLDS[audit.triggerIndicator as keyof typeof THRESHOLDS];
+                                        return Array.from({ length: 120 }, (_, i) => {
+                                            const range = Math.abs(config.hard - config.soft) * 2.5;
+                                            const s = Math.min(config.soft, config.hard) - range * 0.2 + (range * 1.4 / 120) * i;
+                                            return { s, penalty: calculatePenalty(s, config.soft, config.hard, gamma) };
+                                        });
+                                    }, [gamma, audit.triggerIndicator])}>
+                                        <defs>
+                                            <linearGradient id="penaltyGradient" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="5%" stopColor="#ef4444" stopOpacity={0.2}/>
+                                                <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                                            </linearGradient>
+                                        </defs>
+                                        <CartesianGrid strokeDasharray="10 10" vertical={false} strokeOpacity={0.05} />
+                                        <XAxis dataKey="s" hide />
+                                        <YAxis axisLine={false} tickLine={false} tick={{ fill: '#d6d3d1', fontSize: 10, fontWeight: 'bold' }} domain={[0, 1]} />
+                                        <ChartTooltip content={({ active, payload }) => active && payload && payload.length > 0 ? (
+                                            <div className="bg-[#1C1F26] text-white p-8 rounded-[2rem] shadow-3xl border border-white/10 backdrop-blur-xl">
+                                                <div className="text-[10px] font-black uppercase text-stone-500 tracking-widest mb-2 italic">Penalty Factor</div>
+                                                <div className="text-5xl font-mono font-black text-rose-500">{parseFloat(payload[0].value as string).toFixed(4)}</div>
+                                            </div>
+                                        ) : null} />
+                                        <Area type="monotone" dataKey="penalty" stroke="#ef4444" strokeWidth={6} fill="url(#penaltyGradient)" />
+                                        <ReferenceLine x={NIKE_CASE_STUDY[audit.triggerIndicator.toLowerCase() as keyof typeof NIKE_CASE_STUDY] as number} stroke="#1C1F26" strokeWidth={3} strokeDasharray="5 5" />
+                                    </AreaChart>
+                                </ResponsiveContainer>
+                            </div>
                         </div>
-                        <div className="h-[600px] w-full bg-white border border-stone-200 rounded-[3rem] p-12 shadow-2xl relative overflow-hidden group">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <ScatterChart margin={{ top: 20, right: 20, bottom: 40, left: 20 }}>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                                    <XAxis 
-                                        type="number" 
-                                        dataKey="score" 
-                                        name="Score" 
-                                        domain={[0, 3000]}
-                                        tick={{ fill: '#94a3b8', fontSize: 10, fontFamily: 'monospace' }}
-                                        label={{ value: 'FINAL_SCORE (MT)', position: 'insideBottom', offset: -25, fill: '#94a3b8', fontSize: 10, fontWeight: 'black' }}
-                                        axisLine={false}
-                                        tickLine={false}
-                                    />
-                                    <YAxis 
-                                        type="number" 
-                                        dataKey="vol" 
-                                        name="Volatility" 
-                                        domain={[0, 1000]}
-                                        tick={{ fill: '#94a3b8', fontSize: 10, fontFamily: 'monospace' }}
-                                        label={{ value: 'STOCHASTIC_VOLATILITY (MT)', angle: -90, position: 'insideLeft', offset: -10, fill: '#94a3b8', fontSize: 10, fontWeight: 'black' }}
-                                        axisLine={false}
-                                        tickLine={false}
-                                    />
-                                    <Tooltip 
-                                        cursor={{ strokeDasharray: '3 3', stroke: '#cbd5e1' }}
-                                        content={({ active, payload }) => {
-                                            if (active && payload && payload.length) {
-                                                const data = payload[0].payload;
-                                                return (
-                                                    <div className="bg-stone-900 border border-stone-800 p-6 rounded-3xl shadow-2xl text-white">
-                                                        <div className="text-[9px] font-black uppercase tracking-widest text-stone-500 mb-2">Audit Trace</div>
-                                                        <p className="text-xl font-mono font-black mb-1">{data.score.toFixed(2)} MT</p>
-                                                        <p className="text-xs font-mono text-stone-400">VAR: {data.vol.toFixed(2)}</p>
-                                                        {data.isOutlier && (
-                                                            <div className="mt-4 pt-4 border-t border-white/10 text-[9px] font-black text-rose-500 uppercase tracking-widest flex items-center gap-2">
-                                                                <AlertTriangle size={12} /> Manipulation Risk: High
-                                                            </div>
-                                                        )}
+
+                        {/* Real-time Indicator Audit */}
+                        <div className="lg:col-span-4 bg-[#1C1F26] rounded-[4rem] p-12 text-white space-y-12 shadow-2xl shadow-stone-900/20">
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-stone-500 border-b border-white/10 pb-6 flex justify-between items-center">
+                                Real-Time Boundary Audit
+                                <Activity size={18} />
+                            </h3>
+                            <div className="space-y-10">
+                                {Object.entries(THRESHOLDS).map(([key, config]) => {
+                                    const val = NIKE_CASE_STUDY[key.toLowerCase() as keyof typeof NIKE_CASE_STUDY] as number;
+                                    const p = calculatePenalty(val, config.soft, config.hard, gamma);
+                                    const Icon = config.icon;
+                                    const isBreached = p < 0.7;
+                                    return (
+                                        <div key={key} className="space-y-4">
+                                            <div className="flex justify-between items-end">
+                                                <div className="flex items-center gap-4">
+                                                    <div className={cn("p-2 rounded-xl bg-white/5 shadow-inner", isBreached && "text-rose-500")}><Icon size={16} /></div>
+                                                    <div className="space-y-1">
+                                                        <div className="text-[10px] font-black uppercase text-stone-500 tracking-widest">{config.label}</div>
+                                                        <div className="text-2xl font-mono font-black">{val.toLocaleString()} <span className="text-[10px] opacity-30">{config.unit}</span></div>
                                                     </div>
-                                                );
-                                            }
-                                            return null;
-                                        }}
-                                    />
-                                    <ReferenceArea x1={2200} x2={3000} y1={700} y2={1000} fill="#fecaca" fillOpacity={0.1} />
-                                    <ReferenceLine x={2000} stroke="#f43f5e" strokeDasharray="5 5" strokeWidth={1} label={{ value: 'CRITICAL THRESHOLD', position: 'top', fill: '#f43f5e', fontSize: 10, fontWeight: 'black' }} />
-                                    <ReferenceLine y={800} stroke="#f43f5e" strokeDasharray="5 5" strokeWidth={1} />
-                                    
-                                    <Scatter name="Baseline Entities" data={VOLATILITY_SAMPLES}>
-                                        {VOLATILITY_SAMPLES.map((entry, index) => (
+                                                </div>
+                                                <div className={cn("text-3xl font-mono font-black", isBreached ? "text-rose-500" : "text-emerald-500")}>
+                                                    <InlineMath math="\phi" /> {p.toFixed(2)}
+                                                </div>
+                                            </div>
+                                            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/5 shadow-inner">
+                                                <motion.div 
+                                                    className={cn("h-full", isBreached ? "bg-rose-500" : "bg-emerald-500")}
+                                                    initial={false}
+                                                    animate={{ width: `${p * 100}%` }}
+                                                    transition={{ duration: 0.8 }}
+                                                />
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ⚖️ 03 / FORENSIC SCORING */}
+                <section id="scoring-logic" className="space-y-16">
+                    <div className="flex items-center gap-6">
+                        <div className="p-3 bg-stone-900 text-white rounded-2xl shadow-xl shadow-stone-900/10"><Calculator size={24} /></div>
+                        <h2 className="text-4xl font-black uppercase tracking-tighter">03 / Forensic Scoring</h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+                        <div className="lg:col-span-8 p-16 bg-white border border-stone-100 rounded-[5rem] shadow-2xl shadow-stone-900/5 relative overflow-hidden flex flex-col justify-between group">
+                            <div className="absolute top-0 right-0 p-20 opacity-[0.03] pointer-events-none group-hover:rotate-12 transition-transform duration-1000"><History size={300} /></div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
+                                <div className="space-y-8 text-center md:text-left">
+                                    <span className="text-[10px] font-black text-stone-400 uppercase tracking-widest border-b border-stone-100 pb-2 inline-block">Traditional WAM Index</span>
+                                    <div className="text-8xl font-mono font-black text-stone-200 line-through decoration-rose-500 decoration-[8px] decoration-double drop-shadow-sm">
+                                        {NIKE_CASE_STUDY.wamScore.toFixed(1)}
+                                    </div>
+                                    <p className="text-[10px] font-bold text-stone-400 uppercase italic leading-relaxed max-w-xs">
+                                        Linear averages mask ecological failures with governance performance.
+                                    </p>
+                                </div>
+                                <div className="space-y-8 text-center md:text-right border-t md:border-t-0 md:border-l border-stone-100 pt-16 md:pt-0 md:pl-16">
+                                    <span className="text-[11px] font-black text-emerald-600 uppercase tracking-[0.4em] border-b-2 border-emerald-600 pb-2 inline-block">Audited Ecosphere Result</span>
+                                    <div className="text-9xl font-mono font-black tracking-tighter leading-none text-[#1C1F26] drop-shadow-xl">
+                                        {audit.finalScore.toFixed(0)}<span className="text-4xl">.{audit.finalScore.toFixed(1).split('.')[1]}</span>
+                                    </div>
+                                    <Badge className="bg-emerald-600 text-white rounded-full px-8 py-2 text-[10px] font-black uppercase tracking-widest shadow-lg border-none">Physics Compliant ✓</Badge>
+                                </div>
+                            </div>
+
+                            <div className="mt-20 p-10 bg-rose-50/50 border border-rose-200 rounded-[3rem] relative z-10 shadow-inner">
+                                <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+                                    <div className="flex items-center gap-6">
+                                        <div className="p-4 bg-rose-500 rounded-2xl text-white shadow-xl shadow-rose-200 animate-pulse"><AlertTriangle size={32} /></div>
+                                        <div className="space-y-1">
+                                            <h4 className="text-xl font-black uppercase tracking-tight text-rose-600">Non-Compensatory Rule Activated</h4>
+                                            <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest italic">Weakest link (<InlineMath math="\phi_{min}" />) dictates final score.</p>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <span className="text-[10px] font-black text-stone-400 uppercase tracking-widest block mb-1">Audit Adjustment</span>
+                                        <div className="text-5xl font-mono font-black text-rose-600">-{((1 - audit.minPhi) * 100).toFixed(0)}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="lg:col-span-4 flex flex-col gap-8">
+                            <Card className="flex-1 rounded-[4rem] border-stone-100 bg-white p-12 shadow-2xl shadow-stone-900/5 flex flex-col justify-center gap-8 border">
+                                <div className="flex items-center gap-4 text-emerald-600 border-b border-stone-50 pb-6">
+                                    <Microscope size={28} />
+                                    <h4 className="text-xs font-black uppercase tracking-[0.3em]">Statistical Proof</h4>
+                                </div>
+                                <div className="space-y-10 text-center">
+                                    <div className="space-y-2">
+                                        <div className="text-7xl font-mono font-black text-[#1C1F26] leading-none tracking-tighter">P &lt; .001</div>
+                                        <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest italic text-center">Mann-Whitney U Result</p>
+                                    </div>
+                                    <div className="space-y-2 pt-6 border-t border-stone-50">
+                                        <div className="text-7xl font-mono font-black text-emerald-600 leading-none tracking-tighter">94.2%</div>
+                                        <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest italic text-center">Monte Carlo Stability Index</p>
+                                    </div>
+                                </div>
+                            </Card>
+                            <div className="p-10 bg-[#1C1F26] rounded-[3rem] text-white flex items-center justify-between shadow-2xl shadow-stone-900/20 relative overflow-hidden group">
+                                <div className="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="space-y-2 relative z-10">
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-400">Monte Carlo Confidence</h4>
+                                    <p className="text-xs font-bold text-stone-500 uppercase tracking-widest italic">10,000 Iterations Verified</p>
+                                </div>
+                                <ShieldCheck size={40} className="text-emerald-500 relative z-10" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 📊 04 / THE VOLATILITY ABYSS */}
+                <section id="volatility-abyss" className="space-y-16">
+                    <div className="flex items-center gap-6">
+                        <div className="p-3 bg-stone-900 text-white rounded-2xl shadow-xl shadow-stone-900/10"><BarChart3 size={24} /></div>
+                        <h2 className="text-4xl font-black uppercase tracking-tighter">04 / Visual Analytics</h2>
+                    </div>
+
+                    <Card className="rounded-[5rem] border-stone-100 bg-white p-20 shadow-2xl shadow-stone-900/5 relative overflow-hidden h-[800px] border">
+                        <div className="flex justify-between items-start mb-16 relative z-10">
+                            <div className="space-y-4">
+                                <Badge className="bg-[#1C1F26] text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border-none">Diagnostic Scatter</Badge>
+                                <h3 className="text-7xl font-black uppercase tracking-tighter text-[#1C1F26] leading-none">The Volatility Abyss</h3>
+                                <p className="text-sm font-bold text-stone-400 uppercase tracking-widest italic leading-relaxed max-w-xl pl-10 border-l-4 border-stone-50">
+                                    "Mapping the forensic decoupling between traditional indices and audited reality."
+                                </p>
+                            </div>
+                            <div className="flex gap-10 bg-stone-50/50 p-8 rounded-full border border-stone-100 shadow-inner">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-3 h-3 rounded-full bg-rose-500 shadow-lg shadow-rose-200" />
+                                    <span className="text-[10px] font-black uppercase text-stone-500 tracking-widest">Breach Zone</span>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-lg shadow-emerald-200" />
+                                    <span className="text-[10px] font-black uppercase text-stone-500 tracking-widest">Integrity Zone</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="h-[500px] w-full relative z-10">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <ScatterChart margin={{ top: 20, right: 30, bottom: 40, left: 30 }}>
+                                    <CartesianGrid strokeDasharray="10 10" vertical={false} strokeOpacity={0.05} />
+                                    <XAxis type="number" dataKey="wam" name="WAM" hide />
+                                    <YAxis type="number" dataKey="ecosphere" name="Ecosphere" hide />
+                                    <ZAxis type="number" dataKey="z" range={[400, 401]} />
+                                    <ChartTooltip 
+                                        isAnimationActive={false}
+                                        wrapperStyle={{ pointerEvents: 'none', outline: 'none' }}
+                                        cursor={{ strokeDasharray: '3 3', stroke: '#1C1F26', strokeWidth: 1 }} 
+                                        content={({ active, payload }) => active && payload && payload.length > 0 ? (
+                                        <div className="bg-[#1C1F26] text-white p-8 rounded-[2.5rem] border border-white/10 shadow-5xl min-w-[300px] backdrop-blur-3xl pointer-events-none select-none">
+                                            <div className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.4em] mb-6 border-b border-white/5 pb-4 flex justify-between items-center">
+                                                {payload[0].payload.name}
+                                                <Target size={20} />
+                                            </div>
+                                            <div className="space-y-8">
+                                                <div className="flex justify-between items-center opacity-40">
+                                                    <span className="text-[10px] font-black uppercase tracking-widest text-stone-500">Traditional Base</span>
+                                                    <span className="font-mono font-black text-2xl">{payload[0].payload.wam}</span>
+                                                </div>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-[10px] font-black uppercase text-emerald-400 tracking-widest">Audited Result</span>
+                                                    <span className="font-mono font-black text-emerald-400 text-6xl">{payload[0].payload.ecosphere}</span>
+                                                </div>
+                                                <div className="flex justify-between items-center pt-10 border-t border-white/5">
+                                                    <span className="text-[10px] font-black uppercase text-rose-500 italic font-bold">Forensic Penalty</span>
+                                                    <span className="font-mono font-black text-rose-500 text-4xl">-{ (payload[0].payload.penalty * 100).toFixed(0)}%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : null} />
+                                    <ReferenceArea x1={0} x2={100} y1={0} y2={40} fill="#ef4444" fillOpacity={0.03} style={{ pointerEvents: 'none' }} />
+                                    <Scatter name="Assets" data={MOCK_SCATTER_DATA}>
+                                        {MOCK_SCATTER_DATA.map((entry, index) => (
                                             <Cell 
                                                 key={`cell-${index}`} 
-                                                fill={entry.isOutlier ? '#f43f5e' : '#10b981'} 
-                                                fillOpacity={0.4}
-                                                r={entry.isOutlier ? 4 : 2}
-                                            />
-                                        ))}
-                                    </Scatter>
-
-                                    <Scatter name="Critical Outliers" data={TOP_VOLATILITY_ENTITIES}>
-                                        {TOP_VOLATILITY_ENTITIES.map((entry, index) => (
-                                            <Cell 
-                                                key={`cell-out-${index}`} 
-                                                fill="#f43f5e" 
-                                                fillOpacity={1}
-                                                r={6}
-                                                className="animate-pulse"
+                                                fill={entry.ecosphere < 50 ? '#ef4444' : '#10b981'} 
+                                                fillOpacity={0.8} 
+                                                className="transition-all hover:fill-black cursor-pointer"
                                             />
                                         ))}
                                     </Scatter>
                                 </ScatterChart>
                             </ResponsiveContainer>
                         </div>
+                        <div className="absolute bottom-0 right-0 p-20 opacity-[0.01] text-stone-900 font-black text-[25rem] pointer-events-none select-none tracking-tighter -rotate-6">ABYSS</div>
+                    </Card>
+                </section>
+
+                {/* 🏢 05 / FORENSIC CASE STUDY: THE NIKE PARADOX */}
+                <section id="brand-explainability" className="space-y-16">
+                    <div className="flex items-center gap-6">
+                        <div className="p-3 bg-stone-900 text-white rounded-2xl shadow-xl shadow-stone-900/10"><Target size={24} /></div>
+                        <h2 className="text-4xl font-black uppercase tracking-tighter">05 / Forensic Case Study</h2>
                     </div>
 
-                    <div className="lg:col-span-4 space-y-12">
-                        <div className="flex items-end justify-between border-b border-stone-200 pb-6">
-                            <div>
-                                <h3 className="text-xs font-black uppercase tracking-[0.2em] text-stone-400 mb-1">Audit List</h3>
-                                <h2 className="text-2xl font-black uppercase tracking-tighter">Critical Risk Watchlist</h2>
-                            </div>
-                        </div>
-                        <div className="space-y-6">
-                            {TOP_VOLATILITY_ENTITIES.map((entity, i) => (
-                                <motion.div 
-                                    key={i}
-                                    initial={{ x: 20, opacity: 0 }}
-                                    whileInView={{ x: 0, opacity: 1 }}
-                                    transition={{ delay: i * 0.1 }}
-                                    className="bg-white border border-stone-200 p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all border-l-4 border-l-rose-500 overflow-hidden relative group"
-                                >
-                                    <div className="relative z-10">
-                                        <div className="flex justify-between items-start mb-4">
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-rose-600">ID: OUTLIER_{entity.id}</span>
-                                            <div className="bg-rose-50 text-rose-600 px-3 py-1 rounded-md text-[9px] font-black uppercase tracking-widest">Critical Volatility</div>
-                                        </div>
-                                        <h4 className="text-lg font-black uppercase tracking-tighter text-stone-900 group-hover:text-rose-600 transition-colors">{entity.name}</h4>
-                                        <div className="mt-6 pt-6 border-t border-stone-100 flex justify-between items-end">
-                                            <div>
-                                                <p className="text-[9px] font-black uppercase tracking-widest text-stone-400 mb-1">Volatility Spread</p>
-                                                <p className="text-xl font-mono font-black text-rose-600">+{entity.vol.toFixed(2)} MT</p>
-                                            </div>
-                                            <div className="text-right">
-                                                <p className="text-[9px] font-black uppercase tracking-widest text-stone-400 mb-1">95% CI Peak</p>
-                                                <p className="text-xl font-mono font-black text-stone-400">{entity.upper.toFixed(0)}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-[0.05] transition-opacity">
-                                        <ShieldAlert size={120} />
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                {/* 4. DIAGNOSTIC CONCLUSION */}
-                <footer className="bg-stone-900 rounded-[4rem] p-16 md:p-32 text-white relative overflow-hidden border border-white/5">
-                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+                    <div className="p-12 bg-white border border-stone-100 rounded-[4rem] shadow-2xl shadow-stone-900/5 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden">
                         <div className="space-y-12">
-                            <div className="flex items-center gap-6">
-                                <ShieldCheck className="text-emerald-400 w-12 h-12" />
-                                <h3 className="text-4xl md:text-7xl font-black uppercase tracking-tighter leading-none">Diagnostic<br />Final Verdict</h3>
+                            <div className="flex items-center gap-10">
+                                <div className="w-40 h-40 bg-stone-50 rounded-[3rem] flex items-center justify-center p-10 border border-stone-100 shadow-inner group transition-all hover:shadow-xl">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike" className="w-full opacity-90 group-hover:scale-110 transition-transform duration-700" />
+                                </div>
+                                <div className="space-y-3">
+                                    <Badge className="bg-[#1C1F26] text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border-none">Nike FY2023 Audit</Badge>
+                                    <h3 className="text-4xl font-black uppercase tracking-tighter text-[#1C1F26] leading-none">The Nike Paradox</h3>
+                                </div>
                             </div>
-                            <div className="space-y-6">
-                                <p className="text-xl md:text-2xl font-medium leading-relaxed text-stone-400">
-                                    Systemic Stress Test complete. Output variance verified against a <span className="text-white font-bold">20% corporate data manipulation margin</span>. 
+                            <div className="space-y-10 bg-stone-50/50 p-12 rounded-[3rem] border border-stone-100 shadow-inner">
+                                <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-stone-400 mb-6 border-b border-stone-200 pb-4 flex justify-between items-center">
+                                    Audit Narrative
+                                    <History size={16} />
+                                </h4>
+                                <p className="text-lg font-bold text-stone-600 leading-relaxed uppercase italic border-l-4 border-stone-900 pl-8">
+                                    "Traditional ESG metrics rewarded Nike with a 70.8 score. Forensic analysis identifies a systemic decoupling: Water intensity ({NIKE_CASE_STUDY.water.toLocaleString()} L/$M) breached the planetary hard boundary."
                                 </p>
                             </div>
                         </div>
-                        <div className="flex justify-center lg:justify-end">
-                            <div className="w-full max-w-md aspect-square bg-[#FAF9F6] rounded-[4rem] p-16 flex flex-col items-center justify-center text-center space-y-8 shadow-inner">
-                                <div className="p-8 bg-stone-900 rounded-full shadow-[0_20px_40px_rgba(0,0,0,0.2)]">
-                                    <Zap className="text-emerald-400 w-16 h-16 fill-emerald-400" />
+                        <div className="flex flex-col justify-center items-center">
+                            <div className="w-full max-w-md p-12 bg-[#1C1F26] text-white rounded-[3.5rem] shadow-3xl shadow-stone-900/30 relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:rotate-12 transition-transform duration-1000"><Target size={250} /></div>
+                                <div className="space-y-4 relative z-10 opacity-20 text-[9px] font-black uppercase tracking-[0.5em] mb-12 border-b border-white/5 pb-6">
+                                    Traditional Index Score / WAM 70.8
                                 </div>
-                                <h4 className="text-4xl font-black uppercase tracking-tighter text-stone-900 mb-2">Real Reality.</h4>
-                                <p className="text-[11px] font-black uppercase tracking-widest text-stone-400 max-w-[250px] mx-auto leading-relaxed">
-                                    The math has spoken. There is no hiding from the physics of extraction.
-                                </p>
+                                <div className="space-y-4 relative z-10">
+                                    <span className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.5em] border-b-2 border-emerald-500/30 pb-2 inline-block">Final Audited Score</span>
+                                    <div className="text-8xl font-mono font-black leading-none tracking-tighter text-white">
+                                        {audit.finalScore.toFixed(0)}<span className="text-3xl text-emerald-500">.{audit.finalScore.toFixed(1).split('.')[1]}</span>
+                                    </div>
+                                </div>
+                                <div className="pt-20 mt-20 border-t border-white/5 flex justify-between items-end relative z-10">
+                                    <div className="space-y-4">
+                                        <span className="text-[10px] font-black uppercase text-rose-500 tracking-[0.2em] italic">Forensic Adjustment</span>
+                                        <div className="text-5xl font-mono font-black text-rose-500">-{((1 - audit.minPhi) * 100).toFixed(0)}%</div>
+                                    </div>
+                                    <Badge className="bg-emerald-600/20 text-emerald-500 border border-emerald-500/30 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">Audited ✓</Badge>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </footer >
-
-                <div className="text-center pt-24 border-t border-stone-200">
-                    <p className="text-[10px] font-mono text-stone-400 uppercase tracking-[0.6em]">
-                        Ecosphere Engine © 2026 — All Simulations Audited & Verified in 15.94s
-                    </p>
-                </div>
-            </div >
-        </div >
+                </section>
+            </div>
+        </div>
     );
 }

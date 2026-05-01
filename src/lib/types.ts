@@ -123,6 +123,8 @@ export interface EnrichedBrand extends BrandCSV {
         avgScore: number;
         bestProduct?: EnrichedProduct;
         worstProduct?: EnrichedProduct;
+        topProducts: EnrichedProduct[];
+        bottomProducts: EnrichedProduct[];
         variance: number;
         tierDistribution: {
             A: number;
@@ -132,6 +134,7 @@ export interface EnrichedBrand extends BrandCSV {
             F: number;
         };
     };
+    materialUsage: string[];
 }
 
 export interface EnrichedProduct extends ProductCSV {
@@ -143,4 +146,10 @@ export interface EnrichedProduct extends ProductCSV {
 
     // Flags
     redFlags: string[];
+
+    // Competitive Metadata (Bi-directional)
+    competitorCount: number;
+    brandList: string[]; // Names of other brands producing this
+    brandRank: number; // Rank of current brand among those producing this
+    totalCategoryVolume?: number;
 }

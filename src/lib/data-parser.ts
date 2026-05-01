@@ -14,6 +14,12 @@ export async function getBrandData(): Promise<BrandData[]> {
         return cachedBrandData;
     }
     const filePath = path.join(process.cwd(), 'upload', 'major_fashion_brands_sustainability_data_v2.csv');
+    
+    if (!fs.existsSync(filePath)) {
+        // console.error("CSV File not found at:", filePath);
+        return [];
+    }
+
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const lines = fileContent.trim().split('\n');
     const headers = lines[0].split(',').map(h => h.trim());

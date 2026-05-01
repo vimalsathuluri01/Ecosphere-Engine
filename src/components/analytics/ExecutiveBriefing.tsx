@@ -1,6 +1,6 @@
 'use client';
 
-import { Terminal, ShieldAlert, Cpu, Sparkles } from 'lucide-react';
+import { Terminal, ShieldAlert, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { memo } from 'react';
 

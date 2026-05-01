@@ -1,7 +1,6 @@
 import { getProducts } from '@/lib/data';
 import Link from 'next/link';
-import { Search, ArrowUpRight, BarChart3, AlertTriangle, ShieldAlert, Recycle, Zap, Truck, Timer } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { Search, BarChart3, AlertTriangle, Recycle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
