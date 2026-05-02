@@ -6,9 +6,11 @@ import { formatEmission, formatWater, formatWaste, formatScore } from '@/lib/for
 
 interface ProductCardProps {
     product: EnrichedProduct;
+    isSelected?: boolean;
+    onToggle?: (e: React.MouseEvent) => void;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, isSelected, onToggle }: ProductCardProps) {
     const hasViolations = product.hazardous_chemicals_used === 'yes' || !!product.environmental_violations;
 
     // 1. Ecosphere Grade Logic (Non-compensatory)
@@ -78,8 +80,9 @@ export function ProductCard({ product }: ProductCardProps) {
     return (
         <Link href={`/products/${product.product_id}`} className="group block h-full">
             <div className={cn(
-                "h-full bg-white border border-stone-100 rounded-3xl p-6 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] flex flex-col relative focus-within:ring-2 focus-within:ring-stone-400 outline-none",
-                hasViolations && "bg-rose-50/50 border-rose-100"
+                "h-full bg-white border rounded-3xl p-6 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] flex flex-col relative focus-within:ring-2 focus-within:ring-stone-400 outline-none",
+                hasViolations && "bg-rose-50/50 border-rose-100",
+                isSelected ? "ring-4 ring-emerald-500/20 border-emerald-500 shadow-emerald-500/10" : "border-stone-100"
             )}>
 
                 {/* 1. CATEGORY ICON HEADER (Replaces empty photos with high-end iconography) */}
@@ -149,6 +152,30 @@ export function ProductCard({ product }: ProductCardProps) {
                         <span className="truncate">{fatalFlaw}</span>
                     </div>
                 </div>
+
+                {/* 5. Selection Overlay (Zen Eco Style) */}
+                <button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onToggle?.(e);
+                    }}
+                    className={cn(
+                        "absolute top-4 left-4 w-10 h-10 rounded-full flex items-center justify-center transition-all z-20 shadow-lg border-2",
+                        isSelected
+                            ? "bg-emerald-500 border-emerald-400 text-white scale-110 opacity-100"
+                            : "bg-white/80 backdrop-blur-sm border-stone-200 text-stone-400 hover:scale-110 hover:border-stone-400 opacity-0 group-hover:opacity-100"
+                    )}
+                >
+                    {isSelected ? 
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg> : 
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                    }
+                </button>
 
             </div>
         </Link>

@@ -300,7 +300,8 @@ export function BrandAnalyticsDetails({ brand, allBrands, md }: { brand: BrandDa
                                 title="Carbon Intensity"
                                 icon={<Factory className="w-4 h-4" />}
                                 value={brand.Carbon_Intensity_MT_per_USD_Million.toFixed(1)}
-                                limit={md.Carbon_Intensity_MT_per_USD_Million.toFixed(1)}
+                                median={md.Carbon_Intensity_MT_per_USD_Million.toFixed(1)}
+                                limit={150} // Hard Scientific Boundary
                                 penalty={pCarbon}
                                 total={`${(brand.Carbon_Footprint_MT / 1000000).toFixed(2)}M MT`}
                                 unit="kg/$1M"
@@ -309,7 +310,8 @@ export function BrandAnalyticsDetails({ brand, allBrands, md }: { brand: BrandDa
                                 title="Water Intensity"
                                 icon={<Droplets className="w-4 h-4" />}
                                 value={brand.Water_Intensity_L_per_USD_Million.toFixed(0)}
-                                limit={md.Water_Intensity_L_per_USD_Million.toFixed(0)}
+                                median={md.Water_Intensity_L_per_USD_Million.toFixed(0)}
+                                limit={800000} // Hard Scientific Boundary
                                 penalty={pWater}
                                 total={`${(brand.Water_Usage_Liters / 1000000000).toFixed(2)}B L`}
                                 unit="L/$1M"
@@ -318,7 +320,8 @@ export function BrandAnalyticsDetails({ brand, allBrands, md }: { brand: BrandDa
                                 title="Waste Intensity"
                                 icon={<Trash2 className="w-4 h-4" />}
                                 value={brand.Waste_Intensity_KG_per_USD_Million.toFixed(1)}
-                                limit={md.Waste_Intensity_KG_per_USD_Million.toFixed(1)}
+                                median={md.Waste_Intensity_KG_per_USD_Million.toFixed(1)}
+                                limit={1200} // Hard Scientific Boundary
                                 penalty={pWaste}
                                 total={`${(brand.Waste_Production_KG / 1000000).toFixed(2)}M KG`}
                                 unit="kg/$1M"
@@ -467,9 +470,9 @@ function DeviationAxisRow({ title, multiplier }: { title: string, multiplier: nu
 
 // --- SUB-COMPONENTS ---
 
-function BoundaryCard({ title, icon, value, limit, penalty, total, unit }: any) {
-    const isCritical = penalty > 0;
-    const progress = Math.min(100, (value / limit) * 100);
+function BoundaryCard({ title, icon, value, median, limit, penalty, total, unit }: any) {
+    const isCritical = Number(value) > limit;
+    const progress = Math.min(100, (value / median) * 100);
     const safeTitle = title.replace(/\W/g, '').toLowerCase() || 'penalty';
 
     return (
@@ -533,8 +536,11 @@ function BoundaryCard({ title, icon, value, limit, penalty, total, unit }: any) 
                         className={cn("absolute top-0 left-0 bottom-0 rounded-full", isCritical ? "bg-rose-500" : "bg-stone-800", `prog-${safeTitle}`)}
                     />
                 </div>
-                <div className="flex justify-end mt-2.5">
-                    <span className="font-mono text-[11px] font-bold text-stone-500 uppercase tracking-widest whitespace-nowrap">
+                <div className="flex justify-between mt-2.5">
+                    <span className="font-mono text-[9px] font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap">
+                        Median: {Number(median).toLocaleString()}
+                    </span>
+                    <span className={cn("font-mono text-[9px] font-bold uppercase tracking-widest whitespace-nowrap", isCritical ? "text-rose-500" : "text-stone-400")}>
                         Limit: {limit.toLocaleString()}
                     </span>
                 </div>
@@ -555,7 +561,7 @@ function BoundaryCard({ title, icon, value, limit, penalty, total, unit }: any) 
                         DRAG
                     </div>
                     <div className={cn("font-mono text-lg font-black truncate", isCritical ? "text-rose-600" : "text-emerald-600")}>
-                        {(penalty * 100).toFixed(1)}%
+                        {((1 - penalty) * 100).toFixed(1)}%
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useTransition } from 'react';
 import { KPIRibbon } from './KPIRibbon';
 import { IndustryClimateGap } from './IndustryClimateGap';
 import { ImpactDrivers } from './ImpactDrivers';
@@ -12,11 +12,21 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Zap } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export default function AnalyticsDashboard() {
     const [weightingMode, setWeightingMode] = useState<'entity_mode' | 'volume_mode'>('entity_mode');
     const [interventionLevel, setInterventionLevel] = useState(0);
+    const [immediateSliderValue, setImmediateSliderValue] = useState(0);
+    const [isPending, startTransition] = useTransition();
     const [data, setData] = useState<any>(null);
+
+    const handleSliderChange = (val: number[]) => {
+        setImmediateSliderValue(val[0]);
+        startTransition(() => {
+            setInterventionLevel(val[0]);
+        });
+    };
 
     useEffect(() => {
         fetch('/data/macro_system_data.json')
@@ -119,20 +129,25 @@ export default function AnalyticsDashboard() {
                         <div className="bg-[#1c1f26] text-white p-8 rounded-[2rem] shadow-xl flex flex-col gap-6 min-w-[320px] relative z-[110]">
                             <div className="flex justify-between items-center">
                                 <div className="flex items-center gap-2">
-                                    <Zap size={14} className="text-emerald-400 fill-emerald-400" />
+                                    <Zap size={14} className={cn("text-emerald-400 fill-emerald-400", isPending && "animate-pulse")} />
                                     <span className="text-[10px] font-black uppercase tracking-widest">Policy Simulator</span>
                                 </div>
-                                <span className="text-xs font-mono font-black text-emerald-400">{interventionLevel}%</span>
+                                <span className={cn(
+                                    "text-xs font-mono font-black transition-colors",
+                                    isPending ? "text-emerald-400/50" : "text-emerald-400"
+                                )}>
+                                    {immediateSliderValue}%
+                                </span>
                             </div>
                             <Slider
-                                value={[interventionLevel]}
+                                value={[immediateSliderValue]}
                                 max={100}
                                 step={1}
-                                onValueChange={(vals) => setInterventionLevel(vals[0])}
+                                onValueChange={handleSliderChange}
                                 className="relative z-[120]"
                             />
                             <p className="text-[9px] font-bold text-stone-500 uppercase tracking-tighter">
-                                Force the Worst 10% to Clean Up
+                                {isPending ? 'Recalculating Systemic Shift...' : 'Force the Worst 10% to Clean Up'}
                             </p>
                         </div>
                     </div>
@@ -157,7 +172,7 @@ export default function AnalyticsDashboard() {
                 <section className="space-y-16">
                     <div className="max-w-xl">
                         <h2 className="text-2xl font-black uppercase tracking-tighter mb-4">The Causality Bridge</h2>
-                        <p className="text-xs text-stone-500 leading-relaxed font-serif italic">
+                        <p className="text-base text-stone-600 leading-relaxed font-serif italic">
                             Quantifying the root physical drivers of systemic penalty. Every bar represents a normalized contribution to the industry's ecological debt footprint.
                         </p>
                     </div>
@@ -181,7 +196,7 @@ export default function AnalyticsDashboard() {
                 <section className="space-y-16">
                     <div className="max-w-xl">
                         <h2 className="text-2xl font-black uppercase tracking-tighter mb-4">Systemic Outliers</h2>
-                        <p className="text-xs text-stone-500 leading-relaxed font-serif italic">
+                        <p className="text-base text-stone-600 leading-relaxed font-serif italic">
                             Individual entities displaying maximum entropy vs. the industry median. Precise deviation math anchored in the 20k baseline.
                         </p>
                     </div>
@@ -193,7 +208,7 @@ export default function AnalyticsDashboard() {
                     <div className="grid grid-cols-12 gap-12">
                         <div className="col-span-12 md:col-span-6">
                             <h3 className="text-4xl font-black uppercase tracking-tighter mb-6">Diagnostic Conclusion</h3>
-                            <div className="space-y-6 text-stone-600 font-serif leading-relaxed text-lg italic">
+                            <div className="space-y-6 text-stone-800 font-serif leading-relaxed text-xl italic">
                                 <p>
                                     The data reveals a stark "Hockey Stick" concentration where the top decile of producers is responsible for over {currentData.kpis.top_10_share}% of total industry emissions. This is not a market failure, but a structural feature of the current volume-velocity logic.
                                 </p>

@@ -7,9 +7,10 @@ import { motion } from 'framer-motion';
 interface BrandCardProps {
     brand: BrandData;
     medians: ReturnType<typeof getMedians>;
+    isSelected?: boolean;
 }
 
-export function BrandCard({ brand, medians }: BrandCardProps) {
+export function BrandCard({ brand, medians, isSelected }: BrandCardProps) {
     const isHighScore = brand.finalScore! >= 60;
     const isMidScore = brand.finalScore! >= 40 && brand.finalScore! < 60;
 
@@ -53,7 +54,7 @@ export function BrandCard({ brand, medians }: BrandCardProps) {
     const issuesCount = [carbonStatus, waterStatus, sustainableStatus].filter(s => s === 'critical').length;
 
     return (
-        <article className="relative bg-white border border-stone-100 rounded-[28px] shadow-[0_4px_24px_rgb(0,0,0,0.02)] p-6 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer group isolation-auto">
+        <article className={`relative bg-white border rounded-[28px] shadow-[0_4px_24px_rgb(0,0,0,0.02)] p-6 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer group isolation-auto ${isSelected ? 'ring-4 ring-emerald-500/20 border-emerald-500 shadow-emerald-500/10' : 'border-stone-100'}`}>
 
             {/* Absolute Issue Badge (Overhanging) */}
             {issuesCount > 0 && (

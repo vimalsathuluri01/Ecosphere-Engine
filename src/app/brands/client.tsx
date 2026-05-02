@@ -3,9 +3,10 @@
 import { BrandData, getMedians } from '@/lib/methodology';
 import { BrandCard } from '@/components/brand-analytics/brand-card';
 import Link from 'next/link';
-import { slugify } from '@/lib/utils';
-
+import { slugify, cn } from '@/lib/utils';
 import { useState, useCallback, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
+import { Plus, Check, ArrowRight, X } from 'lucide-react';
 
 export function AnalyticsClient({ brands }: { brands: BrandData[] }) {
     const medians = useMemo(() => getMedians(brands), [brands]);
@@ -17,6 +18,30 @@ export function AnalyticsClient({ brands }: { brands: BrandData[] }) {
 
     const [shuffledBrands, setShuffledBrands] = useState(() => getDiverseSample());
     const [visibleCount, setVisibleCount] = useState(24);
+    const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+    const router = useRouter();
+
+    const toggleBrand = useCallback((brandName: string) => {
+        setSelectedBrands(prev => {
+            if (prev.includes(brandName)) {
+                return prev.filter(name => name !== brandName);
+            }
+            if (prev.length < 4) {
+                return [...prev, brandName];
+            }
+            return prev;
+        });
+    }, []);
+
+    const clearSelection = () => setSelectedBrands([]);
+
+    const navigateToCompare = () => {
+        if (selectedBrands.length >= 2) {
+            const params = new URLSearchParams();
+            params.set('brands', selectedBrands.join(','));
+            router.push(`/compare?${params.toString()}`);
+        }
+    };
 
     const visibleBrands = shuffledBrands.slice(0, visibleCount);
     const hasMore = visibleCount < shuffledBrands.length;
@@ -63,9 +88,30 @@ export function AnalyticsClient({ brands }: { brands: BrandData[] }) {
                 <main>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
                         {visibleBrands.map((b) => (
-                            <Link key={b.Brand_Name} href={`/brands/${slugify(b.Brand_Name)}`}>
-                                <BrandCard brand={b} medians={medians} />
-                            </Link>
+                            <div key={b.Brand_Name} className="relative group">
+                                <Link href={`/brands/${slugify(b.Brand_Name)}`}>
+                                    <BrandCard 
+                                        brand={b} 
+                                        medians={medians} 
+                                        isSelected={selectedBrands.includes(b.Brand_Name)}
+                                    />
+                                </Link>
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        toggleBrand(b.Brand_Name);
+                                    }}
+                                    className={cn(
+                                        "absolute top-4 right-4 w-10 h-10 rounded-xl flex items-center justify-center transition-all z-20 shadow-lg border-2",
+                                        selectedBrands.includes(b.Brand_Name)
+                                            ? "bg-emerald-500 border-emerald-400 text-white scale-110"
+                                            : "bg-white/80 backdrop-blur-sm border-stone-200 text-stone-400 hover:scale-110 hover:border-stone-400 group-hover:opacity-100 opacity-0"
+                                    )}
+                                >
+                                    {selectedBrands.includes(b.Brand_Name) ? <Check size={18} strokeWidth={3} /> : <Plus size={18} strokeWidth={3} />}
+                                </button>
+                            </div>
                         ))}
                     </div>
 
@@ -80,6 +126,51 @@ export function AnalyticsClient({ brands }: { brands: BrandData[] }) {
                         </div>
                     )}
                 </main>
+
+                {/* STICKY COMPARISON BAR */}
+                {selectedBrands.length > 0 && (
+                    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-[800px]">
+                        <div className="bg-stone-900 rounded-[2rem] p-4 shadow-2xl border border-white/10 flex items-center justify-between gap-6 backdrop-blur-md bg-opacity-95">
+                            <div className="flex items-center gap-4 pl-4">
+                                <div className="flex -space-x-3">
+                                    {selectedBrands.map((name, i) => (
+                                        <div key={name} className="w-10 h-10 rounded-full bg-white border-2 border-stone-900 flex items-center justify-center text-stone-900 font-black text-xs shadow-lg" style={{ zIndex: 10 - i }}>
+                                            {name.charAt(0)}
+                                        </div>
+                                    ))}
+                                    {Array.from({ length: 4 - selectedBrands.length }).map((_, i) => (
+                                        <div key={i} className="w-10 h-10 rounded-full border-2 border-dashed border-stone-700 bg-stone-800/50 flex items-center justify-center" />
+                                    ))}
+                                </div>
+                                <div>
+                                    <div className="text-white text-sm font-black uppercase tracking-tighter">
+                                        {selectedBrands.length} / 4 Selected
+                                    </div>
+                                    <button 
+                                        onClick={clearSelection}
+                                        className="text-[10px] font-mono font-bold text-stone-400 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1"
+                                    >
+                                        <X size={10} /> Clear Audit
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={navigateToCompare}
+                                disabled={selectedBrands.length < 2}
+                                className={cn(
+                                    "px-8 h-14 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center gap-3 transition-all",
+                                    selectedBrands.length >= 2
+                                        ? "bg-emerald-500 text-white hover:bg-emerald-400 shadow-lg shadow-emerald-500/20 active:scale-95"
+                                        : "bg-stone-800 text-stone-500 cursor-not-allowed"
+                                )}
+                            >
+                                Compare Metrics
+                                <ArrowRight size={16} />
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
         </section>
     );

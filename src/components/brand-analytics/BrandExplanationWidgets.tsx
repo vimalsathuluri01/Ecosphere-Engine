@@ -74,7 +74,7 @@ export function BrandExplanationWidgets({ brand, allBrands }: { brand: BrandData
                                 <div className="text-[10px] text-rose-500 font-mono tracking-widest uppercase mb-1">Non-Compensatory Algorithm</div>
                                 <div className="text-xl font-bold text-rose-400 tracking-tight">Planetary Boundary Penalty</div>
                             </div>
-                            <span className="text-3xl font-black text-rose-400 tracking-tighter">x {finalSurvivalMult.toFixed(2)}</span>
+                            <span className="text-3xl font-black text-rose-400 tracking-tighter">x {finalSurvivalMult.toFixed(3)}</span>
                         </div>
                         <div className="flex justify-between items-end pt-2">
                             <div>
@@ -157,7 +157,7 @@ export function BrandExplanationWidgets({ brand, allBrands }: { brand: BrandData
                                         <Droplets className="w-6 h-6 text-blue-600" />
                                     </div>
                                     <div>
-                                        <div className="text-3xl font-black text-slate-900 tracking-tighter leading-none">{olympicPools.toFixed(1)} <span className="text-lg text-slate-400 font-normal tracking-normal">Pools</span></div>
+                                        <div className="text-3xl font-black text-slate-900 tracking-tighter leading-none">{olympicPools.toFixed(2)} <span className="text-lg text-slate-400 font-normal tracking-normal">Pools</span></div>
                                         <div className="text-xs text-slate-500 font-medium mt-1 uppercase tracking-widest font-mono">Olympic Swimming Pools Extracted</div>
                                     </div>
                                 </div>
@@ -166,7 +166,7 @@ export function BrandExplanationWidgets({ brand, allBrands }: { brand: BrandData
                                         <Factory className="w-6 h-6 text-slate-700" />
                                     </div>
                                     <div>
-                                        <div className="text-3xl font-black text-slate-900 tracking-tighter leading-none">{carsDriven.toFixed(0)} <span className="text-lg text-slate-400 font-normal tracking-normal">Cars</span></div>
+                                        <div className="text-3xl font-black text-slate-900 tracking-tighter leading-none">{carsDriven.toFixed(2)} <span className="text-lg text-slate-400 font-normal tracking-normal">Cars</span></div>
                                         <div className="text-xs text-slate-500 font-medium mt-1 uppercase tracking-widest font-mono">Passenger Cars Driven for a Year</div>
                                     </div>
                                 </div>

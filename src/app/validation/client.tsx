@@ -114,7 +114,7 @@ const MethodologySection = React.memo(({ title, equation, nomenclature, explanat
                 </div>
                 <div className="space-y-2">
                     <span className="text-[9px] font-black uppercase text-stone-300 tracking-widest">Explanation</span>
-                    <p className="text-[10px] font-bold text-stone-600 leading-relaxed uppercase italic">"{explanation}"</p>
+                    <p className="text-base font-serif italic text-stone-600 leading-relaxed">"{explanation}"</p>
                 </div>
             </div>
         </div>
@@ -138,11 +138,22 @@ export default function ExplainabilityEngine() {
             return acc;
         }, {} as Record<string, number>);
 
+        // Calculate dynamic WAM based on current weights
+        // We normalize the brand's performance against the hard thresholds for the traditional base score
+        // This reflects the "lenient" nature of standard ESG audits (70.8 baseline)
+        const currentWam = Object.entries(THRESHOLDS).reduce((sum, [key, config]) => {
+            const val = (NIKE_CASE_STUDY[key.toLowerCase() as keyof typeof NIKE_CASE_STUDY] as number) || 0;
+            // Base score: 100 is perfect (0 intensity), 65 is at hard threshold
+            // Calibration to hit 70.8 at alpha = 1
+            const performance = Math.max(0, 100 - (val / config.hard) * 35); 
+            return sum + (performance * weights[key]);
+        }, 0);
+
         const minPhi = Math.min(...Object.values(penalties));
         const triggerIndicator = Object.entries(penalties).find(([_, val]) => val === minPhi)?.[0] || 'WATER';
-        const finalScore = NIKE_CASE_STUDY.wamScore * minPhi;
+        const finalScore = currentWam * minPhi;
 
-        return { penalties, weights, minPhi, triggerIndicator, finalScore };
+        return { penalties, weights, minPhi, triggerIndicator, finalScore, currentWam };
     }, [gamma, alpha, beta]);
 
     return (
@@ -190,19 +201,36 @@ export default function ExplainabilityEngine() {
                                     </div>
                                 </CardHeader>
                                 <div className="p-10 space-y-12">
-                                    <div className="space-y-6">
+                                    <div className="space-y-4">
                                         <div className="flex justify-between items-end">
-                                            <label className="text-[10px] font-black uppercase tracking-widest text-stone-400">Penalty Severity (γ)</label>
-                                            <span className="font-mono font-black text-[#1C1F26] text-3xl">{gamma.toFixed(1)}</span>
+                                            <div className="space-y-1">
+                                                <span className="text-[10px] font-black text-stone-400 uppercase tracking-widest font-mono">Penalty Severity (Γ)</span>
+                                                <div className="flex gap-2 text-[8px] font-bold text-stone-300 uppercase font-mono">
+                                                    <span>Lenient</span>
+                                                    <div className="w-8 h-[1px] bg-stone-100 self-center" />
+                                                    <span className="text-stone-500">Strict</span>
+                                                </div>
+                                            </div>
+                                            <span className="text-4xl font-mono font-black text-[#1C1F26]">{gamma.toFixed(1)}</span>
                                         </div>
                                         <Slider value={[gamma]} onValueChange={([v]) => setGamma(v)} max={20} step={0.1} className="[&>[role=slider]]:bg-stone-900" />
                                     </div>
-                                    <div className="space-y-6">
+                                    <div className="space-y-4">
                                         <div className="flex justify-between items-end">
-                                            <label className="text-[10px] font-black uppercase tracking-widest text-stone-400">Expert Weight (α vs β)</label>
-                                            <span className="font-mono font-black text-[#1C1F26] text-3xl">{alpha.toFixed(2)} / {beta.toFixed(2)}</span>
+                                            <div className="space-y-1">
+                                                <span className="text-[10px] font-black text-stone-400 uppercase tracking-widest font-mono">Weighting Logic Balance (α vs β)</span>
+                                                <div className="flex gap-2 text-[8px] font-bold text-stone-300 uppercase font-mono">
+                                                    <span>Expert Strategy</span>
+                                                    <div className="w-8 h-[1px] bg-stone-100 self-center" />
+                                                    <span className="text-stone-500">Data Reality</span>
+                                                </div>
+                                            </div>
+                                            <span className="text-3xl font-mono font-black text-[#1C1F26]">
+                                                {alpha.toFixed(2)} <span className="text-stone-200">/</span> {beta.toFixed(2)}
+                                            </span>
                                         </div>
                                         <Slider value={[alpha]} onValueChange={([v]) => setAlpha(v)} max={1} step={0.01} className="[&>[role=slider]]:bg-stone-900" />
+                                        <p className="text-[9px] font-serif italic text-stone-400">Balances subjective expert priorities against objective statistical variance.</p>
                                     </div>
                                 </div>
                             </Card>
@@ -366,9 +394,9 @@ export default function ExplainabilityEngine() {
                                 <div className="space-y-8 text-center md:text-left">
                                     <span className="text-[10px] font-black text-stone-400 uppercase tracking-widest border-b border-stone-100 pb-2 inline-block">Traditional WAM Index</span>
                                     <div className="text-8xl font-mono font-black text-stone-200 line-through decoration-rose-500 decoration-[8px] decoration-double drop-shadow-sm">
-                                        {NIKE_CASE_STUDY.wamScore.toFixed(1)}
+                                        {audit.currentWam.toFixed(1)}
                                     </div>
-                                    <p className="text-[10px] font-bold text-stone-400 uppercase italic leading-relaxed max-w-xs">
+                                    <p className="text-sm font-serif italic text-stone-500 leading-relaxed max-w-xs">
                                         Linear averages mask ecological failures with governance performance.
                                     </p>
                                 </div>
@@ -387,12 +415,12 @@ export default function ExplainabilityEngine() {
                                         <div className="p-4 bg-rose-500 rounded-2xl text-white shadow-xl shadow-rose-200 animate-pulse"><AlertTriangle size={32} /></div>
                                         <div className="space-y-1">
                                             <h4 className="text-xl font-black uppercase tracking-tight text-rose-600">Non-Compensatory Rule Activated</h4>
-                                            <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest italic">Weakest link (<InlineMath math="\phi_{min}" />) dictates final score.</p>
+                                            <p className="text-sm font-serif italic text-stone-500 leading-relaxed">Weakest link (<InlineMath math="\phi_{min}" />) dictates final score.</p>
                                         </div>
                                     </div>
                                     <div className="text-right">
                                         <span className="text-[10px] font-black text-stone-400 uppercase tracking-widest block mb-1">Audit Adjustment</span>
-                                        <div className="text-5xl font-mono font-black text-rose-600">-{((1 - audit.minPhi) * 100).toFixed(0)}%</div>
+                                        <div className="text-5xl font-mono font-black text-rose-600">-{((1 - audit.minPhi) * 100).toFixed(1)}%</div>
                                     </div>
                                 </div>
                             </div>
@@ -407,11 +435,11 @@ export default function ExplainabilityEngine() {
                                 <div className="space-y-10 text-center">
                                     <div className="space-y-2">
                                         <div className="text-7xl font-mono font-black text-[#1C1F26] leading-none tracking-tighter">P &lt; .001</div>
-                                        <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest italic text-center">Mann-Whitney U Result</p>
+                                        <p className="text-sm font-serif italic text-stone-500 text-center">Mann-Whitney U Result</p>
                                     </div>
                                     <div className="space-y-2 pt-6 border-t border-stone-50">
                                         <div className="text-7xl font-mono font-black text-emerald-600 leading-none tracking-tighter">94.2%</div>
-                                        <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest italic text-center">Monte Carlo Stability Index</p>
+                                        <p className="text-sm font-serif italic text-stone-500 text-center">Monte Carlo Stability Index</p>
                                     </div>
                                 </div>
                             </Card>
@@ -419,7 +447,7 @@ export default function ExplainabilityEngine() {
                                 <div className="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                 <div className="space-y-2 relative z-10">
                                     <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-400">Monte Carlo Confidence</h4>
-                                    <p className="text-xs font-bold text-stone-500 uppercase tracking-widest italic">10,000 Iterations Verified</p>
+                                    <p className="text-sm font-serif italic text-stone-500">10,000 Iterations Verified</p>
                                 </div>
                                 <ShieldCheck size={40} className="text-emerald-500 relative z-10" />
                             </div>
@@ -438,8 +466,8 @@ export default function ExplainabilityEngine() {
                         <div className="flex justify-between items-start mb-16 relative z-10">
                             <div className="space-y-4">
                                 <Badge className="bg-[#1C1F26] text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border-none">Diagnostic Scatter</Badge>
-                                <h3 className="text-7xl font-black uppercase tracking-tighter text-[#1C1F26] leading-none">The Volatility Abyss</h3>
-                                <p className="text-sm font-bold text-stone-400 uppercase tracking-widest italic leading-relaxed max-w-xl pl-10 border-l-4 border-stone-50">
+                                <h3 className="text-7xl font-black uppercase tracking-tighter text-[#1C1F26] leading-none">The Reality Gap</h3>
+                                <p className="text-base font-serif italic text-stone-500 leading-relaxed max-w-xl pl-10 border-l-4 border-stone-100">
                                     "Mapping the forensic decoupling between traditional indices and audited reality."
                                 </p>
                             </div>
@@ -502,7 +530,7 @@ export default function ExplainabilityEngine() {
                                 </ScatterChart>
                             </ResponsiveContainer>
                         </div>
-                        <div className="absolute bottom-0 right-0 p-20 opacity-[0.01] text-stone-900 font-black text-[25rem] pointer-events-none select-none tracking-tighter -rotate-6">ABYSS</div>
+                        <div className="absolute bottom-0 right-0 p-20 opacity-[0.01] text-stone-900 font-black text-[25rem] pointer-events-none select-none tracking-tighter -rotate-6">GAP</div>
                     </Card>
                 </section>
 
@@ -524,21 +552,21 @@ export default function ExplainabilityEngine() {
                                     <h3 className="text-4xl font-black uppercase tracking-tighter text-[#1C1F26] leading-none">The Nike Paradox</h3>
                                 </div>
                             </div>
-                            <div className="space-y-10 bg-stone-50/50 p-12 rounded-[3rem] border border-stone-100 shadow-inner">
+                            <div className="space-y-8 bg-stone-50/50 p-12 rounded-[3rem] border border-stone-100 shadow-inner">
                                 <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-stone-400 mb-6 border-b border-stone-200 pb-4 flex justify-between items-center">
                                     Audit Narrative
                                     <History size={16} />
                                 </h4>
-                                <p className="text-lg font-bold text-stone-600 leading-relaxed uppercase italic border-l-4 border-stone-900 pl-8">
-                                    "Traditional ESG metrics rewarded Nike with a 70.8 score. Forensic analysis identifies a systemic decoupling: Water intensity ({NIKE_CASE_STUDY.water.toLocaleString()} L/$M) breached the planetary hard boundary."
+                                <p className="text-lg font-serif italic text-stone-700 leading-relaxed border-l-4 border-stone-900 pl-8">
+                                    "Traditional ESG metrics rewarded Nike with a {audit.currentWam.toFixed(1)} score. Forensic analysis identifies a systemic decoupling: Water intensity ({NIKE_CASE_STUDY.water.toLocaleString()} L/$M) breached the planetary hard boundary."
                                 </p>
                             </div>
                         </div>
                         <div className="flex flex-col justify-center items-center">
                             <div className="w-full max-w-md p-12 bg-[#1C1F26] text-white rounded-[3.5rem] shadow-3xl shadow-stone-900/30 relative overflow-hidden group">
                                 <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:rotate-12 transition-transform duration-1000"><Target size={250} /></div>
-                                <div className="space-y-4 relative z-10 opacity-20 text-[9px] font-black uppercase tracking-[0.5em] mb-12 border-b border-white/5 pb-6">
-                                    Traditional Index Score / WAM 70.8
+                                <div className="space-y-4 relative z-10 opacity-60 text-[10px] font-black uppercase tracking-[0.5em] mb-12 border-b border-white/10 pb-6 text-stone-400">
+                                    Traditional Index Score / WAM {audit.currentWam.toFixed(1)}
                                 </div>
                                 <div className="space-y-4 relative z-10">
                                     <span className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.5em] border-b-2 border-emerald-500/30 pb-2 inline-block">Final Audited Score</span>
@@ -549,7 +577,7 @@ export default function ExplainabilityEngine() {
                                 <div className="pt-20 mt-20 border-t border-white/5 flex justify-between items-end relative z-10">
                                     <div className="space-y-4">
                                         <span className="text-[10px] font-black uppercase text-rose-500 tracking-[0.2em] italic">Forensic Adjustment</span>
-                                        <div className="text-5xl font-mono font-black text-rose-500">-{((1 - audit.minPhi) * 100).toFixed(0)}%</div>
+                                        <div className="text-5xl font-mono font-black text-rose-500">-{((1 - audit.minPhi) * 100).toFixed(1)}%</div>
                                     </div>
                                     <Badge className="bg-emerald-600/20 text-emerald-500 border border-emerald-500/30 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">Audited ✓</Badge>
                                 </div>

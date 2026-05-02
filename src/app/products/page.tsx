@@ -4,7 +4,7 @@ import { Search, BarChart3, AlertTriangle, Recycle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { ProductCard } from '@/components/product-card';
+import { ProductMatrixClient } from './client';
 
 // --- VISUALIZATION CONSTANTS ---
 const PAGE_LIMIT = 48;
@@ -75,14 +75,10 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
                     </div>
                 </div>
 
-                {/* GRID */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 pb-12">
-                    {paginatedProducts.map((p) => (
-                        <ProductCard key={p.product_id} product={p} />
-                    ))}
-                </div>
+                {/* GRID & SELECTION ENGINE */}
+                <ProductMatrixClient initialProducts={paginatedProducts} />
 
-                {/* PAGINATION */}
+                {/* PAGINATION (Kept for search navigation) */}
                 <div className="flex justify-between items-center bg-white p-6 rounded-2xl border border-slate-200 mb-20 shadow-sm">
                     <div className="text-[10px] font-bold uppercase text-slate-400 tracking-widest">
                         Showing {(page - 1) * PAGE_LIMIT + 1} - {Math.min(page * PAGE_LIMIT, totalResults)} of {totalResults} Records

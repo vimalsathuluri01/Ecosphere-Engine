@@ -63,7 +63,7 @@ export const OutlierTearSheet = memo(function OutlierTearSheet({ vanguard, syste
                     ></div>
                 </div>
 
-                <p className="text-[11px] leading-relaxed text-stone-500 font-serif italic">
+                <p className="text-base leading-relaxed text-stone-600 font-serif italic">
                     {type === 'vanguard' 
                         ? `Operating at ${Math.abs(item.deviation)}% higher efficiency than the current industry median for ${item.category}.`
                         : `Resource consumption is approximately ${Math.round(1 + item.deviation/100)}x the planetary boundary threshold for this material class.`

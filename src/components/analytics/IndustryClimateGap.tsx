@@ -124,18 +124,18 @@ export const IndustryClimateGap = memo(function IndustryClimateGap({ data }: Pro
                         style: {
                             fill: '#ef4444',
                             text: 'CRITICAL CONCENTRATION',
-                            font: '900 11px monospace'
+                            font: '900 13px monospace'
                         }
                     },
                     {
                         type: 'text',
                         z: 100,
-                        top: 18,
+                        top: 24,
                         style: {
                             fill: '#78716c',
                             text: 'This decile produces significantly more\ncarbon than all others combined.',
-                            font: 'italic 12px serif',
-                            lineHeight: 16
+                            font: 'italic 16px serif',
+                            lineHeight: 20
                         }
                     }
                 ]
